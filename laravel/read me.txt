@@ -1,0 +1,15 @@
+step 1: for database table creation
+
+create model: php artisan make:model User -m
+it create migration file also
+
+migrate: php artisan migrate
+
+step 2: for controlling model-view
+
+create controller: php artisan make:controller UserController --resource
+
+step 3: specifying route
+
+route: in web.php file -> Route::resource('user','UserController');
+
