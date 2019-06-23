@@ -1,6 +1,30 @@
 <!DOCTYPE HTML>  
 <html>
     <head>
+        <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<title>Booking Form HTML Template</title>
+
+	<!-- Google font -->
+	<link rel="stylesheet" href="css/google.font.">
+
+	<!-- Bootstrap -->
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- Latest compiled and minified CSS -->
+	
+        <!--Bootsrap 4 CDN-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <!--Fontawesome CDN-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="css/login-style.css" />
+
         <style>
             .error {color: #FF0000;}
             body{
@@ -23,106 +47,51 @@
             }
         </style>
     </head>
-    <body>  
-
-        <?php
-        // define variables and set to empty values
-        $nameErr = $passwordErr = $userOrpassErr = "";
-        $username = $pass = "";
-        $errormgs = "";
-
-        if (isset($_POST['submit'])) {
-            $errormgs="ok";
-
-            if (empty($_POST["pass"])) {
-                $passwordErr = "Password is required";
-                $errormgs = "error";
-            }/* else {
-                $pass = test_input($_POST["pass"]);
-                $errormgs1 = "ok";
-                // check if password is well-formed
-                if (!preg_match("/^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z@#$& ]*$/", $pass)) {
-                    $passwordErr = "Invalid password format. Atleast a digit, a character are required."
-                            . "@,#,$,& are used.";
-                    $errormgs1 = "error";
-                }
-                //check password length
-                elseif (strlen($pass) < 6) {
-                    $passwordErr = "Password length must be more than or equal 6";
-                    $errormgs1 = "error";
-                }
-            }*/
-            if (empty($_POST["username"])) {
-                $nameErr = "Username is required";
-                $errormgs = "error";
-            } /*else {
-                $username = test_input($_POST["username"]);
-                $errormgs2 = "ok";
-                // check if name only contains letters and whitespace
-                if (!preg_match("/^[a-zA-Z ]*$/", $username)) {
-                    $nameErr = "Only letters and white space allowed";
-                    $errormgs2 = "error";
-                }
-            }*/
-
-            if ($errormgs != "error") {
-                $mgs="error";
-                $pass = test_input($_POST["pass"]);
-                $pass1=md5($pass);
-                $username = test_input($_POST["username"]);
-                 
-                $conn=oci_connect("WSMS","wsms","//localhost/orcl");
-                $query="SELECT USERNAME,PASSWORD FROM RETAILERS";
-                
-                $stid=oci_parse($conn,$query);
-                $r=oci_execute($stid);
-                echo $pass1;
-                while ($row = oci_fetch_assoc($stid)) {
-                    if($row['USERNAME'] == $username && $row['PASSWORD'] == $pass1){
-                        
-                        $mgs="ok";
-                        break;
-                    } 
-                }
-                if($mgs=="error"){
-                    $userOrpassErr="Username or password error !";
-                }
-                else{
-                    header("Location: homePage.php");
-                //  echo "$errormgs1";
-                    exit();
-                }
-            }
-        }
-
-        function test_input($data) {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
-        ?>
-        <h2>Login for online orders </h2>
-        <div align="center" >
-            <div class="bgimage">
-                
-            <p><span class="error">* required field.</span></p>
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
-                Username: <input type="text" name="username" size="35" value="<?php echo $username; ?>">
-                <span class="error">*</span>
-                <br><span class="error"> <?php echo $nameErr; ?></span>
-                <br>
-                Password: <input type="text" name="pass" size="35" value="<?php echo $pass; ?>">
-                <span class="error">* </span>
-                <br><span class="error"><?php echo $passwordErr; ?></span>
-                <br><span class="error"><?php echo $userOrpassErr; ?></span>
-                <br><br>
-                <div align="center" >
-                    <input type="submit" name="submit" value="Submit">  
-                </div>
-                <br>
-            </form>
-            </div>
-        </div>
-    </body>
+    <body>
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Sign In</h3>
+				<!--div class="d-flex justify-content-end social_icon">
+					<span><i class="fab fa-facebook-square"></i></span>
+					<span><i class="fab fa-google-plus-square"></i></span>
+					<span><i class="fab fa-twitter-square"></i></span>
+				</div-->
+			</div>
+			<div class="card-body">
+				<form>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" class="form-control" placeholder="username">
+						
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input type="password" class="form-control" placeholder="password">
+					</div>
+					<div class="row align-items-center remember">
+						<input type="checkbox">Remember Me
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Login" class="btn float-right login_btn">
+					</div>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center links">
+					Don't have an account?<a href="user/create">Sign Up</a>
+				</div>
+				<div class="d-flex justify-content-center">
+					<a href="#">Forgot your password?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
 </html>

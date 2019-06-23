@@ -39,8 +39,9 @@
         #login_button button{
             color: blue;
             height: 40px;
-            width: 100px;
+            width: 90px;
             margin-left: 10px;
+            border-radius: 3px 3px 3px 3px;
             float: left;
         }
     </style>
@@ -66,9 +67,7 @@
 					<div class="col-md-7 col-md-push-5">
 						<div class="booking-cta">
 							<h1>Make your reservation</h1>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi facere, soluta magnam consectetur molestias itaque
-								ad sint fugit architecto incidunt iste culpa perspiciatis possimus voluptates aliquid consequuntur cumque quasi.
-								Perspiciatis.
+							<p>Wellcome to our website.
 							</p>
 						</div>
 					</div>

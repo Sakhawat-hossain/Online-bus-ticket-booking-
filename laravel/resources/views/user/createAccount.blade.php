@@ -1,20 +1,42 @@
 <!DOCTYPE HTML>  
 <html>
     <head>
+        <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<title>Booking Form HTML Template</title>
+
+	<!-- Google font -->
+	<link rel="stylesheet" href="../css/google.font.">
+
+	<!-- Bootstrap -->
+	<link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
+    <!-- Latest compiled and minified CSS -->
+	
+        <!--Bootsrap 4 CDN-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <!--Fontawesome CDN-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="../css/login-style.css" />
+
         <style>
-            .error {
-                color: #FF0000;
-            }
+            .error {color: #FF0000;}
             body{
-                margin: 0 auto;
+                margin-top: 100px;
             }
             h2{
                 text-align: center;
             }
             form{
                 text-align: left;
-                margin: 0 auto;
-                padding-left: 10px; 
+                 margin: 0 auto;
+                 padding-left: 10px;
             }
             .bgimage{
                 background-color:  #e0e0e0;
@@ -25,59 +47,53 @@
             }
         </style>
     </head>
-    <body>  
-
-    <?php
-        // define variables and set to empty values
-        $fnameErr = $lnameErr = $hsnoErr = $streetErr = $thanaErr = $disttrictErr = $phnoErr = $usernameErr = $passwordErr1 = $passwordErr2="";
-        $fname = $lname = $houseno = $street  = $thana = $district = $phno = $username = $password1 = $password2 = "";
-       
-        $errormgs="";
-        $mgs="1";
-       
-
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-        
-    ?>
-
-        <h2>Create an account for online orders </h2>
-        <div align="center">
-            <div class="bgimage">
-        <form method="POST" action="{{url('user')}}">
-            {{csrf_field()}}
-
-            Username : <input type="text" name="username" size="35" value="<?php echo $username;?>">
-            <span class="error">* <?php echo $usernameErr;?></span>
-            <br>
-            Password : <input type="password" name="password" size="35" value="<?php echo $password1;?>">
-            <span class="error">* <?php echo $passwordErr1;?></span>
-            <br>  
-            Email : <input type="text" name="email" size="35" value="<?php echo $fname;?>">
-            <span class="error">* <?php echo $fnameErr;?></span>
-            <br>
-            <div align="center">
-                <input type="submit">  
-            </div>
-        </form>
-        <p><span class="error">* required field.</span></p>
-            </div>
-        </div>
-    
-        <form method="GET" action="{{url('user')}}">
-            <div align="center">
-                <input type="submit" value="Show index">
-            </div>
-        </form>
-
-        <form method="GET" action="{{url('user/1')}}">
-            <div align="center">
-                <input type="submit" value="Show profile">
-            </div>
-        </form>
-    </body>
+    <body>
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Sign up</h3>
+			</div>
+			<div class="card-body">
+				<form>
+                    <div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="far fa-user"></i></span>
+						</div>
+						<input type="text" name="name" class="form-control" placeholder="Abdul Karim">	
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" name="username" class="form-control" placeholder="username">	
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input type="password" name="password" class="form-control" placeholder="password">
+					</div>
+                    <div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="far fa-envelope"></i></span>
+						</div>
+						<input type="text" name="email" class="form-control" placeholder="email">
+					</div>
+                    
+                    <div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="far fa-gender"></i></span>
+						</div>
+						<input type="text" name="gender" class="form-control" placeholder="male/female">	
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Sign up" class="btn float-right login_btn">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
 </html>
