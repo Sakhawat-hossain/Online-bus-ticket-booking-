@@ -22,3 +22,7 @@ Route::get('signin','MyController@signin' );
 Route::resource('user','UserController');
 
 Route::resource('bus','BusController');
+
+Route::get('/buslist', function () {
+    return view('busList');
+});
