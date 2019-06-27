@@ -216,6 +216,111 @@
                     </div>
                 </div>
                 
+                <div class="row-space">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-bus" style="color:#154360;"></i>  AK Travels</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-bus" style="color:#154360;"></i>  Hanif Paribahan</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-bus" style="color:#154360;"></i>  Nabil</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-bus" style="color:#154360;"></i>  Dipjol Enterprise</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="operator-container">
+            <div class="container">
+                <h1>AVAILABLE BUS ROUTES</h1>
+                
+                <div class="row-space">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-map-marker-alt" style="color:#154360;"></i>  AK Travels</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-map-marker-alt" style="color:#154360;"></i>  Hanif Paribahan</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-map-marker-alt" style="color:#154360;"></i>  Nabil</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-map-marker-alt" style="color:#154360;"></i>  Dipjol Enterprise</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row-space">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-bus" style="color:#154360;"></i>  AK Travels</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-bus" style="color:#154360;"></i>  Hanif Paribahan</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-bus" style="color:#154360;"></i>  Nabil</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span><i class="fas fa-bus" style="color:#154360;"></i>  Dipjol Enterprise</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="operator-container">
+            <div class="container">
+                <h1 style="padding-right:50px;">WE ACCEPT</h1>
+                
+                <div class="row-space">
+                    <div class="row">
+                        <div class="col-lm-3">
+                            <img src="img/bkash-logo.png" class="img-rounded">
+                        </div>
+                        <div class="col-lm-3">
+                            <img src="img/dbbl-logo.jpg">
+                        </div>
+                        <div class="col-lm-3">
+                            <img src="img/rocket-logo.png">
+                        </div>
+                        <div class="col-lm-3">
+                            <img src="img/mkash-logo.png">
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div id="footer">
+            <div class="container">
+                <div class="row-space">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2>Online Tickets</h2>
+                            <span style="color:#154360;">onlinetickets.com is a premium online booking portal which allows you to purchase tickets for various bus services, launch services, movies and events across the country.</span>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-3">
+                            <h2>Company Info</h2>
+                            <a href="term-conditions"><li>Terms and Conditins</li></a>
+                            <a href="faq"><li>FAQ</li></a>
+                            <a href="privacy-policy"><li>Privacy Policy</li></a>
+                        </div>
+                        <div class="col-sm-3">
+                            <h2>About Online Tickets</h2>
+                            <a href="about-us"><li>About Us</li></a>
+                            <a href="contact-info"><li>Contact Us</li></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 	</div>

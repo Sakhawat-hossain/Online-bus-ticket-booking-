@@ -1,16 +1,36 @@
 .section {
-	position: relative;
-	height: 100vh;
+	font-family: 'Montserrat', sans-serif;
+	background-size: cover;
+	background-position: center;
+    background-color: white;
 }
 
-.section .section-center {
-	position: absolute;
-	top: 50%;
-	left: 0;
-	right: 0;
-	-webkit-transform: translateY(-50%);
-	transform: translateY(-50%);
+
+#header{
+    width: 98%;
+    margin-left: 1%;
+    height: 50px;
+    margin-top: 10px;
 }
-.section h2{
-    text-align: center;
+        #login_button{
+            height: auto;
+            width: auto;
+            position: relative;
+            right: 20px;
+            top: 10px;
+            float: right;
+        }
+
+#search-option{
+    width: auto;
+    height: auto;
+    margin-top: 20px;
+    background-color: #FBEEE6;
+    padding-left: 50px;
+}
+
+#table-container{
+    margin-top: 30px;
+    background-color: #F4F6F6;
+    padding-top: 10px;
 }
