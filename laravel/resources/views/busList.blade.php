@@ -10,6 +10,7 @@
         
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        
     </head>
     <body>
         <div class="section">
@@ -85,8 +86,8 @@
 					</div>			
                     
                 <div id="table-container">
-                    <table class="table table-hover" >
-                        <thead>
+                    <table class="table" >
+                        <thead class="thead-dark">
                             <tr>
                                 <th>Enterprise Name</th>
                                 <th>Coach No</th>
@@ -109,7 +110,7 @@
                                 <td>7.00 AM</td>
                                 <td>500</td>
                                 <td>30</td>
-                                <td><button type="button" class="btn btn-success">View seats</button></td>
+                                <td><a role="button" class="btn btn-success" href="{{url('seatlist/'.'1')}}">View seats</a></td>
                             </tr>
                         </tbody>
                         <tbody>
@@ -125,6 +126,8 @@
                                 <td><button type="button" class="btn btn-success">View seats</button></td>
                             </tr>
                         </tbody>
+                        
+                        
                     </table>
                 </div>
             </div>

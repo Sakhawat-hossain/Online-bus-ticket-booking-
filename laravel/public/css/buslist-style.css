@@ -32,5 +32,13 @@
 #table-container{
     margin-top: 30px;
     background-color: #F4F6F6;
-    padding-top: 10px;
+}
+.table thead{
+    padding-bottom: 25px;
+    padding-top: 15px;
+    font-size: 15px;
+    height: 40px;
+}
+.table tbody:hover{
+    background-color: azure;
 }

@@ -26,3 +26,11 @@ Route::resource('bus','BusController');
 Route::get('/buslist', function () {
     return view('busList');
 });
+
+Route::get('/seatlist/{id}', function () {
+    return view('bus-seat.seatlist');
+});
+
+Route::get('/profile/{id}', function () {
+    return view('user.profile');
+});
