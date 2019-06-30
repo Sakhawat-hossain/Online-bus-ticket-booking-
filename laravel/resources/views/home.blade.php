@@ -14,6 +14,7 @@
 
 	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet"  href="css/header-design.css"/>
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
@@ -40,15 +41,25 @@
 <body>
 	<div id="homepage-background">
         <div id="header">
-                <div id="login_button">
-                    <! http://localhost:8000/>
-                    <a href="user/create">
-                        <button type="button" class="btn btn-default" style="right-margin:10px;">Register</button>
-                    </a>
-                    <a href="signin">
-                        <button type="button" class="btn btn-default">Sign in</button>
-                    </a>
+            <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#" style="color: white;"><span>
+                        <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#footer">Contact</a></li>
+                        <li><a href="#footer">About</a></li>
+                        <li><a href="#operator-container">Operators</a></li>
+                        <li><a href="#operator-container">Routes</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                        <li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                    </ul>
                 </div>
+            </nav>
         </div>
         
 			<div id="booking"> 
@@ -305,7 +316,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <h2>Online Tickets</h2>
-                            <span style="color:#154360;">onlinetickets.com is a premium online booking portal which allows you to purchase tickets for various bus services, launch services, movies and events across the country.</span>
+                            <span>onlinetickets.com is a premium online booking portal which allows you to purchase tickets for various bus services, launch services, movies and events across the country.</span>
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-3">

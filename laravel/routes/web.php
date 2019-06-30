@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('signin','MyController@signin' );
+Route::get('signin','MyController@signin' ); // log in controller
 
 //Route::get('signup','MyController@signup' );
 

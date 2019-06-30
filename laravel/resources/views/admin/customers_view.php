@@ -39,8 +39,7 @@
 	</head>
 	<body>
 		<div class="container theme-paper theme-compact">
-			
-									<nav class="navbar navbar-default navbar-fixed-top hidden-print" role="navigation">
+            <nav class="navbar navbar-default navbar-fixed-top hidden-print" role="navigation">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="sr-only">Toggle navigation</span>
@@ -58,10 +57,10 @@
 					<ul class="dropdown-menu" role="menu"><li><a href="buses_view.php?t=1561834926"><img src="resources/table_icons/yellow_submarine.png" height="32"> Buses</a></li><li><a href="seats_view.php?t=1561834926"><img src="resources/table_icons/chair.png" height="32"> Seats</a></li><li><a href="availability_view.php?t=1561834926"><img src="resources/table_icons/accept.png" height="32"> Availability</a></li><li><a href="bookings_view.php?t=1561834926"><img src="resources/table_icons/accordion.png" height="32"> Bookings</a></li><li><a href="routes_view.php?t=1561834926"><img src="resources/table_icons/routing_go_right.png" height="32"> Routes</a></li><li><a href="customers_view.php?t=1561834926"><img src="resources/table_icons/account_balances.png" height="32"> Customers</a></li><li class="divider"></li><li><a href="hooks/summary-reports.php"><img src="hooks/summary_reports-logo-md.png" height="32"> Summary Reports</a></li></ul>
 				</li>									</ul>
 
-									<ul class="nav navbar-nav">
+                <ul class="nav navbar-nav">
 						<a href="admin/pageHome.php" class="btn btn-danger navbar-btn hidden-xs" title="Admin Area"><i class="glyphicon glyphicon-cog"></i> Admin Area</a>
 						<a href="admin/pageHome.php" class="btn btn-danger navbar-btn visible-xs btn-lg" title="Admin Area"><i class="glyphicon glyphicon-cog"></i> Admin Area</a>
-					</ul>
+                </ul>
 				
 															<ul class="nav navbar-nav navbar-right hidden-xs" style="min-width: 330px;">
 							<a class="btn navbar-btn btn-default" href="index.php?signOut=1"><i class="glyphicon glyphicon-log-out"></i> Sign Out</a>
