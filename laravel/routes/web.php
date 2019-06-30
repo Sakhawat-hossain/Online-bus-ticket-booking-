@@ -34,3 +34,14 @@ Route::get('/seatlist/{id}', function () {
 Route::get('/profile/{id}', function () {
     return view('user.profile');
 });
+
+Route::get('/admin', function () {
+    return view('admin.index');
+});
+
+Route::get('/customers_view', function () {
+    return view('admin.customers_view');
+});
+Route::get('/bookings_view', function () {
+    return view('admin.bookings_view');
+});
