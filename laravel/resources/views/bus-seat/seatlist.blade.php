@@ -8,7 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bus Ticket Reservation Widget Flat Responsive Widget Template :: w3layouts</title>
+<title>Seat details</title>
 <!-- for-mobile-apps -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -152,7 +152,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			}
 		</script>
 	</div>
-	<p class="copy_rights">&copy; 2016 Bus Ticket Reservation Widget. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank"> W3layouts</a></p>
 </div>
 <script src="js/jquery.nicescroll.js"></script>
 <script src="js/scripts.js"></script>

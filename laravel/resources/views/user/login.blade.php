@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Booking Form HTML Template</title>
+	<title>Bus Ticket Booking</title>
 
 	<!-- Google font -->
 	<link rel="stylesheet" href="css/google.font.">
@@ -55,7 +55,12 @@
 					<li><a href="#footer">About</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="user/create"><span class="glyphicon glyphicon-log-in"></span> Register</a></li>
+					@if(isset($username))
+						<li><a href="#"><span><i class="fas fa-user-tie"></i>{{$username}}</span></a> </li>
+						<li><a href="signout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+					@else
+						<li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+					@endif
 				</ul>
 			</div>
 		</nav>
@@ -68,21 +73,27 @@
 			</div>
 
 			<div class="card-body">
-				<form>
+				<form method="post" action="signin">
+					{{csrf_field()}}
 					<div class="input-group form-group">
 						<div class="input-group-addon">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" name="username" class="form-control" placeholder="username"/>
+						<input type="text" name="username" class="form-control" placeholder="username" required>
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-addon">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
-						<input type="password" name="password" class="form-control" placeholder="password">
+						<input type="password" name="password" class="form-control" placeholder="password" required>
 					</div>
+					@if(\Session::has('userwrong'))
+						<div class="alert-danger">
+							<p>{{\Session::get('userwrong')}}</p>
+						</div>
+					@endif
 					<div class="form-group">
-						<input type="submit" value="Sign in" name="signin" class="btn float-right login_btn" style="margin-left: 50%;margin-bottom: 15px;">
+						<input type="submit" value="signin" name="form" class="btn float-right login_btn" style="margin-left: 50%;margin-bottom: 15px;">
 					</div>
 				</form>
 			</div>

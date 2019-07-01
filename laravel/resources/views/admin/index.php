@@ -233,7 +233,7 @@
 
                     </div>
                 </div>                                 <!-- /. ROW  -->
-				 <footer><strong><p><center>Bus Booking System. Developed By: Ronald. Brought To You by: <a href="http://code-projects.org/">code-projects</a></p></center></strong></footer>
+            <footer><strong><p><center>Bus Booking System.</center></p></strong></footer>
 				</div>
              <!-- /. PAGE INNER  -->
             </div>

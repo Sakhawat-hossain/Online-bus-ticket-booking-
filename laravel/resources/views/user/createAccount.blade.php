@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Booking Form HTML Template</title>
+	<title>Register</title>
 
 	<!-- Google font -->
 	<link rel="stylesheet" href="../css/google.font.">
@@ -68,7 +68,8 @@
 			</div>
 
 			<div class="card-body">
-				<form>
+				<form method="post" action="../user">
+					{{csrf_field()}}
                     <div class="input-group form-group">
 						<div class="input-group-addon">
 							<span class="input-group-text"><i class="far fa-user"></i></span>
@@ -85,19 +86,19 @@
 						<div class="input-group-addon">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" name="username" class="form-control" placeholder="username"/>
+						<input type="text" name="username" class="form-control" placeholder="username" required>
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-addon">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
-						<input type="password" name="password" class="form-control" placeholder="password">
+						<input type="password" name="password" class="form-control" placeholder="password" required>
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-addon">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
-						<input type="password" name="re-password" class="form-control" placeholder="re-password">
+						<input type="password" name="re-password" class="form-control" placeholder="re-password" required>
 					</div>
                     <div class="input-group form-group">
 						<div class="input-group-addon">
@@ -110,17 +111,22 @@
 						<div class="input-group-addon">
 							<span class="input-group-text"><i class="fa fa-mobile" ></i></span>
 						</div>
-						<input type="text" name="mobileno" class="form-control" placeholder="mobile no">
+						<input type="text" name="mobileno" class="form-control" placeholder="mobile no" required>
 					</div>
 
                     <div class="input-group form-group">
 						<div class="input-group-addon">
 							<span class="input-group-text"><i class="far fa-gender"></i></span>
 						</div>
-						<input type="text" name="gender" class="form-control" placeholder="male/female">
+						<input type="text" name="gender" class="form-control" placeholder="male/female" required>
 					</div>
+					@if(\Session::has('wrong'))
+						<div class="alert-danger">
+							<p>{{\Session::get('wrong')}}</p>
+						</div>
+					@endif
 					<div class="form-group">
-						<input type="submit" value="Sign up" name="signup" class="btn float-right login_btn" style="margin-left: 50%;margin-bottom: 15px;">
+						<input type="submit" value="signup" name="form" class="btn float-right login_btn" style="margin-left: 50%;margin-bottom: 15px;">
 					</div>
 				</form>
 			</div>

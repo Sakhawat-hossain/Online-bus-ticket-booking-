@@ -7,9 +7,9 @@
 
          <h1>All Information About Users</h1>
 
-         @if(isset($users))
+         @if(isset($userinfo))
               <h3>var users set</h3>
-              @foreach ($users as $user)
+              @foreach ($userinfo as $user)
                <ul>
                     <li>
                      @foreach($user as $var)

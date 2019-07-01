@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Booking Form HTML Template</title>
+	<title>Bus Ticket Booking</title>
 
 	<!-- Google font -->
 	<link rel="stylesheet" href="css/google.font.">
@@ -45,7 +45,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <a class="navbar-brand" href="#" style="color: white;"><span>
-                        <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
+                        <i class="glyphicon glyphicon-home"></i></span>Online ticket booking</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
@@ -55,8 +55,13 @@
                         <li><a href="#operator-container">Routes</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                        <li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                        @if(isset($username))
+                            <li><a href="#"><span><i class="fas fa-user-tie"></i>{{$username}}</span></a> </li>
+                            <li><a href="signout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        @else
+                            <li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                            <li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                        @endif
                     </ul>
                 </div>
             </nav>
@@ -64,7 +69,7 @@
         
 			<div id="booking"> 
                 <div class="booking-form">
-                    <form method="post">
+
                         <div class="row">
 				            <div class="col-sm-6">
 								<div class="form-group">
@@ -106,9 +111,9 @@
                         </div>
                         
                         <div class="form-btn">
-				            <button class="submit-btn" name="send">Search</button>
+                            <a href="http://localhost/laravel-project/laravel/public/buslist"><button class="submit-btn" name="send">Search</button></a>
                         </div>
-                    </form>
+
                 </div>
 				<!--div class="row">
 					<div class="col-md-7 col-md-push-5">
