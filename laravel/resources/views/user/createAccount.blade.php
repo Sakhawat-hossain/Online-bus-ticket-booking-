@@ -46,16 +46,21 @@
 		<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="#" style="color: white;"><span>
+					<a class="navbar-brand" href="../home" style="color: white;"><span>
                         <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
 				</div>
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
+					<li class="active"><a href="../home">Home</a></li>
 					<li><a href="#footer">Contact</a></li>
 					<li><a href="#footer">About</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                    @if(\Illuminate\Support\Facades\Session::has('username'))
+                        <li><a href="profile"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
+                        <li><a href="../signin"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                    @else
+					    <li><a href="../signin/create"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                    @endif
 				</ul>
 			</div>
 		</nav>
@@ -120,10 +125,8 @@
 						</div>
 						<input type="text" name="gender" class="form-control" placeholder="male/female" required>
 					</div>
-					@if(\Session::has('wrong'))
-						<div class="alert-danger">
-							<p>{{\Session::get('wrong')}}</p>
-						</div>
+					@if(\Illuminate\Support\Facades\Session::has('wrong'))
+							<p>{{\Illuminate\Support\Facades\Session::get('wrong')}}</p>
 					@endif
 					<div class="form-group">
 						<input type="submit" value="signup" name="form" class="btn float-right login_btn" style="margin-left: 50%;margin-bottom: 15px;">

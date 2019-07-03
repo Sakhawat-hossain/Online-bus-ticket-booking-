@@ -46,6 +46,13 @@ align-content: center;
     height: auto;
     width: auto;
 }
+.card-body p{
+    margin-bottom: 10px;
+    margin-top: 15px;
+    height: auto;
+    width: 70%;
+    color: darkred;
+}
 
 .social_icon span{
 font-size: 80px;

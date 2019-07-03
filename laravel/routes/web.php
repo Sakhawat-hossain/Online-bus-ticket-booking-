@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/home', function () {
+    return view('home');
+});
 
 //Route::get('signin', array('uses' => 'MyController@showLogin'));
 //Route::post('signin', array('uses' => 'MyController@doLogin'));
@@ -23,6 +26,7 @@ Route::get('/', function () {
 
 //Route::get('signup','MyController@signup' );
 
+Route::resource('signin','LoginController');
 Route::resource('user','UserController');
 
 Route::resource('bus','BusController');
@@ -35,7 +39,7 @@ Route::get('/seatlist/{id}', function () {
     return view('bus-seat.seatlist');
 });
 
-Route::get('/profile/{id}', function () {
+Route::get('/profile', function () {
     return view('user.profile');
 });
 

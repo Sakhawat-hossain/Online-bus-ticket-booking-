@@ -11,11 +11,11 @@
 	<title>Bus Ticket Booking</title>
 
 	<!-- Google font -->
-	<link rel="stylesheet" href="css/google.font.">
+	<link rel="stylesheet" href="../css/google.font.">
 
 	<!-- Bootstrap -->
-	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
-	<link type="text/css" rel="stylesheet"  href="css/header-design.css"/>
+	<link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet"  href="../css/header-design.css"/>
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
@@ -25,8 +25,8 @@
 
 
 	<!-- Custom stlylesheet -->
-	<link type="text/css" rel="stylesheet" href="css/footer-design.css" />
-	<link type="text/css" rel="stylesheet" href="css/login-style.css"/>
+	<link type="text/css" rel="stylesheet" href="../css/footer-design.css" />
+	<link type="text/css" rel="stylesheet" href="../css/login-style.css"/>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,20 +46,20 @@
 		<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="#" style="color: white;"><span>
+					<a class="navbar-brand" href="../home" style="color: white;"><span>
                         <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
 				</div>
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
+					<li class="active"><a href="../home">Home</a></li>
 					<li><a href="#footer">Contact</a></li>
 					<li><a href="#footer">About</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					@if(isset($username))
-						<li><a href="#"><span><i class="fas fa-user-tie"></i>{{$username}}</span></a> </li>
-						<li><a href="signout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+					@if(\Illuminate\Support\Facades\Session::has('username'))
+						<li><a href="#"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
+						<li><a href="../signin"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
 					@else
-						<li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+						<li><a href="../user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
 					@endif
 				</ul>
 			</div>
@@ -73,7 +73,7 @@
 			</div>
 
 			<div class="card-body">
-				<form method="post" action="signin">
+				<form method="post" action="../signin">
 					{{csrf_field()}}
 					<div class="input-group form-group">
 						<div class="input-group-addon">
@@ -87,13 +87,12 @@
 						</div>
 						<input type="password" name="password" class="form-control" placeholder="password" required>
 					</div>
-					@if(\Session::has('userwrong'))
-						<div class="alert-danger">
-							<p>{{\Session::get('userwrong')}}</p>
-						</div>
+					@if(\Illuminate\Support\Facades\Session::has('userwrong'))
+						<!--div class="alert-danger"-->
+							<p>{{\Illuminate\Support\Facades\Session::get('userwrong')}}</p>
 					@endif
 					<div class="form-group">
-						<input type="submit" value="signin" name="form" class="btn float-right login_btn" style="margin-left: 50%;margin-bottom: 15px;">
+						<input type="submit" value="Sign in" name="form" class="btn float-right login_btn" style="margin-left: 50%;margin-bottom: 15px;">
 					</div>
 				</form>
 			</div>
