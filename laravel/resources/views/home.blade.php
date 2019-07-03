@@ -25,12 +25,19 @@
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	<link type="text/css" rel="stylesheet" href="css/autoquery-style.css"/>
 
+    <script src="js/jquery/jquery-3.4.1.js"></script>
+	<script src="js/jquery/home-query.js"></script>
+
+	<script>
+
+	</script>
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		  <!-script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script-->
 		<![endif]-->
     <style>
         
@@ -69,27 +76,23 @@
         
 			<div id="booking"> 
                 <div class="booking-form">
-
+					<form method="post" autocomplete="off">
                         <div class="row">
 				            <div class="col-sm-6">
 								<div class="form-group">
 									<span class="form-label">From</span>
-                                    <select class="form-control" name="from">
-                                        <option>Dhaka</option>
-                                        <option>Rangpur</option>
-                                        <option>Bogura</option>
-                                    </select>
+									<div class="autocomplete">
+										<input id="fromInput" type="text" name="fromvalue" placeholder="Start place">
+									</div>
 								    <span class="select-arrow"></span>
 								</div>
 				            </div>
                             <div class="col-sm-6">
 								<div class="form-group">
 									<span class="form-label">To</span>
-                                    <select class="form-control" name="from">
-                                        <option>Dhaka</option>
-                                        <option>Rangpur</option>
-                                        <option>Bogura</option>
-                                    </select>
+									<div class="autocomplete">
+										<input id="toInput" type="text" name="tovalue" placeholder="End place">
+									</div>
 							       <span class="select-arrow"></span>
 								</div>
 							</div>
@@ -113,69 +116,8 @@
                         <div class="form-btn">
                             <a href="http://localhost/laravel-project/laravel/public/buslist"><button class="submit-btn" name="send">Search</button></a>
                         </div>
-
+					</form>
                 </div>
-				<!--div class="row">
-					<div class="col-md-7 col-md-push-5">
-						<div class="booking-cta">
-							<h1>Make your reservation</h1>
-							<p>Wellcome to our website.
-							</p>
-						</div>
-					</div>
-                    
-					<div class="col-md-4 col-md-pull-7">
-						<div class="booking-form">
-							<form method="get">
-                                <div class="form-group">
-									<span class="form-label">From</span>
-									<select class="form-control" name="from">
-										<option>Dhaka</option>
-										<option>Rangpur</option>
-                                        <option>Bogura</option>
-								    </select>
-									<span class="select-arrow"></span>
-								</div>
-								<div class="form-group">
-									<span class="form-label">To</span>
-									<select class="form-control" name="to">
-										<option>Dhaka</option>
-										<option>Rangpur</option>
-                                        <option>Bogura</option>
-								    </select>
-									<span class="select-arrow"></span>
-								</div>
-                                
-                                <div class="form-group">
-									<span class="form-label">Type</span>
-									<select class="form-control" name="type">
-										<option>AC</option>
-										<option>Non-AC</option>
-								    </select>
-									<span class="select-arrow"></span>
-								</div>
-                                
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="form-group">
-											<span class="form-label">Check In</span>
-											<input class="form-control" type="date" name="checkin" required>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<span class="form-label">Check out</span>
-											<input class="form-control" type="date" name="checkout">
-										</div>
-									</div>
-								</div>
-								<div class="form-btn">
-									<button class="submit-btn" name="send">Check availability</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div-->
 			</div>
         <div id="operator-container">
             <div class="container">

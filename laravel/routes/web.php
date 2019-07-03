@@ -21,7 +21,7 @@ Route::get('/home', function () {
 //Route::get('signin', array('uses' => 'MyController@showLogin'));
 //Route::post('signin', array('uses' => 'MyController@doLogin'));
 
-//Route::get('signin','MyController@signin' ); // log in controller
+Route::get('places','MyController@places' ); // log in controller
 //Route::post('signin/{id}','MyController@checkuser' );
 
 //Route::get('signup','MyController@signup' );

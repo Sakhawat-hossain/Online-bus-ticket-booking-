@@ -26,16 +26,6 @@
 	top: 0;
 }
 
-
-        #login_button{
-            height: auto;
-            width: auto;
-            position: relative;
-            right: 20px;
-            top: 10px;
-            float: right;
-        }
-
 #booking{
     width: 98%;
     margin-left: 1%;
@@ -144,25 +134,6 @@
 .booking-form .submit-btn:focus {
 	opacity: 0.9;
 }
-
-.booking-cta {
-	margin-top: 80px;
-	margin-bottom: 30px;
-}
-
-.booking-cta h1 {
-	font-size: 52px;
-	text-transform: uppercase;
-	color: #fff;
-	font-weight: 700;
-}
-
-.booking-cta p {
-	font-size: 16px;
-	color: rgba(255, 255, 255, 0.8);
-}
-
-
 
 #operator-container{
     width: 90%;

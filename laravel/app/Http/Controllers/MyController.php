@@ -20,6 +20,18 @@ class MyController extends Controller
     {
         return view('user.login');
     }
+    public function places()
+    {
+        $pls=DB::table('routes')->select('to')->distinct()->get();
+        $i=0;
+        foreach ($pls as $pl){
+            echo "$i. ";
+            foreach ($pl as $p)
+                echo "$p   ";
+            $i = $i+1;
+            echo "<br>";
+        }
+    }
 
     public function doLogin(Request $request)
     {
