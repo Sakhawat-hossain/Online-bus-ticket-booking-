@@ -5,29 +5,77 @@
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
         <link rel="stylesheet" href="css/buslist-style.css">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/header-design.css">
+        <link rel="stylesheet" href="css/footer-design.css">
         
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $("#opt").click(function () {
+                    $("#opt-up").toggle();
+                    $("#opt-down-1").toggle();
+                    $("#opt-down-2").hide();
+                });
+                $("#ctype").click(function () {
+                    $("#opt-up-1").toggle();
+                    $("#opt-down-3").toggle();
+                    $("#opt-down-4").hide();
+                });
+                $("#savailable").click(function () {
+                    $("#opt-up-2").toggle();
+                    $("#opt-down-5").toggle();
+                    $("#opt-down-6").hide();
+                });
+                $("#fare").click(function () {
+                    $("#opt-up-3").toggle();
+                    $("#opt-down-7").toggle();
+                    $("#opt-down-8").hide();
+                });
+                $("#filter").click(function () {
+                    $("#filter-list").toggle();
+                });
+            });
+        </script>
         
     </head>
     <body>
         <div class="section">
+
             <div id="header">
-                <div id="login_button">
-                    <! http://localhost:8000/>
-                    <a href="user/create">
-                        <button type="button" class="btn btn-default" style="right-margin:10px;">Register</button>
-                    </a>
-                    <a href="signin">
-                        <button type="button" class="btn btn-default">Sign in</button>
-                    </a>
-                </div>
+                <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#" style="color: white;"><span>
+                        <i class="glyphicon glyphicon-home"></i></span>Online ticket booking</a>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#footer">Contact</a></li>
+                            <li><a href="#footer">About</a></li>
+                            <li><a href="#operator-container">Operators</a></li>
+                            <li><a href="#operator-container">Routes</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            @if(\Illuminate\Support\Facades\Session::has('username'))
+                                <li><a href="profile"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
+                                <li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                            @else
+                                <li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                                <li><a href="signin/create"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                            @endif
+                        </ul>
+                    </div>
+                </nav>
             </div>
-            
-            <div class="container"> 
-                <div id="search-option">
+
+            <div class="container" style="min-height: 500px;">
+                <div id="search-option-container">
                                 <div class="row">
 									<div class="col-sm-2">
 										<div class="form-group">
@@ -83,10 +131,41 @@
                                         <button type="button" class="btn btn-success">Search</button>
                                     </div>
 								</div>
-					</div>			
+					</div>
+
+                <div id="sort-option-container">
+                    <div class="row">
+                        <div class="col-sm-2"><p><span><i class="fas fa-sort"></i></span>Sort By</p></div>
+                        <div class="col-sm-2"><p  onclick="sortTable(0)"  id="opt">Operator name
+                                <span id="opt-up"><i class="fas fa-sort-up"></i></span>
+                                <span id="opt-down-1" hidden><i class="fas fa-sort-down"></i></span>
+                                <span id="opt-down-2"><i class="fas fa-sort-down"></i></span>
+                            </p></div>
+                        <div class="col-sm-2"><p  onclick="sortTable(3)" id="ctype">Coach type
+                                <span id="opt-up-1"><i class="fas fa-sort-up"></i></span>
+                                <span id="opt-down-3" hidden><i class="fas fa-sort-down"></i></span>
+                                <span id="opt-down-4"><i class="fas fa-sort-down"></i></span></p></div>
+                        <div class="col-sm-2"><p  onclick="sortTable(6)" id="savailable">Seat available
+                                <span id="opt-up-2"><i class="fas fa-sort-up"></i></span>
+                                <span id="opt-down-5" hidden><i class="fas fa-sort-down"></i></span>
+                                <span id="opt-down-6"><i class="fas fa-sort-down"></i></span></p></div>
+                        <div class="col-sm-2"><p  onclick="sortTable(7)" id="fare">Fare
+                                <span id="opt-up-3"><i class="fas fa-sort-up"></i></span>
+                                <span id="opt-down-7" hidden><i class="fas fa-sort-down"></i></span>
+                                <span id="opt-down-8"><i class="fas fa-sort-down"></i></span></p></div>
+
+                        <div class="col-sm-2"><p id="filter">Filter  <span><i class="fas fa-sort-down"></i></span></p>
+                            <div id="filter-list">
+                                <ul>
+                                    <li>Bus Type</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                     
                 <div id="table-container">
-                    <table class="table" >
+                    <table class="table" id="myTable">
                         <thead class="thead-dark">
                             <tr>
                                 <th>Enterprise Name</th>
@@ -95,11 +174,27 @@
                                 <th>Coach Type</th>
                                 <th>Departure Time</th>
                                 <th>Arrival Time</th>
-                                <th>Fare</th>
                                 <th>Available Seats</th>
+                                <th>Fare (B/E)</th>
                                 <th>View</th>
                             </tr>
                         </thead>
+
+                        @if(isset($searchdata))
+                            @foreach($searchdata as $datarow)
+                                <tbody>
+                                @php $i=1 @endphp
+                                @foreach($datarow as $data)
+                                    @if($i==9)
+                                        <td><a role="button" class="btn btn-success" href="{{url('seatlist/'.$data)}}">View seats</a></td>
+                                    @else
+                                        <td>{{$data}}</td>
+                                    @endif
+                                    @php $i=1+$i @endphp
+                                @endforeach
+                                </tbody>
+                            @endforeach
+                        @endif
                         <tbody>
                             <tr>
                                 <td>Hanif Enterprise</td>
@@ -108,8 +203,8 @@
                                 <td>Non-AC</td>
                                 <td>11.00 PM</td>
                                 <td>7.00 AM</td>
-                                <td>500</td>
                                 <td>30</td>
+                                <td>500</td>
                                 <td><a role="button" class="btn btn-success" href="{{url('seatlist/'.'1')}}">View seats</a></td>
                             </tr>
                         </tbody>
@@ -121,8 +216,8 @@
                                 <td>Non-AC</td>
                                 <td>11.00 PM</td>
                                 <td>7.00 AM</td>
-                                <td>500</td>
                                 <td>30</td>
+                                <td>500</td>
                                 <td><button type="button" class="btn btn-success">View seats</button></td>
                             </tr>
                         </tbody>
@@ -131,6 +226,90 @@
                     </table>
                 </div>
             </div>
+
+            <div id="footer">
+                <div class="container">
+                    <div class="row-space">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h2>Online Tickets</h2>
+                                <span>onlinetickets.com is a premium online booking portal which allows you to purchase tickets for various bus services, launch services, movies and events across the country.</span>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-3">
+                                <h2>Company Info</h2>
+                                <a href="term-conditions"><li>Terms and Conditins</li></a>
+                                <a href="faq"><li>FAQ</li></a>
+                                <a href="privacy-policy"><li>Privacy Policy</li></a>
+                            </div>
+                            <div class="col-sm-3">
+                                <h2>About Online Tickets</h2>
+                                <a href="about-us"><li>About Us</li></a>
+                                <a href="contact-info"><li>Contact Us</li></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+        <script>
+            function sortTable(n) {
+                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                table = document.getElementById("myTable");
+                switching = true;
+                //Set the sorting direction to ascending:
+                dir = "asc";
+                /*Make a loop that will continue until
+                no switching has been done:*/
+                while (switching) {
+                    //start by saying: no switching is done:
+                    switching = false;
+                    rows = table.rows;
+                    /*Loop through all table rows (except the
+                    first, which contains table headers):*/
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        //start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /*Get the two elements you want to compare,
+                        one from current row and one from the next:*/
+                        x = rows[i].getElementsByTagName("TD")[n];
+                        y = rows[i + 1].getElementsByTagName("TD")[n];
+                        /*check if the two rows should switch place,
+                        based on the direction, asc or desc:*/
+                        if (dir == "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch= true;
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /*If a switch has been marked, make the switch
+                        and mark that a switch has been done:*/
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        //Each time a switch is done, increase this count by 1:
+                        switchcount ++;
+                    } else {
+                        /*If no switching has been done AND the direction is "asc",
+                        set the direction to "desc" and run the while loop again.*/
+                        if (switchcount == 0 && dir == "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
+        </script>
+
     </body>
 </html>

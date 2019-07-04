@@ -15,9 +15,11 @@
 	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet"  href="css/header-design.css"/>
+    <link type="text/css" rel="stylesheet"  href="css/footer-design.css"/>
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <!-- Latest compiled and minified CSS -->
 <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"-->
 
@@ -76,14 +78,15 @@
         
 			<div id="booking"> 
                 <div class="booking-form">
-					<form method="post" autocomplete="off">
+					<form method="post" autocomplete="off" action="search-buses">
+						{{csrf_field()}}
                         <div class="row">
 				            <div class="col-sm-6">
 								<div class="form-group">
 									<span class="form-label">From</span>
-									<div class="autocomplete">
-										<input id="fromInput" type="text" name="fromvalue" placeholder="Start place">
-									</div>
+										<div class="autocomplete">
+											<input id="fromInput" type="text" name="fromvalue" placeholder="from" required>
+										</div>
 								    <span class="select-arrow"></span>
 								</div>
 				            </div>
@@ -91,7 +94,7 @@
 								<div class="form-group">
 									<span class="form-label">To</span>
 									<div class="autocomplete">
-										<input id="toInput" type="text" name="tovalue" placeholder="End place">
+										<input id="toInput" type="text" name="tovalue" placeholder="to" required>
 									</div>
 							       <span class="select-arrow"></span>
 								</div>
@@ -102,19 +105,19 @@
 				            <div class="col-sm-6">
 								<div class="form-group">
 									<span class="form-label">Deperture Date</span>
-									<input class="form-control" type="date" name="checkin" required>
+									<input class="form-control" type="date" name="departuredate" required>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<span class="form-label">Return Date (*optional)</span>
-									<input class="form-control" type="date" name="checkout">
+									<input class="form-control" type="date" name="returndate">
 							    </div>
                             </div>
                         </div>
                         
                         <div class="form-btn">
-                            <a href="http://localhost/laravel-project/laravel/public/buslist"><button class="submit-btn" name="send">Search</button></a>
+                            <input type="submit" class="submit-btn" name="search-bus" value="Search">
                         </div>
 					</form>
                 </div>

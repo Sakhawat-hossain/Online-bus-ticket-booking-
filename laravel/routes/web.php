@@ -19,7 +19,7 @@ Route::get('/home', function () {
 });
 
 //Route::get('signin', array('uses' => 'MyController@showLogin'));
-//Route::post('signin', array('uses' => 'MyController@doLogin'));
+Route::post('sign-in', 'MyController@doLogin');
 
 Route::get('places','MyController@places' ); // log in controller
 //Route::post('signin/{id}','MyController@checkuser' );
@@ -27,9 +27,12 @@ Route::get('places','MyController@places' ); // log in controller
 //Route::get('signup','MyController@signup' );
 
 Route::resource('signin','LoginController');
+
 Route::resource('user','UserController');
 
 Route::resource('bus','BusController');
+
+Route::post('search-buses','BusSearchController@search_bus');
 
 Route::get('/buslist', function () {
     return view('busList');

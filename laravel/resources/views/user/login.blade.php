@@ -17,6 +17,7 @@
 	<link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
 	<link type="text/css" rel="stylesheet"  href="../css/header-design.css"/>
 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 	<!-- Latest compiled and minified CSS -->
@@ -66,14 +67,14 @@
 		</nav>
 	</div>
 
-	<div class="container">
-		<div class="card">
+	<div class="container" style="min-height: 500px;">
+		<div class="card" style="margin-top: 150px;">
 			<div class="card-header">
 				<h3>Sign in</h3>
 			</div>
 
 			<div class="card-body">
-				<form method="post" action="../signin">
+				<form method="post" action="../sign-in">
 					{{csrf_field()}}
 					<div class="input-group form-group">
 						<div class="input-group-addon">

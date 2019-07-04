@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use mysql_xdevapi\Session;
 
 class MyController extends Controller
 {
@@ -24,13 +25,19 @@ class MyController extends Controller
     {
         $pls=DB::table('routes')->select('to')->distinct()->get();
         $i=0;
+
+        echo "[";
         foreach ($pls as $pl){
-            echo "$i. ";
+            //echo "$i. ";
             foreach ($pl as $p)
-                echo "$p   ";
+                //Session::put($i,$p);
+                echo '"'."$p".'", ';
             $i = $i+1;
-            echo "<br>";
+            //echo "<br>";
         }
+        //Session::put('from-to',$i);
+
+        //return redirect()->route('/home');
     }
 
     public function doLogin(Request $request)
@@ -48,13 +55,15 @@ class MyController extends Controller
         if ($form='signin'){
             $pass = DB::table('users')->where('username',$username)->value('password');
 
-            $password=Hash::make($password);
-            if($password != $pass){
-                return view('signin')->with('userwrong','username or password wrong');
+            if(Hash::check($password,$pass)){
+                \Illuminate\Support\Facades\Session::put('username',$username);
+                return redirect()->route('signin.create');
+                //return view('home');
             }
 
         }
-        return view('home')->with('username',$username);
+        //Session::put('username',$username);
+        return redirect()->route('signin.create');
 
         //$validator = Validator::make(Input::all(), $rules);
 
@@ -66,7 +75,7 @@ class MyController extends Controller
         //else {
 
             // create our user data for the authentication
-            $userdata = array(
+       /*     $userdata = array(
                 'username' => Input::get('username'),
                 'password' => Input::get('password')
             );
@@ -85,7 +94,7 @@ class MyController extends Controller
                 // validation not successful, send back to form
                 return Redirect::to('signin');
 
-            }
+            } */
         //}
     }
 

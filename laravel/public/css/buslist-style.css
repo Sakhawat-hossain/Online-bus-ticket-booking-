@@ -5,32 +5,37 @@
     background-color: white;
 }
 
-
-#header{
-    width: 98%;
-    margin-left: 1%;
-    height: 50px;
-    margin-top: 10px;
-}
-        #login_button{
-            height: auto;
-            width: auto;
-            position: relative;
-            right: 20px;
-            top: 10px;
-            float: right;
-        }
-
-#search-option{
+#search-option-container{
     width: auto;
     height: auto;
-    margin-top: 20px;
-    background-color: #FBEEE6;
+    background-color: #154360;
     padding-left: 50px;
+    color: #FDFEFE;
+    padding-top: 8px;
+}
+
+#sort-option-container{
+    width: auto;
+    height: 60px;
+    background-color: #154360; /*#D6DBDF*/
+    padding-left: 50px;
+    color: #FDFEFE;
+}
+
+#sort-option-container p{
+    padding: 10px;
+    border-radius: 4px;
+}
+#sort-option-container p:hover{
+    background-color: #777777;
+}
+
+#myTable{
+
 }
 
 #table-container{
-    margin-top: 30px;
+    margin-top: 10px;
     background-color: #F4F6F6;
 }
 .table thead{
@@ -41,4 +46,15 @@
 }
 .table tbody:hover{
     background-color: azure;
+}
+
+#filter-list{
+    min-height: 100px;
+    width: 100%;
+    padding: 10px;
+    background-color: whitesmoke;
+    position: absolute;
+    display: none;
+    color: black;
+    float: right;
 }
