@@ -39,7 +39,7 @@ Route::get('/buslist', function () {
 });
 
 Route::get('/seatlist/{id}', function () {
-    return view('bus-seat.seatlist');
+    return view('seatList');
 });
 
 Route::get('/profile', function () {
