@@ -51,11 +51,11 @@
                 <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
                     <div class="container-fluid">
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="#" style="color: white;"><span>
+                            <a class="navbar-brand" href="home" style="color: white;"><span>
                         <i class="glyphicon glyphicon-home"></i></span>Online ticket booking</a>
                         </div>
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">Home</a></li>
+                            <li class="active"><a href="home">Home</a></li>
                             <li><a href="#footer">Contact</a></li>
                             <li><a href="#footer">About</a></li>
                             <li><a href="#operator-container">Operators</a></li>
@@ -63,7 +63,8 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             @if(\Illuminate\Support\Facades\Session::has('username'))
-                                <li><a href="profile"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
+                                @php $username=Session::get('username');@endphp
+                                <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
                                 <li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                             @else
                                 <li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
@@ -75,63 +76,86 @@
             </div>
 
             <div class="container" style="min-height: 500px;">
+
                 <div id="search-option-container">
-                                <div class="row">
-									<div class="col-sm-2">
-										<div class="form-group">
-											<span class="form-label">From</span>
-                                            <select class="form-control" name="from">
-                                                <option>Dhaka</option>
-                                                <option>Rangpur</option>
-                                                <option>Bogura</option>
-                                            </select>
-									       <span class="select-arrow"></span>
-										</div>
-									</div>
-                                    <div class="col-sm-2">
-										<div class="form-group">
-											<span class="form-label">To</span>
-                                            <select class="form-control" name="from">
-                                                <option>Dhaka</option>
-                                                <option>Rangpur</option>
-                                                <option>Bogura</option>
-                                            </select>
-									       <span class="select-arrow"></span>
-										</div>
-									</div>
-                                    <div class="col-sm-2">
-										<div class="form-group">
-											<span class="form-label">Type</span>
-                                            <select class="form-control" name="from">
-                                                <option>AC</option>
-                                                <option>Non-AC</option>
-                                            </select>
-									       <span class="select-arrow"></span>
-										</div>
-									</div>
-                                    <div class="col-sm-2">
-										<div class="form-group">
-											<span class="form-label">Enterprise</span>
-                                            <select class="form-control" name="from">
-                                                <option>Hanif</option>
-                                                <option>Nabil</option>
-                                                <option>Desh Travel</option>
-                                                <option>Dipjol</option>
-                                            </select>
-									       <span class="select-arrow"></span>
-										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<span class="form-label">Deperture Date</span>
-											<input class="form-control" type="date" name="checkout" required>
-										</div>
-									</div>
-                                    <div class="form-btn" style="margin-top: 20px;float: right;margin-right:80px;">
-                                        <button type="button" class="btn btn-success">Search</button>
-                                    </div>
-								</div>
-					</div>
+                    <form method="post" action="search-buses-with-filter">
+                        {{csrf_field()}}
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <span class="form-label">From</span>
+                                    <select class="form-control" name="from">
+                                        @foreach($places as $place)
+                                            @foreach($place as $pl)
+                                                @if($pl==$send_data->from)
+                                                    <option selected>{{$pl}}</option>
+                                                @else
+                                                    <option>{{$pl}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <span class="form-label">To</span>
+                                    <select class="form-control" name="to">
+                                        @foreach($places as $place)
+                                            @foreach($place as $pl)
+                                                @if($pl==$send_data->to)
+                                                    <option selected>{{$pl}}</option>
+                                                @else
+                                                    <option>{{$pl}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <span class="form-label">Type</span>
+                                    <select class="form-control" name="type">
+                                        <option>All</option>
+                                        <option>AC</option>
+                                        <option>Non-AC</option>
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <span class="form-label">Enterprise</span>
+                                    <select class="form-control" name="bus_name">
+                                        <option>All</option>
+                                        @foreach($buses as $bus)
+                                            @foreach($bus as $pl)
+                                                @if($pl==$send_data->bus)
+                                                    <option selected>{{$pl}}</option>
+                                                @else
+                                                    <option>{{$pl}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <span class="form-label">Departure Date</span>
+                                    <input class="form-control" type="date" name="departure" value="{{$send_data->departure}}" required>
+                                </div>
+                            </div>
+                            <div class="form-btn" style="margin-top: 20px;float: right;margin-right:80px;">
+                                <button type="submit" class="btn btn-success">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
                 <div id="sort-option-container">
                     <div class="row">
@@ -195,7 +219,7 @@
                                 </tbody>
                             @endforeach
                         @endif
-                        <tbody>
+                        <!--tbody>
                             <tr>
                                 <td>Hanif Enterprise</td>
                                 <td>300HE</td>
@@ -220,7 +244,7 @@
                                 <td>500</td>
                                 <td><button type="button" class="btn btn-success">View seats</button></td>
                             </tr>
-                        </tbody>
+                        </tbody-->
                         
                         
                     </table>

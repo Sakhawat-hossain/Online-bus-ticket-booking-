@@ -35,102 +35,91 @@ class BusSearchController extends Controller
             ->select('buses.name', 'buses.coach_no','routes.starting_point','buses.type','trips.departure_time','trips.arrival_time','buses.available_seat','trips.b/e','trips.id')
             ->get();
 
-        //$all=$request->all();
-        return View::make('busList')->with('searchdata',$data);
+        $send_data=(object)array(
+            'from' => $from,
+            'to' => $to,
+            'departure' => $departure,
+            'returndate' => $returndate,
+            'bus' => 'All',
+        );
+
+        $places=DB::table('routes')->distinct()->select('to')->get();
+        $buses=DB::table('buses')->distinct()->select('name')->get();
+
+        return View::make('busList')->with('searchdata',$data)->with('send_data',$send_data)->with('places',$places)->with('buses',$buses);
 
     }
 
-    public function index()
+    public function search_bus_filter(Request $request)
     {
         //
-    }
+        //$form=$request->get('search-bus');
+        $from=$request->get('from');
+        $to=$request->get('to');
+        $departure=$request->get('departure');
+        $type=$request->get('type');
+        $bus_name=$request->get('bus_name');
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        return view('busList');
-    }
+        //$returndate=$request->get('returndate');
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-        $form=$request->get('search-bus');
-        $from=$request->get('fromvalue');
-        $to=$request->get('tovalue');
-        $departure=$request->get('departuredate');
-        $returndate=$request->get('returndate');
 
-        //echo "    $form";
-
-        if ($form='search-bus'){
-            //$pass = DB::table('users')->where('username',$username)->value('password');
-
-            Session::put('from',$from);
-            Session::put('to',$to);
-            Session::put('departure',$departure);
-            Session::put('returndate',$returndate);
-
-            echo "password in - $from<br>";
+        if($bus_name != 'All' && $type != 'All'){
+            $data=DB::table('trips')
+                ->join('routes','trips.routeID', '=', 'routes.id')
+                ->join('buses','trips.busID', '=', 'buses.id')
+                ->where('date',$departure)
+                ->where('from',$from)
+                ->where('to',$to)
+                ->where('name',$bus_name)
+                ->where('type',$type)
+                ->select('buses.name', 'buses.coach_no','routes.starting_point','buses.type','trips.departure_time','trips.arrival_time','buses.available_seat','trips.b/e','trips.id')
+                ->get();
+        }
+        elseif($bus_name != 'All'){
+            $data=DB::table('trips')
+                ->join('routes','trips.routeID', '=', 'routes.id')
+                ->join('buses','trips.busID', '=', 'buses.id')
+                ->where('date',$departure)
+                ->where('from',$from)
+                ->where('to',$to)
+                ->where('name',$bus_name)
+                ->select('buses.name', 'buses.coach_no','routes.starting_point','buses.type','trips.departure_time','trips.arrival_time','buses.available_seat','trips.b/e','trips.id')
+                ->get();
+        }
+        elseif($type != 'All'){
+            $data=DB::table('trips')
+                ->join('routes','trips.routeID', '=', 'routes.id')
+                ->join('buses','trips.busID', '=', 'buses.id')
+                ->where('date',$departure)
+                ->where('from',$from)
+                ->where('to',$to)
+                ->where('type',$type)
+                ->select('buses.name', 'buses.coach_no','routes.starting_point','buses.type','trips.departure_time','trips.arrival_time','buses.available_seat','trips.b/e','trips.id')
+                ->get();
+        }
+        else{
+            $data=DB::table('trips')
+                ->join('routes','trips.routeID', '=', 'routes.id')
+                ->join('buses','trips.busID', '=', 'buses.id')
+                ->where('date',$departure)
+                ->where('from',$from)
+                ->where('to',$to)
+                ->select('buses.name', 'buses.coach_no','routes.starting_point','buses.type','trips.departure_time','trips.arrival_time','buses.available_seat','trips.b/e','trips.id')
+                ->get();
         }
 
 
-        return redirect()->route('/buslist')->with('success',$request);
+        $send_data=(object)array(
+            'from' => $from,
+            'to' => $to,
+            'departure' => $departure,
+            'bus' => $bus_name,
+        );
 
-    }
+        $places=DB::table('routes')->distinct()->select('to')->get();
+        $buses=DB::table('buses')->distinct()->select('name')->get();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        return View::make('busList')->with('searchdata',$data)->with('send_data',$send_data)->with('places',$places)->with('buses',$buses);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

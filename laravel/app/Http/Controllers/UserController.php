@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
 
 class UserController extends Controller
 {
@@ -109,12 +110,58 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        //echo $id;
         // $user = DB::table('users')->where('name', 'John')->first(); // for a row
         // $email = DB::table('users')->where('name', 'John')->value('email'); // for a single value
         // $user = DB::table('users')->find(3); // using id
 
-        $users = DB::table('users')->find($id);//with('username','password','email')->get(); DB::table('users');//
-        return view('user.profile')->with('user',$users);
+        //$users = DB::table('users')->find($id);//with('username','password','email')->get(); DB::table('users');//
+        $user = DB::table('users')
+             ->select('first_name','last_name','email','phone no','gender','created_at','updated_at','id')
+             ->where('username', $id)->get();
+
+        $first_name=$last_name=$phn=$gender=$email=$create=$update=$userID="";
+        $i=0;
+        foreach ($user as $userdata){
+            foreach ($userdata as $data){
+                if($i==0) $first_name=$data;
+                elseif($i==1) $last_name=$data;
+                elseif($i==2) $email=$data;
+                elseif($i==3) $phn=$data;
+                elseif($i==4) $gender=$data;
+                elseif($i==5) $create=$data;
+                elseif($i==6) $update=$data;
+                elseif($i==7) $userID=$data;
+
+                $i=$i+1;
+            }
+        }
+        $create=date("d/m/Y",strtotime($create));
+        $update=date("d/m/Y",strtotime($update));
+        $userdata=(object)array(
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'email' => $email,
+            'phn' => $phn,
+            'gender' => $gender,
+            'create' => $create,
+            'update' => $update,
+        );
+
+        $ticketdata=DB::table('tickets')
+            ->where('userID',$userID)
+            ->join('seats','seats.ticketID', '=', 'tickets.id')
+            ->join('trips','seats.tripID', '=', 'trips.id')
+            ->join('buses','trips.busID', '=', 'buses.id')
+            ->join('routes','trips.routeID', '=', 'routes.id')
+            ->join('seat_infos','seats.seatID', '=', 'seat_infos.id')
+            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','seat_infos.seatNo','seats.fare','tickets.booking_time')
+            ->get();
+
+        $ticketNum=DB::table('tickets')
+            ->where('userID',$userID)->count();
+
+        return view('user.profile')->with('userdata',$userdata)->with('ticketdata',$ticketdata)->with('ticketNum',$ticketNum);
 
     }
 
@@ -139,6 +186,29 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $password=$request->get('password');
+        $repassword=$request->get('re-password');
+
+        echo "$password<br>";
+
+        if ($password != $repassword) {
+            return redirect()->route('user.show',['id' => $id]);
+        }
+        // 'first_name', 'last_name', 'username', 'password', 'email', 'phone no', 'gender'
+
+        $fname = $request->get('first_name');
+        $lname = $request->get('last_name');
+        $email = $this->test_input($request->get('email'));
+        $pno = $this->test_input($request->get('phone'));
+
+        $password = Hash::make($password);
+
+        DB::table('users')
+            ->where('username', $id)
+            ->update(['first_name' => $fname, 'last_name' => $lname, 'email' => $email, 'phone no' => $pno, 'password' => $password,'updated_at' => date("Y-m-d H:i:s")]);
+
+        return redirect()->route('user.show',['id' => $id]);
 
     }
 

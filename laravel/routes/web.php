@@ -28,19 +28,13 @@ Route::get('places','MyController@places' ); // log in controller
 
 Route::resource('signin','LoginController');
 
-Route::resource('user','UserController');
+Route::resource('user','UserController'); // sign up, show profile, edit profile
 
 Route::resource('bus','BusController');
 
-Route::post('search-buses','BusSearchController@search_bus');
-
-Route::get('/buslist', function () {
-    return view('busList');
-});
-
-Route::get('/seatlist/{id}', function () {
-    return view('seatList');
-});
+Route::post('search-buses','BusSearchController@search_bus'); // bus list without filter
+Route::post('search-buses-with-filter','BusSearchController@search_bus_filter'); // bus list with filter
+Route::get('/seat-list-details/{id}', 'BusSearchController@seat_list'); //seat list details
 
 Route::get('/profile', function () {
     return view('user.profile');
