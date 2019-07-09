@@ -74,3 +74,37 @@ INSERT INTO `seats` (`tripID`,`seatID`,`fare`,`status`) VALUES
 (8,68,1000,'available'),
 (8,69,1000,'available'),
 (8,70,1000,'available');
+
+
+
+
+                <div id="sort-option-container">
+                    <div class="row">
+                        <div class="col-sm-2"><p><span><i class="fas fa-sort"></i></span>Sort By</p></div>
+                        <div class="col-sm-2"><p  onclick="sortTable(0)"  id="opt">Operator name
+                                <span id="opt-up"><i class="fas fa-sort-up"></i></span>
+                                <span id="opt-down-1" hidden><i class="fas fa-sort-down"></i></span>
+                                <span id="opt-down-2"><i class="fas fa-sort-down"></i></span>
+                            </p></div>
+                        <div class="col-sm-2"><p  onclick="sortTable(3)" id="ctype">Coach type
+                                <span id="opt-up-1"><i class="fas fa-sort-up"></i></span>
+                                <span id="opt-down-3" hidden><i class="fas fa-sort-down"></i></span>
+                                <span id="opt-down-4"><i class="fas fa-sort-down"></i></span></p></div>
+                        <div class="col-sm-2"><p  onclick="sortTable(6)" id="savailable">Seat available
+                                <span id="opt-up-2"><i class="fas fa-sort-up"></i></span>
+                                <span id="opt-down-5" hidden><i class="fas fa-sort-down"></i></span>
+                                <span id="opt-down-6"><i class="fas fa-sort-down"></i></span></p></div>
+                        <div class="col-sm-2"><p  onclick="sortTable(7)" id="fare">Fare
+                                <span id="opt-up-3"><i class="fas fa-sort-up"></i></span>
+                                <span id="opt-down-7" hidden><i class="fas fa-sort-down"></i></span>
+                                <span id="opt-down-8"><i class="fas fa-sort-down"></i></span></p></div>
+
+                        <div class="col-sm-2"><p id="filter">Filter  <span><i class="fas fa-sort-down"></i></span></p>
+                            <div id="filter-list">
+                                <ul>
+                                    <li>Bus Type</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Collection;
 
 class BusSearchController extends Controller
 {
@@ -120,6 +121,74 @@ class BusSearchController extends Controller
         $buses=DB::table('buses')->distinct()->select('name')->get();
 
         return View::make('busList')->with('searchdata',$data)->with('send_data',$send_data)->with('places',$places)->with('buses',$buses);
+
+    }
+
+    public function seat_list($id){
+        //return view('seatList');
+
+        $prices=DB::table('seats')->select('fare','seatID','status')->where('tripID',$id)->get();
+
+        $seat_fare=collect();
+        $fare=0;
+        $idx=0;
+        $status='';
+        foreach ($prices as $prc){
+            $j=0;
+            foreach($prc as $pr){
+                if($j==0) $fare=$pr;
+                elseif($j==1) $idx=$pr;
+                else $status=$pr;
+                $j=$j+1;
+            }
+            $seat_temp=collect(['fare'=>$fare,'status'=>$status]);
+            $seat_fare->put($idx,$seat_temp);
+        }
+
+        $seats=DB::table('trips')->where('trips.id',$id)
+            ->join('buses','trips.busID','=','buses.id')
+            ->join('seat_infos','buses.id','=','seat_infos.busID')
+            ->select('seat_infos.status','seat_infos.seatNo','seat_infos.category','seat_infos.id')->get();
+
+        $seat_info=collect();
+        $i=0;
+
+        foreach ($seats as $seat){
+            $j=0;
+            foreach ($seat as $st){
+                if($j==0)  $status=$st;
+                elseif($j==1) $seatNo=$st;
+                elseif($j==2) $category=$st;
+                else $idx=$st;
+
+                $j=$j+1;
+            }
+            $sfare=$seat_fare->get($idx);
+            $status_t=$sfare->get('status');
+            $fare=$sfare->get('fare');
+
+            if($status_t != 'available'){
+                $collectData=collect(['status'=>$status_t,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare]);
+            }else{
+                $collectData=collect(['status'=>$status,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare]);
+            }
+
+            $seat_info->put($i,$collectData);
+            $i=$i+1;
+        }
+//echo "hello<br>";
+//dd($seat_info);
+        //$s=json_encode($seat_info);
+
+        //$ss=$s.status;
+        //dd($s);
+
+        $total=DB::table('trips')->where('trips.id',$id)
+            ->join('buses','trips.busID','=','buses.id')
+            ->value('total_seat');
+
+        $seat_inf=json_encode($seat_info);
+        return view('seatList')->with('seat_info',$seat_inf)->with('total',$total);
 
     }
 }

@@ -11,12 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-Route::get('/home', function () {
-    return view('home');
-});
+Route::get('/', 'homeController@homepage');
+Route::get('/home', 'homeController@homepage');
 
 //Route::get('signin', array('uses' => 'MyController@showLogin'));
 Route::post('sign-in', 'MyController@doLogin');

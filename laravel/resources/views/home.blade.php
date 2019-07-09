@@ -111,14 +111,35 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<span class="form-label">Return Date (*optional)</span>
+                                    <span class="form-label"><i class="fas fa-star" style="color: brown;"></i>Return Date</span>
 									<input class="form-control" type="date" name="returndate">
 							    </div>
                             </div>
                         </div>
-                        
-                        <div class="form-btn">
-                            <input type="submit" class="submit-btn" name="search-bus" value="Search">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <span class="form-label"><i class="fas fa-star" style="color: brown;"></i>Deperture Time</span>
+                                    <select class="form-control" name="departuretime">
+                                        <option>All</option>
+                                        @if(isset($times))
+                                            @foreach($times as $tt)
+                                                @foreach($tt as $t)
+                                                    <option>{{$t}}</option>
+                                                @endforeach
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6"><span style="color: whitesmoke;"><i class="fas fa-star" style="color: brown;"></i>Optional</span></div>
+                            <div class="form-btn">
+                                <input type="submit" class="submit-btn" name="search-bus" value="Search">
+                            </div>
                         </div>
 					</form>
                 </div>

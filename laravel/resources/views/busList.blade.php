@@ -18,24 +18,40 @@
         <script>
             $(document).ready(function () {
                 $("#opt").click(function () {
-                    $("#opt-up").toggle();
-                    $("#opt-down-1").toggle();
-                    $("#opt-down-2").hide();
+                    if($("#opt-up-1").is(":hidden") && $("#opt-down-1").is(":hidden")) {
+                        $("#opt-sort-1").hide();
+                        $("#opt-up-1").show();
+                    }else{
+                        $("#opt-up-1").toggle();
+                        $("#opt-down-1").toggle();
+                    }
                 });
                 $("#ctype").click(function () {
-                    $("#opt-up-1").toggle();
-                    $("#opt-down-3").toggle();
-                    $("#opt-down-4").hide();
+                    if($("#opt-up-2").is(":hidden") && $("#opt-down-2").is(":hidden")) {
+                        $("#opt-sort-2").hide();
+                        $("#opt-up-2").show();
+                    }else{
+                        $("#opt-up-2").toggle();
+                        $("#opt-down-2").toggle();
+                    }
                 });
                 $("#savailable").click(function () {
-                    $("#opt-up-2").toggle();
-                    $("#opt-down-5").toggle();
-                    $("#opt-down-6").hide();
+                    if($("#opt-up-3").is(":hidden") && $("#opt-down-3").is(":hidden")) {
+                        $("#opt-sort-3").hide();
+                        $("#opt-up-3").show();
+                    }else{
+                        $("#opt-up-3").toggle();
+                        $("#opt-down-3").toggle();
+                    }
                 });
                 $("#fare").click(function () {
-                    $("#opt-up-3").toggle();
-                    $("#opt-down-7").toggle();
-                    $("#opt-down-8").hide();
+                    if($("#opt-up-4").is(":hidden") && $("#opt-down-4").is(":hidden")) {
+                        $("#opt-sort-4").hide();
+                        $("#opt-up-4").show();
+                    }else{
+                        $("#opt-up-4").toggle();
+                        $("#opt-down-4").toggle();
+                    }
                 });
                 $("#filter").click(function () {
                     $("#filter-list").toggle();
@@ -160,23 +176,6 @@
                 <div id="sort-option-container">
                     <div class="row">
                         <div class="col-sm-2"><p><span><i class="fas fa-sort"></i></span>Sort By</p></div>
-                        <div class="col-sm-2"><p  onclick="sortTable(0)"  id="opt">Operator name
-                                <span id="opt-up"><i class="fas fa-sort-up"></i></span>
-                                <span id="opt-down-1" hidden><i class="fas fa-sort-down"></i></span>
-                                <span id="opt-down-2"><i class="fas fa-sort-down"></i></span>
-                            </p></div>
-                        <div class="col-sm-2"><p  onclick="sortTable(3)" id="ctype">Coach type
-                                <span id="opt-up-1"><i class="fas fa-sort-up"></i></span>
-                                <span id="opt-down-3" hidden><i class="fas fa-sort-down"></i></span>
-                                <span id="opt-down-4"><i class="fas fa-sort-down"></i></span></p></div>
-                        <div class="col-sm-2"><p  onclick="sortTable(6)" id="savailable">Seat available
-                                <span id="opt-up-2"><i class="fas fa-sort-up"></i></span>
-                                <span id="opt-down-5" hidden><i class="fas fa-sort-down"></i></span>
-                                <span id="opt-down-6"><i class="fas fa-sort-down"></i></span></p></div>
-                        <div class="col-sm-2"><p  onclick="sortTable(7)" id="fare">Fare
-                                <span id="opt-up-3"><i class="fas fa-sort-up"></i></span>
-                                <span id="opt-down-7" hidden><i class="fas fa-sort-down"></i></span>
-                                <span id="opt-down-8"><i class="fas fa-sort-down"></i></span></p></div>
 
                         <div class="col-sm-2"><p id="filter">Filter  <span><i class="fas fa-sort-down"></i></span></p>
                             <div id="filter-list">
@@ -191,16 +190,28 @@
                 <div id="table-container">
                     <table class="table" id="myTable">
                         <thead class="thead-dark">
-                            <tr>
-                                <th>Enterprise Name</th>
-                                <th>Coach No</th>
-                                <th>Starting Counter</th>
-                                <th>Coach Type</th>
-                                <th>Departure Time</th>
-                                <th>Arrival Time</th>
-                                <th>Available Seats</th>
-                                <th>Fare (B/E)</th>
-                                <th>View</th>
+                            <tr style="height: 60px;">
+                                <th onclick="sortTable(0)"  id="opt" style="padding-bottom: 20px;">Enterprise Name
+                                    <span id="opt-up-1" hidden><i class="fas fa-sort-up"></i></span>
+                                    <span id="opt-sort-1"><i class="fas fa-sort"></i></span>
+                                    <span id="opt-down-1" hidden><i class="fas fa-sort-down"></i></span></th>
+                                <th style="padding-bottom: 20px;">Coach No</th>
+                                <th style="padding-bottom: 20px;">Starting Counter</th>
+                                <th onclick="sortTable(3)" id="ctype" style="padding-bottom: 20px;">Coach Type
+                                    <span id="opt-up-2" hidden><i class="fas fa-sort-up"></i></span>
+                                    <span id="opt-sort-2"><i class="fas fa-sort"></i></span>
+                                    <span id="opt-down-2" hidden><i class="fas fa-sort-down"></i></span></th>
+                                <th style="padding-bottom: 20px;">Departure Time</th>
+                                <th style="padding-bottom: 20px;">Arrival Time</th>
+                                <th onclick="sortTable(6)" id="savailable" style="padding-bottom: 20px;">Available Seats
+                                    <span id="opt-up-3" hidden><i class="fas fa-sort-up"></i></span>
+                                    <span id="opt-sort-3" ><i class="fas fa-sort"></i></span>
+                                    <span id="opt-down-3" hidden><i class="fas fa-sort-down"></i></span></th>
+                                <th onclick="sortTable(7)" id="fare" style="padding-bottom: 20px;">Fare (B/E)
+                                    <span id="opt-up-4" hidden><i class="fas fa-sort-up"></i></span>
+                                    <span id="opt-sort-4"><i class="fas fa-sort"></i></span>
+                                    <span id="opt-down-4" hidden><i class="fas fa-sort-down"></i></span></th>
+                                <th style="padding-bottom: 20px;">View</th>
                             </tr>
                         </thead>
 
@@ -210,7 +221,7 @@
                                 @php $i=1 @endphp
                                 @foreach($datarow as $data)
                                     @if($i==9)
-                                        <td><a role="button" class="btn btn-success" href="{{url('seatlist/'.$data)}}">View seats</a></td>
+                                        <td><a role="button" class="btn btn-success" href="{{url('seat-list-details',['id' => $data])}}">View seats</a></td>
                                     @else
                                         <td>{{$data}}</td>
                                     @endif
