@@ -87,194 +87,64 @@
                 <div class="row">
                     <!--left side -->
                     <div class="col-sm-4">
-                        {{$total}}
                         @if($total>30)
                             <div id="details-seat-view">
                                 <div id="front-side"><p>Front</p></div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="0" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="1" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="2" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="3" style="color: #CCCCCB;"></i></span></div>
+                                @php $idx=0; @endphp
+                                @for($i=0;$i<10;$i++)
+                                    <div id="seat-view-group">
+                                        <div class="row">
+                                            @for($j=0;$j<5;$j++)
+                                                @if($j==0)
+                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                    @php $idx = $idx+1; @endphp
+                                                @elseif($j==1)
+                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                    @php $idx = $idx+1; @endphp
+                                                @elseif($j==2)
+                                                    <div class="col-sm-2"><span></span></div>
+                                                @elseif($j==3)
+                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                    @php $idx = $idx+1; @endphp
+                                                @elseif($j==4)
+                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                    @php $idx = $idx+1; @endphp
+                                                @endif
+
+                                            @endfor
+                                        </div>
                                     </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="4" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="5" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="6" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="7" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="8" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="9" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="10" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="11" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="12" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="13" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="14" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="15" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="16" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="17" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="18" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="19" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="20" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="21" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="22" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="23" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="24" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="25" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="26" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="27" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="28" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="29" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="30" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="31" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="32" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="33" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="34" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="35" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="36" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="37" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="38" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="39" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
+                                @endfor
+
                             </div>
                         @else
                             <div id="details-seat-view">
                                 <div id="front-side"><p>Front</p></div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="0" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="1" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="2" style="color: #CCCCCB;"></i></span></div>
+                                @php $idx=0; @endphp
+                                @for($i=0;$i<10;$i++)
+                                    <div id="seat-view-group">
+                                        <div class="row">
+                                            @for($j=0;$j<5;$j++)
+                                                @if($j==0)
+                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                    @php $idx = $idx+1; @endphp
+                                                @elseif($j==1)
+                                                    <div class="col-sm-2"><span></span></div>
+                                                @elseif($j==2)
+                                                    <div class="col-sm-2"><span></span></div>
+                                                @elseif($j==3)
+                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                    @php $idx = $idx+1; @endphp
+                                                @elseif($j==4)
+                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                    @php $idx = $idx+1; @endphp
+                                                @endif
+
+                                            @endfor
+                                        </div>
                                     </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="3" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="4" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="5" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="6" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="7" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="8" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="9" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="10" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="11" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="12" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="13" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="14" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="15" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="16" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="17" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="18" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="19" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="20" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="21" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="22" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="23" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="24" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="25" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="26" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
-                                <div id="seat-view-group">
-                                    <div class="row">
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="27" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span></span></div>
-                                        <div class="col-sm-2" ><span></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="28" style="color: #CCCCCB;"></i></span></div>
-                                        <div class="col-sm-2"><span><i class="fas fa-couch fa-2x" id="29" style="color: #CCCCCB;"></i></span></div>
-                                    </div>
-                                </div>
+                                @endfor
+
                             </div>
                         @endif
                     </div>
@@ -287,16 +157,14 @@
                                     <div class="col-sm-7">
                                         <h3>Selected seats : </h3>
                                         <div id="seat-info">
-                                            <p>Business class : Seat   A-1 : 500 Tk <span><i class="far fa-times-circle" style="color: darkred;"></i></span></p>
-                                            <p>Business class : Seat  A-1 : 500 Tk</p>
-                                            <p>Business class : Seat  A-1 : 500 Tk</p>
-                                            <p>Economy class : Seat  A-1 : 500 Tk</p>
-                                            <p>Economy class : Seat  A-1 : 500 Tk</p>
-                                            <p>Economy class : Seat  A-1 : 500 Tk</p>
+
+
                                         </div>
                                         <div id="service-total-info">
-                                            <p><strong>Service charge :</strong> 300 Tk</p>
-                                            <p><strong>Total :</strong> 3300 Tk</p>
+                                            <div class="row"><p style="float: left;"><strong>Service charge : </strong></p>
+                                                <p id="sc" style="padding-left: 50px;">0 Tk</p></div>
+                                            <div class="row" ><p style="float: left;"><strong>Total : </strong></p>
+                                                <p id="total" style="padding-left: 50px;">0 Tk</p></div>
                                         </div>
                                         <div id="buy-button">
                                             <button class="btn btn-success">Buy now</button>
@@ -304,6 +172,8 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <p><span><i class="fas fa-asterisk" style="color: red;"></i></span>You can buy maximum 6 tickets</p>
+                                        <p id="alert-2" style="margin-top: 70px;">
+                                            <span><i class="fas fa-asterisk" style="color: red;"></i></span>You exeed your limit</p>
                                     </div>
                                 </div>
                             </div>
@@ -349,51 +219,93 @@
     var j=0;
     var seat_arr=<?php echo $seat_info; ?>;
 
+    var total_selected=0;
+    var charge=0;
+    var unit_charge=50;
+    var total_price=0;
 
-        <?php $idx=6; ?>
-    for(i=0;i<total_seat;i++){
-        seat_arr[i]=new Array(4);
-            <?php $seat=$seat_info->get($idx); ?>
-        for(j=0;j<4;j++){
-            if(j==0) seat_arr[i][j]=<?php echo json_encode($seat->get('status')); ?>;
-            if(j==1) seat_arr[i][j]=<?php echo json_encode($seat->get('seatNo')); ?>;
-            if(j==2) seat_arr[i][j]=<?php echo json_encode($seat->get('category')); ?>;
-            if(j==3) seat_arr[i][j]=<?php echo json_encode($seat->get('fare')); ?>;
-        }
-        <?php $idx=$idx+1; ?>
-    }
 
-    //var json=JSON.parse(seat_info);
+    var details=document.getElementById("seat-info");
+    var sc=document.getElementById("sc");
+    var total=document.getElementById("total");
+   /* //var json=JSON.parse(seat_info);
     pp=document.getElementById('pp');
     for(i=0;i<total_seat;i++){
         var param=document.createElement("p");
-        var node=document.createTextNode(seat_arr[i][0]+" "+seat_arr[i][1]+" "+seat_arr[i][2]+" "+seat_arr[i][3]);
+        var node=document.createTextNode(seat_arr[i].status+" "+seat_arr[i].seatNo+" "+seat_arr[i].category+" "+seat_arr[i].fare);
         param.appendChild(node);
         pp.appendChild(param);
-    }
+    }*/
 
-    for(i=0;i<10;i++){
-        if(seat_arr[i][0].localeCompare('available')==0){
-            if (seat_arr[i][2].localeCompare('Business')==0) {
+    for(i=0;i<total_seat;i++){
+        if(seat_arr[i].status.localeCompare('available')==0){
+            if (seat_arr[i].category.localeCompare('Business')==0) {
                 document.getElementById(i).style.color = '#4b88a6';
             }
             else
                 document.getElementById(i).style.color = '#CCCCCB';
         }
-        else if(seat_arr[i][0].localeCompare('booked')==0){
+        else if(seat_arr[i].status.localeCompare('booked')==0){
             document.getElementById(i).style.color = '#DB7484';
         }
-        else if(seat_arr[i][0].localeCompare('blocked')==0){
+        else if(seat_arr[i].staus.localeCompare('blocked')==0){
             document.getElementById(i).style.color = '#3c3c3c';
         }
-        else if(seat_arr[i][0].localeCompare('selected')==0){
+        else if(seat_arr[i].status.localeCompare('selected')==0){
             document.getElementById(i).style.color = 'forestgreen';
         }
     }
 
 
+    function select_seat(id) {
+
+        if(seat_arr[id].status.localeCompare('selected')==0){
+            seat_arr[id].status='available';
+            if (seat_arr[id].category.localeCompare('Business')==0) {
+                document.getElementById(id).style.color = '#4b88a6';
+            }
+            else
+                document.getElementById(id).style.color = '#CCCCCB';
+
+            var elm=document.getElementById('details-'+id);
+            elm.parentNode.removeChild(elm);
+
+            charge = charge-unit_charge;
+            total_price = total_price - unit_charge - parseInt(seat_arr[id].fare);
+
+            total.innerHTML = total_price+" Tk";
+            sc.innerHTML = charge + " Tk";
+
+            total_selected--;
+        }
+        else if(total_selected>5){
+
+            document.getElementById("alert-2").show;
+        }else {
+            document.getElementById("alert-2").hidden;
+            if(seat_arr[id].status.localeCompare('available')==0){
+                seat_arr[id].status='selected';
+                document.getElementById(id).style.color = 'forestgreen';
+
+                var param=document.createElement("p");
+                var node=document.createTextNode(seat_arr[id].category+" class : Seat "+seat_arr[id].seatNo+" : "+seat_arr[id].fare+" Tk ");
+                param.appendChild(node);
+                param.setAttribute('id','details-'+id);
+                details.appendChild(param);
+
+                charge = charge+unit_charge;
+                total_price = total_price + unit_charge + parseInt(seat_arr[id].fare);
+
+                total.innerHTML = total_price+" Tk";
+                sc.innerHTML = charge + " Tk";
+
+                total_selected++;
+            }
+        }
+
+    }
     function getcolor1(){
-        document.getElementById('pp').innerHTML = seat_arr[0].status;
+        //document.getElementById('pp').innerHTML = seat_arr[0]["status"];
         //document.getElementById('0').style.color='red';
     }
 
