@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Collection;
+use phpDocumentor\Reflection\Types\Null_;
 
 class BusSearchController extends Controller
 {
@@ -127,23 +128,28 @@ class BusSearchController extends Controller
     public function seat_list($id){
         //return view('seatList');
 
-        $prices=DB::table('seats')->select('fare','seatID','status')->where('tripID',$id)->get();
+        $prices=DB::table('seats')->select('fare','seatID','status','id','ticketID')->where('tripID',$id)->get();
 
         $seat_fare=collect();
         $fare=0;
         $idx=0;
         $status='';
+        $seatid=0;
+        $tid='';
         foreach ($prices as $prc){
             $j=0;
             foreach($prc as $pr){
                 if($j==0) $fare=$pr;
                 elseif($j==1) $idx=$pr;
-                else $status=$pr;
+                elseif($j==2) $status=$pr;
+                elseif($j==3) $seatid=$pr;
+                else $tid=$pr;
                 $j=$j+1;
             }
-            $seat_temp=collect(['fare'=>$fare,'status'=>$status]);
+            $seat_temp=collect(['fare'=>$fare,'status'=>$status,'id'=>$seatid,'userID'=>$tid]);
             $seat_fare->put($idx,$seat_temp);
         }
+        //dd($seat_fare);
 
         $seats=DB::table('trips')->where('trips.id',$id)
             ->join('buses','trips.busID','=','buses.id')
@@ -163,14 +169,19 @@ class BusSearchController extends Controller
 
                 $j=$j+1;
             }
+            $status_t='available';
             $sfare=$seat_fare->get($idx);
-            $status_t=$sfare->get('status');
-            $fare=$sfare->get('fare');
+            if($sfare){
+                $status_t=$sfare->get('status');
+                $fare=$sfare->get('fare');
+                $seatid=$sfare->get('id');
+                $tid=$sfare->get('userID');
+            }
 
-            if($status_t != 'available'){
-                $collectData=collect(['status'=>$status_t,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare]);
+            if($status != 'available'){
+                $collectData=collect(['status'=>$status,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare,'id'=>0,'userID'=>$tid]);
             }else{
-                $collectData=collect(['status'=>$status,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare]);
+                $collectData=collect(['status'=>$status_t,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare,'id'=>$seatid,'userID'=>$tid]);
             }
 
             $seat_info->put($i,$collectData);
@@ -188,7 +199,14 @@ class BusSearchController extends Controller
             ->value('total_seat');
 
         $seat_inf=json_encode($seat_info);
-        return view('seatList')->with('seat_info',$seat_inf)->with('total',$total);
+
+        return view('seatList')->with('seat_info',$seat_inf)->with('total',$total)->with('tripID',$id);
 
     }
+
+    public function booking($id){
+
+        return view('booking')->with('username',$id);
+    }
+
 }

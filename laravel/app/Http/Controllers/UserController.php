@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
+use  Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -98,6 +99,9 @@ class UserController extends Controller
 
             $user->save();
         }
+            $id=DB::table('users')->where('username',$username)->value('id');
+            Session::put('username',$username);
+            Session::put('userID',$id);
 
         return view('home')->with('username',$username);
     }
@@ -117,10 +121,10 @@ class UserController extends Controller
 
         //$users = DB::table('users')->find($id);//with('username','password','email')->get(); DB::table('users');//
         $user = DB::table('users')
-             ->select('first_name','last_name','email','phone no','gender','created_at','updated_at','id')
+             ->select('first_name','last_name','email','phone no','gender','created_at','updated_at','id','age')
              ->where('username', $id)->get();
 
-        $first_name=$last_name=$phn=$gender=$email=$create=$update=$userID="";
+        $first_name=$last_name=$phn=$gender=$email=$create=$update=$userID=$age="";
         $i=0;
         foreach ($user as $userdata){
             foreach ($userdata as $data){
@@ -132,6 +136,7 @@ class UserController extends Controller
                 elseif($i==5) $create=$data;
                 elseif($i==6) $update=$data;
                 elseif($i==7) $userID=$data;
+                else $age=$data;
 
                 $i=$i+1;
             }
@@ -144,6 +149,7 @@ class UserController extends Controller
             'email' => $email,
             'phn' => $phn,
             'gender' => $gender,
+            'age' => $age,
             'create' => $create,
             'update' => $update,
         );
@@ -154,12 +160,12 @@ class UserController extends Controller
             ->join('trips','seats.tripID', '=', 'trips.id')
             ->join('buses','trips.busID', '=', 'buses.id')
             ->join('routes','trips.routeID', '=', 'routes.id')
-            ->join('seat_infos','seats.seatID', '=', 'seat_infos.id')
-            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','seat_infos.seatNo','seats.fare','tickets.booking_time')
-            ->get();
+            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','seats.fare','tickets.booking_time','tickets.id')
+            ->groupBy('tickets.id')->get();
 
         $ticketNum=DB::table('tickets')
             ->where('userID',$userID)->count();
+
 
         return view('user.profile')->with('userdata',$userdata)->with('ticketdata',$ticketdata)->with('ticketNum',$ticketNum);
 

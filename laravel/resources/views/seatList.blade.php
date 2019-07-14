@@ -4,6 +4,8 @@
     <title>Bus details</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
@@ -16,14 +18,223 @@
 
     <script>
 
-        function getcolor(){
-                //document.getElementById('A-1').style.color = 'green';
-            //document.getElementById('pp').innerText= 'hello';
+        var total_seat = <?php echo json_encode($total); ?>;
+        var tripID = <?php echo json_encode($tripID); ?>;
+
+        var seat_arr=<?php echo $seat_info; ?>;
+        var username=<?php echo json_encode(Session::get('username')); ?>
+
+        var userID=<?php echo json_encode(Session::get('userID')); ?>;
+        var i=0;
+        var j=0;
+
+        var total_selected=0;
+        var charge=0;
+        var unit_charge=50;
+        var total_price=0;
+
+
+        var details=document.getElementById("seat-info");
+        var sc=document.getElementById("sc");
+        var total=document.getElementById("total");
+
+        var seat_status='';
+
+        var inter_val=setInterval(getStatus,10000);
+
+            function getStatus() {
+                jQuery.ajax({
+                    type:'GET',
+                    url:'../get-status/'+tripID,
+                    data:'',
+                    async:false,
+                    success:function(data) {
+                        //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
+                        $("#pp").text(seat_arr[0].status);
+                        for(i=0;i<total_seat;i++){
+                            var idx=seat_arr[i].id;
+
+                            if(seat_arr[i].status.localeCompare('blocked')){ // not blocked
+                                if(data[idx].localeCompare('available')==0){ // some how available
+                                    seat_arr[i].status='available';
+                                    if (seat_arr[i].category.localeCompare('Business')==0) {
+                                        document.getElementById(i).style.color = '#4b88a6';
+                                    }
+                                    else{
+                                        document.getElementById(i).style.color = '#CCCCCB';}
+                                }
+                                else if(data[idx].localeCompare('selected')==0) { // some how selected by him or another
+                                    document.getElementById(i).style.color = 'forestgreen';
+                                    if(seat_arr[i].status.localeCompare('available')==0){
+                                        seat_arr[i].status='booked';
+                                    }
+                                }
+                                else if(data[idx].localeCompare('booked')==0) { // some how selected by him or another
+                                    document.getElementById(i).style.color = '#DB7484';
+                                    seat_arr[i].status='booked';
+                                }
+                            }
+                        }
+                    },
+                    error:function() {
+                        $("#pp").text("error");
+                    }
+                });
+            }
+
+        function select_seat(id) { //auto refresh
+            //get seat status
+            //seat_status=getData(id);
+//document.getElementById("pp").innerHTML=seat_status;
+            //jQuery("#pp").html("<p>Hello id "+id+"</p>");
+
+            //if(seat_arr[id].status.localeCompare('booked')==0){ // someone de-select seat
+            //  if(seat_status.localeCompare('available')){
+            //    seat_arr[id].status='available';
+            //}
+            //}
+            if(seat_arr[id].status.localeCompare('selected')==0){
+                seat_arr[id].status='available';
+                jQuery.ajax({
+                    type:'GET',
+                    url:'../update-status/'+seat_arr[id].id+"/"+'available/'+userID,
+                    data:'',
+                    success:function(data) {
+                        //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
+                        //seat_status=data.seat_status;
+                    },
+                    error:function() {
+                        $("#pp").text("error-1");
+                    }
+                });
+                if (seat_arr[id].category.localeCompare('Business')==0) {
+                    document.getElementById(id).style.color = '#4b88a6';
+                }
+                else
+                    document.getElementById(id).style.color = '#CCCCCB';
+
+                var elm=document.getElementById('details-'+id);
+                elm.parentNode.removeChild(elm);
+
+                charge = charge-unit_charge;
+                total_price = total_price - unit_charge - parseInt(seat_arr[id].fare);
+
+                document.getElementById("total").innerHTML = total_price+" Tk";
+                document.getElementById("sc").innerHTML = charge + " Tk";
+
+                total_selected--;
+                jQuery("#alert-2").hide();
+            }
+            else if(total_selected>5){
+                jQuery("#alert-2").show();
+                //document.getElementById("alert-2").show;
+            }else {
+                //document.getElementById("alert-2").hidden;
+                if(seat_arr[id].status.localeCompare('available')==0){
+                    seat_arr[id].status='selected';
+
+                       jQuery.ajax({
+                        type:'GET',
+                        url:'../update-status/'+seat_arr[id].id+"/"+'selected/'+userID,
+                        data:'',
+                        success:function(data) {
+                            //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
+                            //seat_status=data.seat_status;
+                        },
+                        error:function() {
+                            $("#pp").text("error-2");
+                        }
+                    });
+                    document.getElementById(id).style.color = 'forestgreen';
+
+                    var param=document.createElement("p");
+                    var node=document.createTextNode(seat_arr[id].category+" class : Seat "+seat_arr[id].seatNo+" : "+seat_arr[id].fare+" Tk ");
+                    param.appendChild(node);
+                    param.setAttribute('id','details-'+id);
+                    document.getElementById("seat-info").appendChild(param);
+                    //document.getElementById("seat-info").innerHTML='checked';
+
+                    charge = charge+unit_charge;
+                    total_price = total_price + unit_charge + parseInt(seat_arr[id].fare);
+
+                    document.getElementById("total").innerHTML = total_price+" Tk";
+                    document.getElementById("sc").innerHTML = charge + " Tk";
+
+                    total_selected++;
+                }
+            }
+
+        }
+
+        function initialization() {
+            //document.getElementById("pp").innerHTML=seat_arr[0].status;
+            //userID
+        /*    jQuery.ajax({
+                type:'GET',
+                url:'../get-userID/'+username,
+                data:'',
+                success:function(data) {
+                    //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
+                    userID=data.userID;
+                },
+                error:function() {
+                    $("#pp").text("error-3");
+                }
+            });*/
+
+            document.getElementById("pp").innerHTML=username+tripID;
+var t=0;
+
+            for(i=0;i<total_seat;i++){
+                t=t+1;
+                if(seat_arr[i].status.localeCompare('available')==0){
+                    if (seat_arr[i].category.localeCompare('Business')==0) {
+                        document.getElementById(i).style.color = '#4b88a6';
+                    }
+                    else{
+                        document.getElementById(i).style.color = '#CCCCCB';}
+                }
+                else if(seat_arr[i].status.localeCompare('booked')==0){
+                    document.getElementById(i).style.color = '#DB7484';
+                }
+                else if(seat_arr[i].status.localeCompare('blocked')==0){
+                    document.getElementById(i).style.color = '#3c3c3c';
+                }
+                else if(seat_arr[i].status.localeCompare('selected')==0){
+                    document.getElementById(i).style.color = 'forestgreen';
+                    //document.getElementById(i).innerHTML='hello';
+
+                    if(userID != seat_arr[i].userID) {
+                        seat_arr[i].status = 'booked';
+                    }
+                    else{
+
+                        var param=document.createElement("p");
+                        var node=document.createTextNode(seat_arr[i].category+" class : Seat "+seat_arr[i].seatNo+" : "+seat_arr[i].fare+" Tk ");
+                        param.appendChild(node);
+                        param.setAttribute('id','details-'+i);
+                        document.getElementById("seat-info").appendChild(param);
+                        //document.getElementById("seat-info").innerHTML='checked';
+
+                        charge = charge+unit_charge;
+                        total_price = total_price + unit_charge + parseInt(seat_arr[i].fare);
+
+                        document.getElementById("total").innerHTML = total_price+" Tk";
+                        document.getElementById("sc").innerHTML = charge + " Tk";
+
+                        total_selected++;
+                    }
+                }
+            }
+            if(total_selected<6) {
+                jQuery("#alert-2").hide();
+            }
+            document.getElementById("send-user").value=username;
         }
     </script>
 
 </head>
-<body onload="initialization()">
+<body onload="initialization();">
 @php //dd($seat_info[3]); @endphp
 <div id="pp" onclick="getcolor1()">Total : {{$total}}</div>
 
@@ -71,13 +282,13 @@
                             <span><i class="fas fa-couch  fa-3x" style="color: #3c3c3c;"></i></span> Blocked
                         </p></div>
                     <div class="col-sm-2"><p>
-                            <span><i class="fas fa-couch  fa-3x" style="color: #CCCCCB;"></i></span> Available
+                            <span><i class="fas fa-couch  fa-3x" style="color: #CCCCCB;"></i></span> Economy(A)
                         </p></div>
                     <div class="col-sm-2"><p>
                             <span><i class="fas fa-couch  fa-3x" style="color: forestgreen;"></i></span> Selected
                         </p></div>
                     <div class="col-sm-2"><p>
-                            <span><i class="fas fa-couch  fa-3x" style="color: #4b88a6;"></i></span> Business
+                            <span><i class="fas fa-couch  fa-3x" style="color: #4b88a6;"></i></span> Business(A)
                         </p></div>
                 </div>
             </div>
@@ -155,11 +366,8 @@
                             <div id="booking-details-bottom">
                                 <div class="row">
                                     <div class="col-sm-7">
-                                        <h3>Selected seats : </h3>
-                                        <div id="seat-info">
-
-
-                                        </div>
+                                        <h3>Selected seats : <input id="send-user" type="text" name="send-username" hidden></h3>
+                                        <div id="seat-info">  </div>
                                         <div id="service-total-info">
                                             <div class="row"><p style="float: left;"><strong>Service charge : </strong></p>
                                                 <p id="sc" style="padding-left: 50px;">0 Tk</p></div>
@@ -167,7 +375,9 @@
                                                 <p id="total" style="padding-left: 50px;">0 Tk</p></div>
                                         </div>
                                         <div id="buy-button">
-                                            <button class="btn btn-success">Buy now</button>
+                                            @php $usern=Session::get('username')      @endphp
+                                            <a href="{{url('/booking-details',['id'=>$usern])}}">
+                                            <button class="btn btn-success">Buy now</button></a>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -212,107 +422,7 @@
 
 </div>
 
-<script>
 
-    var total_seat = <?php echo json_encode($total); ?>;
-    var i=0;
-    var j=0;
-    var seat_arr=<?php echo $seat_info; ?>;
-
-    var total_selected=0;
-    var charge=0;
-    var unit_charge=50;
-    var total_price=0;
-
-
-    var details=document.getElementById("seat-info");
-    var sc=document.getElementById("sc");
-    var total=document.getElementById("total");
-   /* //var json=JSON.parse(seat_info);
-    pp=document.getElementById('pp');
-    for(i=0;i<total_seat;i++){
-        var param=document.createElement("p");
-        var node=document.createTextNode(seat_arr[i].status+" "+seat_arr[i].seatNo+" "+seat_arr[i].category+" "+seat_arr[i].fare);
-        param.appendChild(node);
-        pp.appendChild(param);
-    }*/
-
-    for(i=0;i<total_seat;i++){
-        if(seat_arr[i].status.localeCompare('available')==0){
-            if (seat_arr[i].category.localeCompare('Business')==0) {
-                document.getElementById(i).style.color = '#4b88a6';
-            }
-            else
-                document.getElementById(i).style.color = '#CCCCCB';
-        }
-        else if(seat_arr[i].status.localeCompare('booked')==0){
-            document.getElementById(i).style.color = '#DB7484';
-        }
-        else if(seat_arr[i].staus.localeCompare('blocked')==0){
-            document.getElementById(i).style.color = '#3c3c3c';
-        }
-        else if(seat_arr[i].status.localeCompare('selected')==0){
-            document.getElementById(i).style.color = 'forestgreen';
-        }
-    }
-
-
-    function select_seat(id) {
-
-        if(seat_arr[id].status.localeCompare('selected')==0){
-            seat_arr[id].status='available';
-            if (seat_arr[id].category.localeCompare('Business')==0) {
-                document.getElementById(id).style.color = '#4b88a6';
-            }
-            else
-                document.getElementById(id).style.color = '#CCCCCB';
-
-            var elm=document.getElementById('details-'+id);
-            elm.parentNode.removeChild(elm);
-
-            charge = charge-unit_charge;
-            total_price = total_price - unit_charge - parseInt(seat_arr[id].fare);
-
-            total.innerHTML = total_price+" Tk";
-            sc.innerHTML = charge + " Tk";
-
-            total_selected--;
-        }
-        else if(total_selected>5){
-
-            document.getElementById("alert-2").show;
-        }else {
-            document.getElementById("alert-2").hidden;
-            if(seat_arr[id].status.localeCompare('available')==0){
-                seat_arr[id].status='selected';
-                document.getElementById(id).style.color = 'forestgreen';
-
-                var param=document.createElement("p");
-                var node=document.createTextNode(seat_arr[id].category+" class : Seat "+seat_arr[id].seatNo+" : "+seat_arr[id].fare+" Tk ");
-                param.appendChild(node);
-                param.setAttribute('id','details-'+id);
-                details.appendChild(param);
-
-                charge = charge+unit_charge;
-                total_price = total_price + unit_charge + parseInt(seat_arr[id].fare);
-
-                total.innerHTML = total_price+" Tk";
-                sc.innerHTML = charge + " Tk";
-
-                total_selected++;
-            }
-        }
-
-    }
-    function getcolor1(){
-        //document.getElementById('pp').innerHTML = seat_arr[0]["status"];
-        //document.getElementById('0').style.color='red';
-    }
-
-    function initialization() {
-
-    }
-</script>
 
 
 </body>

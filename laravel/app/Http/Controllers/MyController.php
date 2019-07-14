@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use mysql_xdevapi\Session;
+use Illuminate\Support\Facades\Session;
 
 class MyController extends Controller
 {
@@ -56,7 +56,9 @@ class MyController extends Controller
             $pass = DB::table('users')->where('username',$username)->value('password');
 
             if(Hash::check($password,$pass)){
-                \Illuminate\Support\Facades\Session::put('username',$username);
+                $id=DB::table('users')->where('username',$username)->value('id');
+                Session::put('username',$username);
+                Session::put('userID',$id);
                 return redirect()->route('signin.create');
                 //return view('home');
             }

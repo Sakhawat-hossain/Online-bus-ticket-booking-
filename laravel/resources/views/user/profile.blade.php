@@ -34,6 +34,11 @@
                 document.getElementById('pass-message').innerHTML = 'not matching';
             }
         }
+
+        function showSeat(id) {
+
+        }
+
     </script>
 </head>
 <body>
@@ -85,7 +90,7 @@
             <ul class="list-group">
                 <li class="list-group-item text-muted">Profile</li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> {{$userdata->create}}</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Real name</strong></span> {{$userdata->first_name}}{{' '}}{{$userdata->last_name}}</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Full name</strong></span> {{$userdata->first_name}}{{' '}}{{$userdata->last_name}}</li>
             </ul>
 
             <ul class="list-group">
@@ -123,6 +128,7 @@
                             <div id="home-row"><p><strong>Phone no : </strong>{{$userdata->phn}}</p></div>
 
                             <div id="home-row"><p><strong>Gender : </strong>{{$userdata->gender}}</p></div>
+                            <div id="home-row"><p><strong>Age : </strong>{{$userdata->age}}</p></div>
 
                         @endif
                     </div>
@@ -141,9 +147,9 @@
                                     <th>Departure Date</th>
                                     <th>Bus</th>
                                     <th>Type</th>
-                                    <th>Seat</th>
                                     <th>Fare </th>
                                     <th>Booking Date </th>
+                                    <th>Seats</th>
                                 </tr>
                             </thead>
 
@@ -151,11 +157,21 @@
                             @php $i=1; @endphp
                             @if(isset($ticketdata))
                                 @foreach($ticketdata as $tdata)
+                                    @php $j=1; $temp=0;@endphp
                                     <tr><td>{{$i}}</td>
                                     @foreach($tdata as $td)
-                                        <td>{{$td}}</td>
-                                    @endforeach
+                                        @if($j==8)
+                                            <td><button class="btn btn-success" onclick="showSeat({{$td}})" >Show</button></td>
                                     </tr>
+                                    <!--div id="test" style="border: 1px solid black">
+                                        <tr style="text-align: center;"><td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
+                                          <tr style="text-align: center;">  <td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
+                                    </div-->
+                                        @else
+                                            <td>{{$td}}</td>
+                                        @endif
+                                            @php $j=$j+1; @endphp
+                                    @endforeach
                                     @php $i=1+$i; @endphp
                                 @endforeach
                             @endif

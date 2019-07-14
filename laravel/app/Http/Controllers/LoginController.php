@@ -18,6 +18,7 @@ class LoginController extends Controller
     public function index()
     {
          Session::forget('username');
+        Session::forget('userID');
          //return redirect()->route('/');
         return redirect()->route('signin.create');
     }
