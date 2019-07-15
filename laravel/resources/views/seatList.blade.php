@@ -152,6 +152,15 @@
                     param.appendChild(node);
                     param.setAttribute('id','details-'+id);
                     document.getElementById("seat-info").appendChild(param);
+
+                    var canparam=document.createElement("span");
+                    var cannode=document.createTextNode("Cancel");
+                    canparam.setAttribute("id","cancel-"+id);
+                    canparam.style.color="red";
+                    canparam.appendChild(cannode);
+                    canparam.setAttribute("onclick","cancel("+id+")");
+                    canparam.style.cursor="pointer";
+                    param.appendChild(canparam);
                     //document.getElementById("seat-info").innerHTML='checked';
 
                     charge = charge+unit_charge;
@@ -166,27 +175,46 @@
 
         }
 
-        function initialization() {
-            //document.getElementById("pp").innerHTML=seat_arr[0].status;
-            //userID
-        /*    jQuery.ajax({
+        function cancel(id) {
+            //document.getElementById("cancel-"+id).style.color="black";
+            seat_arr[id].status='available';
+            jQuery.ajax({
                 type:'GET',
-                url:'../get-userID/'+username,
+                url:'../update-status/'+seat_arr[id].id+"/"+'available/'+userID,
                 data:'',
                 success:function(data) {
                     //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
-                    userID=data.userID;
+                    //seat_status=data.seat_status;
                 },
                 error:function() {
-                    $("#pp").text("error-3");
+                    $("#pp").text("error-1");
                 }
-            });*/
+            });
+            if (seat_arr[id].category.localeCompare('Business')==0) {
+                document.getElementById(id).style.color = '#4b88a6';
+            }
+            else
+                document.getElementById(id).style.color = '#CCCCCB';
+
+            var elm=document.getElementById('details-'+id);
+            elm.parentNode.removeChild(elm);
+
+            charge = charge-unit_charge;
+            total_price = total_price - unit_charge - parseInt(seat_arr[id].fare);
+
+            document.getElementById("total").innerHTML = total_price+" Tk";
+            document.getElementById("sc").innerHTML = charge + " Tk";
+
+            total_selected--;
+            jQuery("#alert-2").hide();
+        }
+
+        function initialization() {
 
             document.getElementById("pp").innerHTML=username+tripID;
-var t=0;
 
-            for(i=0;i<total_seat;i++){
-                t=t+1;
+             for(i=0;i<total_seat;i++){
+
                 if(seat_arr[i].status.localeCompare('available')==0){
                     if (seat_arr[i].category.localeCompare('Business')==0) {
                         document.getElementById(i).style.color = '#4b88a6';
@@ -213,6 +241,16 @@ var t=0;
                         var node=document.createTextNode(seat_arr[i].category+" class : Seat "+seat_arr[i].seatNo+" : "+seat_arr[i].fare+" Tk ");
                         param.appendChild(node);
                         param.setAttribute('id','details-'+i);
+
+                        var canparam=document.createElement("span");
+                        var cannode=document.createTextNode("Cancel");
+                        canparam.setAttribute("id","cancel-"+i);
+                        canparam.style.color="red";
+                        canparam.appendChild(cannode);
+                        canparam.setAttribute("onclick","cancel("+i+")");
+                        canparam.style.cursor="pointer";
+                        param.appendChild(canparam);
+
                         document.getElementById("seat-info").appendChild(param);
                         //document.getElementById("seat-info").innerHTML='checked';
 
@@ -229,8 +267,8 @@ var t=0;
             if(total_selected<6) {
                 jQuery("#alert-2").hide();
             }
-            document.getElementById("send-user").value=username;
         }
+
     </script>
 
 </head>
@@ -366,7 +404,7 @@ var t=0;
                             <div id="booking-details-bottom">
                                 <div class="row">
                                     <div class="col-sm-7">
-                                        <h3>Selected seats : <input id="send-user" type="text" name="send-username" hidden></h3>
+                                        <h3>Selected seats : </h3>
                                         <div id="seat-info">  </div>
                                         <div id="service-total-info">
                                             <div class="row"><p style="float: left;"><strong>Service charge : </strong></p>
@@ -375,8 +413,8 @@ var t=0;
                                                 <p id="total" style="padding-left: 50px;">0 Tk</p></div>
                                         </div>
                                         <div id="buy-button">
-                                            @php $usern=Session::get('username')      @endphp
-                                            <a href="{{url('/booking-details',['id'=>$usern])}}">
+                                            @php $usern=Session::get('username');      @endphp
+                                            <a href="{{url('/booking-details',['id'=>$usern,'tripID'=>$tripID])}}">
                                             <button class="btn btn-success">Buy now</button></a>
                                         </div>
                                     </div>

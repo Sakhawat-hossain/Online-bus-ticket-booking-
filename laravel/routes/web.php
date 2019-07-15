@@ -31,7 +31,7 @@ Route::resource('bus','BusController');
 Route::post('search-buses','BusSearchController@search_bus'); // bus list without filter
 Route::post('search-buses-with-filter','BusSearchController@search_bus_filter'); // bus list with filter
 Route::get('/seat-list-details/{id}', 'BusSearchController@seat_list'); //seat list details
-Route::get('booking-details/{id}', 'BusSearchController@booking'); //booking details
+Route::get('booking-details/{id}/{tripID}', 'BusSearchController@booking'); //booking details
 
 Route::get('/get-status/{id}','AjaxlController@getSeatStatus'); // get status of seat
 Route::get('/update-status/{id}/{status}/{userID}','AjaxlController@updateStatus'); // update status of seat

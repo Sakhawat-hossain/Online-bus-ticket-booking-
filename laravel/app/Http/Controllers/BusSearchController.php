@@ -26,16 +26,33 @@ class BusSearchController extends Controller
         $to=$request->get('tovalue');
         $departure=$request->get('departuredate');
         $returndate=$request->get('returndate');
+        $time=$request->get('departuretime');
 
-        //$data=DB::table('routes')->get()->where('from',$from)->where('to',$to)->where('date',$departure);
-        $data=DB::table('trips')
-            ->join('routes','trips.routeID', '=', 'routes.id')
-            ->join('buses','trips.busID', '=', 'buses.id')
-            ->where('date',$departure)
-            ->where('from',$from)
-            ->where('to',$to)
-            ->select('buses.name', 'buses.coach_no','routes.starting_point','buses.type','trips.departure_time','trips.arrival_time','buses.available_seat','trips.b/e','trips.id')
-            ->get();
+
+        $data='';
+        //if($returndate!=''){
+            if($time=='All'){
+                $data=DB::table('trips')
+                    ->join('routes','trips.routeID', '=', 'routes.id')
+                    ->join('buses','trips.busID', '=', 'buses.id')
+                    ->where('date',$departure)
+                    ->where('from',$from)
+                    ->where('to',$to)
+                    ->select('buses.name', 'buses.coach_no','routes.starting_point','buses.type','trips.departure_time','trips.arrival_time','buses.available_seat','trips.b/e','trips.id')
+                    ->get();
+            }
+            else{
+                $data=DB::table('trips')
+                    ->join('routes','trips.routeID', '=', 'routes.id')
+                    ->join('buses','trips.busID', '=', 'buses.id')
+                    ->where('date',$departure)
+                    ->where('from',$from)
+                    ->where('to',$to)->where('departure_time',$time)
+                    ->select('buses.name', 'buses.coach_no','routes.starting_point','buses.type','trips.departure_time','trips.arrival_time','buses.available_seat','trips.b/e','trips.id')
+                    ->get();
+            }
+        //}
+
 
         $send_data=(object)array(
             'from' => $from,
@@ -64,6 +81,11 @@ class BusSearchController extends Controller
 
         //$returndate=$request->get('returndate');
 
+       // $departure=strtotime($departure,'Y-m-d')->yesterday();
+        if($request->get('sendval')=='prev')
+            $departure = date("Y-m-d", strtotime('-1 day',strtotime($departure)));
+        elseif($request->get('sendval')=='next')
+            $departure = date("Y-m-d", strtotime('+1 day',strtotime($departure)));
 
         if($bus_name != 'All' && $type != 'All'){
             $data=DB::table('trips')
@@ -204,9 +226,87 @@ class BusSearchController extends Controller
 
     }
 
-    public function booking($id){
+    public function booking($id,$tripID){
 
-        return view('booking')->with('username',$id);
+        $user = DB::table('users')
+            ->select('first_name','last_name','email','phone no','gender','id','age')
+            ->where('username', $id)->get();
+
+        $first_name=$last_name=$phn=$gender=$email=$userID=$age="";
+        $i=0;
+        foreach ($user as $userdata){
+            foreach ($userdata as $data){
+                if($i==0) $first_name=$data;
+                elseif($i==1) $last_name=$data;
+                elseif($i==2) $email=$data;
+                elseif($i==3) $phn=$data;
+                elseif($i==4) $gender=$data;
+                elseif($i==5) $userID=$data;
+                else $age=$data;
+
+                $i=$i+1;
+            }
+        }
+        $userdata=(object)array(
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'email' => $email,
+            'phn' => $phn,
+            'gender' => $gender,
+            'age' => $age,
+        );
+
+        $seats=DB::table('seats')->where('seats.ticketID',$userID)->where('seats.status','selected')
+            ->where('seats.tripID',$tripID)
+            ->join('seat_infos','seats.seatID','seat_infos.id')
+            ->select('seat_infos.category','seat_infos.seatNo','seats.fare')->get();
+
+        $tripInfo=DB::table('trips')->where('trips.id',$tripID)
+            ->join('routes','trips.routeID','routes.id')
+            ->join('buses','trips.busID','buses.id')
+            ->select('routes.from','routes.to','buses.name','buses.type','trips.date','trips.departure_time')
+            ->get();
+
+        $total=$sc=0;
+
+        foreach ($seats as $trip){
+            $j=0;
+            foreach ($trip as $td){
+                if($j==2) {
+                    $total = $total + $td;
+                    $sc = $sc + 50;
+                }
+                $j++;
+            }
+        }
+        $total = $total+$sc;
+
+        $from=$to='';
+        $j=0;
+        foreach ($tripInfo as $trip){
+            foreach ($trip as $td){
+                if($j==0) $from=$td;
+                elseif ($j==1) $to=$td;
+                $j++;
+            }
+        }
+        $boarding=DB::table('routes')->where('from',$from)->where('to',$to)
+            ->join('boardings','routes.id','boardings.routeID')
+            ->join('places','boardings.placeID','places.id')
+            ->select('places.name')->get();
+
+        $dropping=DB::table('routes')->where('from',$to)->where('to',$from)
+            ->join('boardings','routes.id','boardings.routeID')
+            ->join('places','boardings.placeID','places.id')
+            ->select('places.name')->get();
+
+        $bdtf=collect();
+        $bdtf->put('boarding',$boarding);
+        $bdtf->put('dropping',$dropping);
+        $bdtf->put('total',$total);
+        $bdtf->put('sc',$sc);
+
+        return view('booking')->with('username',$id)->with('userdata',$userdata)->with('seats',$seats)->with('tripInfo',$tripInfo)->with('bdtf',$bdtf);
     }
 
 }

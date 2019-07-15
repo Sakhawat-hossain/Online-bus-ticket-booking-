@@ -93,9 +93,10 @@
 
             <div class="container" style="min-height: 500px;">
 
-                <div id="search-option-container">
-                    <form method="post" action="search-buses-with-filter">
-                        {{csrf_field()}}
+
+                <form method="post" action="search-buses-with-filter">
+                    {{csrf_field()}}
+                    <div id="search-option-container">
                         <div class="row">
                             <div class="col-sm-2">
                                 <div class="form-group">
@@ -167,25 +168,33 @@
                                 </div>
                             </div>
                             <div class="form-btn" style="margin-top: 20px;float: right;margin-right:80px;">
-                                <button type="submit" class="btn btn-success">Search</button>
+                                <button type="submit" class="btn btn-success" name="sendval" value="normal">Search</button>
                             </div>
                         </div>
-                    </form>
+
                 </div>
 
-                <div id="sort-option-container">
-                    <div class="row">
-                        <div class="col-sm-2"><p><span><i class="fas fa-sort"></i></span>Sort By</p></div>
+                    <div id="sort-option-container">
+                        <div class="row">
+                            <div class="col-sm-2"><p><span><i class="fas fa-sort"></i></span>Sort By</p></div>
 
-                        <div class="col-sm-2"><p id="filter">Filter  <span><i class="fas fa-sort-down"></i></span></p>
-                            <div id="filter-list">
-                                <ul>
-                                    <li>Bus Type</li>
-                                </ul>
+                            <div class="col-sm-2" hidden><p id="filter">Filter  <span><i class="fas fa-sort-down"></i></span></p>
+                                <div id="filter-list">
+                                    <ul>
+                                        <li>Bus Type</li>
+                                    </ul>
+                                </div>
                             </div>
+                            <div class="form-btn" style="margin-top: 10px;float: right;margin-right:80px;">
+                                <button type="submit" class="btn btn-default" name="sendval" value="next">Next Day</button>
+                            </div>
+                            <div class="form-btn" style="margin-top: 10px;float: right;margin-right:20px;">
+                                <button type="submit" class="btn btn-default" name="sendval" value="prev">Prev Day</button>
+                            </div>
+
                         </div>
                     </div>
-                </div>
+                </form>
                     
                 <div id="table-container">
                     <table class="table" id="myTable">
