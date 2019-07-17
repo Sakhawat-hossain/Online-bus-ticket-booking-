@@ -154,20 +154,35 @@ class UserController extends Controller
             'update' => $update,
         );
 
-        $ticketdata=DB::table('tickets')
+        $ticketactive=DB::table('tickets')
             ->where('userID',$userID)
             ->join('seats','seats.ticketID', '=', 'tickets.id')
             ->join('trips','seats.tripID', '=', 'trips.id')
             ->join('buses','trips.busID', '=', 'buses.id')
             ->join('routes','trips.routeID', '=', 'routes.id')
-            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','seats.fare','tickets.booking_time','tickets.id')
+            ->where('tickets.status','active')
+            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.id')
+            ->groupBy('tickets.id')->get();
+
+        $ticketprev=DB::table('tickets')
+            ->where('userID',$userID)
+            ->join('seats','seats.ticketID', '=', 'tickets.id')
+            ->join('trips','seats.tripID', '=', 'trips.id')
+            ->join('buses','trips.busID', '=', 'buses.id')
+            ->join('routes','trips.routeID', '=', 'routes.id')
+            ->where('tickets.status','previous')
+            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.id')
             ->groupBy('tickets.id')->get();
 
         $ticketNum=DB::table('tickets')
             ->where('userID',$userID)->count();
 
+        $ticketInfo=collect();
+        $ticketInfo->put('active',$ticketactive);
+        $ticketInfo->put('previous',$ticketprev);
 
-        return view('user.profile')->with('userdata',$userdata)->with('ticketdata',$ticketdata)->with('ticketNum',$ticketNum);
+
+        return view('user.profile')->with('userdata',$userdata)->with('ticketInfo',$ticketInfo)->with('ticketNum',$ticketNum);
 
     }
 

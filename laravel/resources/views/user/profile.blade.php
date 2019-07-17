@@ -35,14 +35,127 @@
             }
         }
 
-        function showSeat(id) {
+        function removeActive(id) {
+            var element=document.getElementById("seats-"+id);
+            element.remove();
+        }
+        function showSeat(id,i) {
 
+            var chk=document.getElementById("seats-"+id);
+
+            if(chk){
+
+            }
+            else{
+                var tr=document.createElement("tr"); // row id -- a-row-i, p-row-i
+                tr.setAttribute("id","seats-"+id);
+                tr.style.textAlign="center";
+
+                var td=document.createElement("td");
+                td.colSpan=8;
+                var p;//=document.createElement("p");
+                var txt;//=document.createTextNode("Seat No : A1, Class : Business, Fare : 500 Tk");
+
+                jQuery.ajax({
+                    type:'GET',
+                    url:'../get-seat-list/'+id,
+                    data:'',
+                    async: false,
+                    success:function(data)
+                    {
+                        var len=data.length;
+                        document.getElementById("pp").innerHTML=len;
+                        for(var j=0;j<len;j++){
+                            p=document.createElement("p");
+                            txt=document.createTextNode("Seat No : "+data[j].seatNo+", Category : "
+                                +data[j].category+", Fare : " +data[j].fare+" Tk");
+                            p.appendChild(txt);
+                            td.appendChild(p);
+                        }
+
+                    }
+                });
+
+                var btn=document.createElement("button");
+                btn.setAttribute("class","btn btn-default");
+                btn.setAttribute("onclick","removeActive("+id+")");
+                txt=document.createTextNode("Hide");
+                btn.appendChild(txt);
+
+                td.appendChild(btn);
+                tr.appendChild(td);
+                jQuery("table #a-row-"+i).after(tr);
+            }
+
+        }
+
+        function removePrev(id) {
+            var element=document.getElementById("pseats-"+id);
+            element.remove();
+        }
+        function showSeatPrev(id,i) {
+
+            var chk=document.getElementById("pseats-"+id);
+
+            if(chk){
+
+            }
+            else{
+                var tr=document.createElement("tr"); // row id -- a-row-i, p-row-i
+                tr.setAttribute("id","pseats-"+id);
+                tr.style.textAlign="center";
+
+                var td=document.createElement("td");
+                td.colSpan=8;
+                var p;//=document.createElement("p");
+                var txt;//=document.createTextNode("Seat No : A1, Class : Business, Fare : 500 Tk");
+
+                jQuery.ajax({
+                    type:'GET',
+                    url:'../get-seat-list/'+id,
+                    data:'',
+                    async: false,
+                    success:function(data)
+                    {
+                        var len=data.length;
+                        document.getElementById("pp").innerHTML=len;
+                        for(var j=0;j<len;j++){
+                            p=document.createElement("p");
+                            txt=document.createTextNode("Seat No : "+data[j].seatNo+", Category : "
+                                +data[j].category+", Fare : " +data[j].fare+" Tk");
+                            p.appendChild(txt);
+                            td.appendChild(p);
+                        }
+
+                    }
+                });
+
+                var btn=document.createElement("button");
+                btn.setAttribute("class","btn btn-default");
+                btn.setAttribute("onclick","removePrev("+id+")");
+                txt=document.createTextNode("Hide");
+                btn.appendChild(txt);
+
+                td.appendChild(btn);
+                tr.appendChild(td);
+                jQuery("table #p-row-"+i).after(tr);
+            }
+
+        }
+
+        function activeTickets() {
+            jQuery("#previous-tickets").hide();
+            jQuery("#active-tickets").show();
+        }
+        function previousTickets() {
+            jQuery("#previous-tickets").show();
+            jQuery("#active-tickets").hide();
         }
 
     </script>
 </head>
 <body>
-
+<p id="pp">hello</p>
 @php
     $name=$phn=$gender=$email=$create=$update="";
     $i = 0;
@@ -73,7 +186,7 @@
     </nav>
 </div>
 
-<div class="container bootstrap snippet" style="min-height: 350px;">
+<div class="container bootstrap snippet" style="min-height: 370px;">
 
     <div class="row">
         <div class="col-sm-10">
@@ -136,8 +249,9 @@
                 </div>
 
                 <div class="tab-pane" id="tickets">
-                    <hr>
-                    <div class="table-responsive">
+                    <div class="table-responsive"   id="active-tickets">
+                        <h3 style="text-align: center;margin-top: 10px;">Active Tickets</h3>
+                        <hr>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -147,21 +261,22 @@
                                     <th>Departure Date</th>
                                     <th>Bus</th>
                                     <th>Type</th>
-                                    <th>Fare </th>
                                     <th>Booking Date </th>
                                     <th>Seats</th>
+                                    <th></th>
                                 </tr>
                             </thead>
 
-                            <tbody id="items">
+                            <tbody>
                             @php $i=1; @endphp
-                            @if(isset($ticketdata))
-                                @foreach($ticketdata as $tdata)
+                            @if(isset($ticketInfo))
+                                @foreach($ticketInfo->get('active') as $tdata)
                                     @php $j=1; $temp=0;@endphp
-                                    <tr><td>{{$i}}</td>
+                                    <tr id="a-row-{{$i}}"><td>{{$i}}</td>
                                     @foreach($tdata as $td)
-                                        @if($j==8)
-                                            <td><button class="btn btn-success" onclick="showSeat({{$td}})" >Show</button></td>
+                                        @if($j==7)
+                                            <td><button class="btn btn-success" onclick="showSeat({{$td}},{{$i}})" >Show</button></td>
+                                            <td><button class="btn btn-warning">Cancel</button></td>
                                     </tr>
                                     <!--div id="test" style="border: 1px solid black">
                                         <tr style="text-align: center;"><td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
@@ -175,9 +290,56 @@
                                     @php $i=1+$i; @endphp
                                 @endforeach
                             @endif
+                            <tr><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
                             </tbody>
                         </table>
                         <hr>
+                        <button class="btn btn-default" onclick="previousTickets()">Previous tickets</button>
+                    </div>
+
+                    <div class="table-responsive"   id="previous-tickets" hidden>
+                        <h3 style="text-align: center;margin-top: 10px;">Previous Tickets</h3>
+                        <hr>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Departure Date</th>
+                                <th>Bus</th>
+                                <th>Type</th>
+                                <th>Booking Date </th>
+                                <th>Seats</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            @php $i=1; @endphp
+                            @if(isset($ticketInfo))
+                                @foreach($ticketInfo->get('previous') as $tdata)
+                                    @php $j=1; $temp=0;@endphp
+                                    <tr id="p-row-{{$i}}"><td>{{$i}}</td>
+                                        @foreach($tdata as $td)
+                                            @if($j==7)
+                                                <td><button class="btn btn-success" onclick="showSeatPrev({{$td}},{{$i}})" >Show</button></td>
+                                    </tr>
+                                    <!--div id="test" style="border: 1px solid black">
+                                        <tr style="text-align: center;"><td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
+                                          <tr style="text-align: center;">  <td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
+                                    </div-->
+                                    @else
+                                        <td>{{$td}}</td>
+                                    @endif
+                                    @php $j=$j+1; @endphp
+                                @endforeach
+                                @php $i=1+$i; @endphp
+                                @endforeach
+                            @endif
+                            </tbody>
+                        </table>
+                        <hr>
+                        <button class="btn btn-default" onclick="activeTickets()">Active tickets</button>
                     </div>
                     <!--/table-resp-->
 

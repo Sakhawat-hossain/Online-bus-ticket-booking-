@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Collection;
@@ -305,8 +307,24 @@ class BusSearchController extends Controller
         $bdtf->put('dropping',$dropping);
         $bdtf->put('total',$total);
         $bdtf->put('sc',$sc);
+        $bdtf->put('tripID',$tripID);
 
-        return view('booking')->with('username',$id)->with('userdata',$userdata)->with('seats',$seats)->with('tripInfo',$tripInfo)->with('bdtf',$bdtf);
+        return view('booking')->with('userdata',$userdata)->with('seats',$seats)->with('tripInfo',$tripInfo)->with('bdtf',$bdtf);
+    }
+
+    public function payment(Request $request,$id,$tripID){
+        if($request->get('boarding')=='Required'){
+            //return redirect()->route('/booking-details/'.$id.'/'.$tripID)->with('berror','select a boarding point');
+            return Redirect::back()->withInput(Input::all())->with('berror','select a boarding point');
+        }
+        $method=$request->get('payment-method');
+        $senddata=collect();
+        $senddata->put('total',$request->get('total'));
+        $senddata->put('sc',$request->get('sc'));
+        $senddata->put('boarding',$request->get('boarding'));
+        $senddata->put('dropping',$request->get('dropping'));
+
+        return view('payment')->with('senddata',$senddata);
     }
 
 }

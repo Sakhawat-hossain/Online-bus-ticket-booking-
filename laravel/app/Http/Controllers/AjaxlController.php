@@ -35,4 +35,13 @@ class AjaxlController extends Controller
         return response()->json(array('userID'=>$id),200);
     }
 
+    public function getSeatList($id){
+        $list=DB::table('seats')
+            ->where('seats.ticketID',$id)
+            ->join('seat_infos','seats.seatID','seat_infos.id')
+            ->select('seat_infos.seatNo','seat_infos.category','seats.fare')->get();
+
+        //dd($list);
+        return response()->json($list,200);
+    }
 }

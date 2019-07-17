@@ -18,7 +18,7 @@
 
 </head>
 <body>
-<div id="pp" onclick="getcolor1()">Total : {{$username}}</div>
+<div id="pp" onclick="getcolor1()">Total : {{Session::get('username')}}</div>
 
 <div class="section">
 
@@ -52,105 +52,114 @@
 
     <div class="container" style="min-height: 500px;">
         <div id="ticket-user-details">
-            <div id="ticket-user-details-upper">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div id="ticket-details">
-                            <h3>Ticket Details</h3>
-                            @if(isset($tripInfo))
-                                @foreach($tripInfo as $trip)
-                                    @php $j=0; @endphp
-                                        @foreach($trip as $dt)
-                                            @if($j==0) <p><strong>From : </strong>&nbsp;{{$dt}}</p>
-                                            @elseif($j==1) <p><strong>To : </strong>&nbsp;{{$dt}}</p>
-                                            @elseif($j==2) <p><strong>Operator : </strong>&nbsp;{{$dt}}</p>
-                                            @elseif($j==3) <p><strong>Coach Type : </strong>&nbsp;{{$dt}}</p>
-                                            @elseif($j==4) <p><strong>Date : </strong>&nbsp;{{$dt}}</p>
-                                            @else <p><strong>Departure Time : </strong>&nbsp;{{$dt}}</p>
-                                            @endif
-                                            @php $j=$j+1; @endphp
-                                        @endforeach
-                                @endforeach
-                            @endif
-                            <p><strong>Seats : </strong></p>
-                            @if(isset($seats))
-                                @foreach($seats as $seat)
-                                    @php $j=0; @endphp
-                                    <p style="padding-left: 70px;">
-                                    @foreach($seat as $st)
-                                        @if($j==0) Class : {{$st}},
-                                        @elseif($j==1) Seat No : {{$st}},
-                                        @else Fare : {{$st}} Tk
-                                        @endif
-                                            @php $j=$j+1; @endphp
+            @php $usern=Session::get('username');      @endphp
+            <form method="post" action="{{url('payment-details',['id'=>$usern,'tripID'=>$bdtf->get('tripID')])}}">
+                {{csrf_field()}}
+                <div id="ticket-user-details-upper">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div id="ticket-details">
+                                <h3>Ticket Details</h3>
+                                @if(isset($tripInfo))
+                                    @foreach($tripInfo as $trip)
+                                        @php $j=0; @endphp
+                                            @foreach($trip as $dt)
+                                                @if($j==0) <p><strong>From : </strong>&nbsp;{{$dt}}</p>
+                                                @elseif($j==1) <p><strong>To : </strong>&nbsp;{{$dt}}</p>
+                                                @elseif($j==2) <p><strong>Operator : </strong>&nbsp;{{$dt}}</p>
+                                                @elseif($j==3) <p><strong>Coach Type : </strong>&nbsp;{{$dt}}</p>
+                                                @elseif($j==4) <p><strong>Date : </strong>&nbsp;{{$dt}}</p>
+                                                @else <p><strong>Departure Time : </strong>&nbsp;{{$dt}}</p>
+                                                @endif
+                                                @php $j=$j+1; @endphp
+                                            @endforeach
                                     @endforeach
-                                    </p>
-                                @endforeach
-                            @endif
-                            <p style="margin-top: 10px;"><strong>Boarding point</strong>
-                                <select name="boarding">
-                                    <option>Required</option>
-                                    @if(isset($bdtf))
-                                        @foreach($bdtf->get('boarding') as $bd)
-                                            @foreach($bd as $dt)
-                                                <option>{{$dt}}</option>
-                                            @endforeach
+                                @endif
+                                <p><strong>Seats : </strong></p>
+                                @if(isset($seats))
+                                    @foreach($seats as $seat)
+                                        @php $j=0; @endphp
+                                        <p style="padding-left: 70px;">
+                                        @foreach($seat as $st)
+                                            @if($j==0) Class : {{$st}},
+                                            @elseif($j==1) Seat No : {{$st}},
+                                            @else Fare : {{$st}} Tk
+                                            @endif
+                                                @php $j=$j+1; @endphp
                                         @endforeach
-                                    @endif
-                                </select></p>
-                            <p><strong>Dropping point</strong>
-                                <select>
-                                    <option>Optional</option>
-                                    @if(isset($bdtf))
-                                        @foreach($bdtf->get('dropping') as $bd)
-                                            @foreach($bd as $dt)
-                                                <option>{{$dt}}</option>
+                                        </p>
+                                    @endforeach
+                                @endif
+                                <p style="margin-top: 10px;"><strong>Boarding point</strong>
+                                    <select name="boarding">
+                                        <option>Required</option>
+                                        @if(isset($bdtf))
+                                            @foreach($bdtf->get('boarding') as $bd)
+                                                @foreach($bd as $dt)
+                                                    <option>{{$dt}}</option>
+                                                @endforeach
                                             @endforeach
-                                        @endforeach
-                                    @endif
-                                </select></p>
+                                        @endif
+                                    </select></p>
+                                @if(isset($berror))
+                                    <p style="color: red">{{$berror}}</p>
+                                @endif
+                                <p><strong>Dropping point</strong>
+                                    <select name="dropping">
+                                        <option>Optional</option>
+                                        @if(isset($bdtf))
+                                            @foreach($bdtf->get('dropping') as $bd)
+                                                @foreach($bd as $dt)
+                                                    <option>{{$dt}}</option>
+                                                @endforeach
+                                            @endforeach
+                                        @endif
+                                    </select></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div id="user-details">
-                            <h3>Customer Details</h3>
-                            @if(isset($userdata))
-                                <div id="home-row"><p><strong>Full name : </strong>&nbsp;{{$userdata->first_name}}{{' '}}{{$userdata->last_name}}</p></div>
-                                <div id="home-row"><p><strong>Email : </strong>&nbsp;{{$userdata->email}}</p></div>
-                                <div id="home-row"><p><strong>Phone no : </strong>&nbsp;{{$userdata->phn}}</p></div>
-                                <div id="home-row"><p><strong>Gender : </strong>&nbsp;{{$userdata->gender}}</p></div>
-                                <div id="home-row"><p><strong>Age : </strong>&nbsp;{{$userdata->age}}&nbsp;years</p></div>
-                            @endif
+                        <div class="col-sm-6">
+                            <div id="user-details">
+                                <h3>Customer Details</h3>
+                                @if(isset($userdata))
+                                    <div id="home-row"><p><strong>Full name : </strong>&nbsp;{{$userdata->first_name}}{{' '}}{{$userdata->last_name}}</p></div>
+                                    <div id="home-row"><p><strong>Email : </strong>&nbsp;{{$userdata->email}}</p></div>
+                                    <div id="home-row"><p><strong>Phone no : </strong>&nbsp;{{$userdata->phn}}</p></div>
+                                    <div id="home-row"><p><strong>Gender : </strong>&nbsp;{{$userdata->gender}}</p></div>
+                                    <div id="home-row"><p><strong>Age : </strong>&nbsp;{{$userdata->age}}&nbsp;years</p></div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="payment-details">
-                <h3>Payment Details</h3>
-                <div class="row">
-                    <div class="col-sm-5">
-                        <div id="payment-details-left">
-                            <p><strong>Service charge : </strong>&nbsp; {{$bdtf->get('total')}} Tk</p>
-                            <p><strong>Total : </strong>&nbsp; {{$bdtf->get('sc')}} Tk</p>
-                            <p><strong>Payment method : </strong>
-                                <select>
-                                    <option>Option</option>
-                                    <option>Bkash</option>
-                                    <option>Rocket</option>
-                                    <option>SureCash</option>
-                                </select></p>
-                            <button class="btn btn-success">Pay now</button>
+                <div id="payment-details">
+                    <h3>Payment Details</h3>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div id="payment-details-left">
+                                <p><strong>Service charge : </strong>&nbsp; {{$bdtf->get('sc')}} Tk</p>
+                                <p><strong>Total : </strong>&nbsp; {{$bdtf->get('total')}} Tk</p>
+                                <input name="total" value="{{$bdtf->get('total')}}" hidden>
+                                <input name="sc" value="{{$bdtf->get('sc')}}" hidden>
+                                <p><strong>Payment method : </strong>
+                                    <select name="payment-method">
+                                        <option>Option</option>
+                                        <option>Bkash</option>
+                                        <option>Rocket</option>
+                                        <option>SureCash</option>
+                                    </select></p>
+                                <button class="btn btn-success">Pay now</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-7">
-                        <div id="payment-details-right">
-                            <p id="bkash">Pay with BKash</p>
-                            <p id="rocket">Pay with Rocket</p>
-                            <p id="surecash">Pay with SureCash</p>
+                        <div class="col-sm-7">
+                            <div id="payment-details-right">
+                                <p id="bkash">Pay with BKash</p>
+                                <p id="rocket">Pay with Rocket</p>
+                                <p id="surecash">Pay with SureCash</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 

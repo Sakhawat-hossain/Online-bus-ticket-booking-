@@ -32,10 +32,12 @@ Route::post('search-buses','BusSearchController@search_bus'); // bus list withou
 Route::post('search-buses-with-filter','BusSearchController@search_bus_filter'); // bus list with filter
 Route::get('/seat-list-details/{id}', 'BusSearchController@seat_list'); //seat list details
 Route::get('booking-details/{id}/{tripID}', 'BusSearchController@booking'); //booking details
+Route::post('payment-details/{id}/{tripID}', 'BusSearchController@payment'); //payment details
 
 Route::get('/get-status/{id}','AjaxlController@getSeatStatus'); // get status of seat
 Route::get('/update-status/{id}/{status}/{userID}','AjaxlController@updateStatus'); // update status of seat
 Route::get('/get-userID/{id}','AjaxlController@getUserID'); // get userID
+Route::get('/get-seat-list/{id}','AjaxlController@getSeatList'); // get seat list to show in profile
 
 Route::get('/profile', function () {
     return view('user.profile');
@@ -48,6 +50,6 @@ Route::get('/admin', function () {
 Route::get('/customers_view', function () {
     return view('admin.customers_view');
 });
-Route::get('/bookings_view', function () {
+Route::get('/bookings_view', function (Request $request,$id,$tripID) {
     return view('admin.bookings_view');
 });
