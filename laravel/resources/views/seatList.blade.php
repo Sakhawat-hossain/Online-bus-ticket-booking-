@@ -42,57 +42,48 @@
 
         var inter_val=setInterval(getStatus,10000);
 
-            function getStatus() {
-                jQuery.ajax({
-                    type:'GET',
-                    url:'../get-status/'+tripID,
-                    data:'',
-                    async:false,
-                    success:function(data) {
-                        //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
-                        $("#pp").text(seat_arr[0].status);
-                        for(i=0;i<total_seat;i++){
-                            var idx=seat_arr[i].id;
+        function getStatus() {
+            jQuery.ajax({
+                type:'GET',
+                url:'../get-status/'+tripID,
+                data:'',
+                async:false,
+                success:function(data) {
+                    //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
+                    $("#pp").text(seat_arr[0].status);
+                    for(i=0;i<total_seat;i++){
+                        var idx=seat_arr[i].id;
 
-                            if(seat_arr[i].status.localeCompare('blocked')){ // not blocked
-                                if(data[idx].localeCompare('available')==0){ // some how available
-                                    seat_arr[i].status='available';
-                                    if (seat_arr[i].category.localeCompare('Business')==0) {
-                                        document.getElementById(i).style.color = '#4b88a6';
-                                    }
-                                    else{
-                                        document.getElementById(i).style.color = '#CCCCCB';}
+                        if(seat_arr[i].status.localeCompare('blocked')){ // not blocked
+                            if(data[idx].localeCompare('available')==0){ // some how available
+                                seat_arr[i].status='available';
+                                if (seat_arr[i].category.localeCompare('Business')==0) {
+                                    document.getElementById(i).style.color = '#4b88a6';
                                 }
-                                else if(data[idx].localeCompare('selected')==0) { // some how selected by him or another
-                                    document.getElementById(i).style.color = 'forestgreen';
-                                    if(seat_arr[i].status.localeCompare('available')==0){
-                                        seat_arr[i].status='booked';
-                                    }
-                                }
-                                else if(data[idx].localeCompare('booked')==0) { // some how selected by him or another
-                                    document.getElementById(i).style.color = '#DB7484';
+                                else{
+                                    document.getElementById(i).style.color = '#CCCCCB';}
+                            }
+                            else if(data[idx].localeCompare('selected')==0) { // some how selected by him or another
+                                document.getElementById(i).style.color = 'forestgreen';
+                                if(seat_arr[i].status.localeCompare('available')==0){
                                     seat_arr[i].status='booked';
                                 }
                             }
+                            else if(data[idx].localeCompare('booked')==0) { // some how selected by him or another
+                                document.getElementById(i).style.color = '#DB7484';
+                                seat_arr[i].status='booked';
+                            }
                         }
-                    },
-                    error:function() {
-                        $("#pp").text("error");
                     }
-                });
-            }
+                },
+                error:function() {
+                    $("#pp").text("error");
+                }
+            });
+        }
 
         function select_seat(id) { //auto refresh
-            //get seat status
-            //seat_status=getData(id);
-//document.getElementById("pp").innerHTML=seat_status;
-            //jQuery("#pp").html("<p>Hello id "+id+"</p>");
 
-            //if(seat_arr[id].status.localeCompare('booked')==0){ // someone de-select seat
-            //  if(seat_status.localeCompare('available')){
-            //    seat_arr[id].status='available';
-            //}
-            //}
             if(seat_arr[id].status.localeCompare('selected')==0){
                 seat_arr[id].status='available';
                 jQuery.ajax({
@@ -209,9 +200,13 @@
             jQuery("#alert-2").hide();
         }
 
+        function login_alert() {
+            alert("Sign in First");
+        }
+
         function initialization() {
 
-            document.getElementById("pp").innerHTML=username+tripID;
+            //document.getElementById("pp").innerHTML=username+tripID;
 
              for(i=0;i<total_seat;i++){
 
@@ -273,9 +268,6 @@
 
 </head>
 <body onload="initialization();">
-@php //dd($seat_info[3]); @endphp
-<div id="pp" onclick="getcolor1()">Total : {{$total}}</div>
-
 <div class="section">
 
     <div id="header">
@@ -296,10 +288,10 @@
                     @if(\Illuminate\Support\Facades\Session::has('username'))
                         @php $username=Session::get('username');@endphp
                         <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
-                        <li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        <li><a href="logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else
-                        <li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                        <li><a href="signin/create"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                        <li><a href="../user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                        <li><a href="../login-from-seatlist/{{$tripID}}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
                     @endif
                 </ul>
             </div>
@@ -344,22 +336,39 @@
                                     <div id="seat-view-group">
                                         <div class="row">
                                             @for($j=0;$j<5;$j++)
-                                                @if($j==0)
-                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                    @php $idx = $idx+1; @endphp
-                                                @elseif($j==1)
-                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                    @php $idx = $idx+1; @endphp
-                                                @elseif($j==2)
-                                                    <div class="col-sm-2"><span></span></div>
-                                                @elseif($j==3)
-                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                    @php $idx = $idx+1; @endphp
-                                                @elseif($j==4)
-                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                    @php $idx = $idx+1; @endphp
+                                                @if(\Illuminate\Support\Facades\Session::get('username')==null)
+                                                    @if($j==0)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==1)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==2)
+                                                        <div class="col-sm-2"><span></span></div>
+                                                    @elseif($j==3)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==4)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @endif
+                                                @else
+                                                    @if($j==0)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==1)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==2)
+                                                        <div class="col-sm-2"><span></span></div>
+                                                    @elseif($j==3)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==4)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @endif
                                                 @endif
-
                                             @endfor
                                         </div>
                                     </div>
@@ -374,21 +383,37 @@
                                     <div id="seat-view-group">
                                         <div class="row">
                                             @for($j=0;$j<5;$j++)
-                                                @if($j==0)
-                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                    @php $idx = $idx+1; @endphp
-                                                @elseif($j==1)
-                                                    <div class="col-sm-2"><span></span></div>
-                                                @elseif($j==2)
-                                                    <div class="col-sm-2"><span></span></div>
-                                                @elseif($j==3)
-                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                    @php $idx = $idx+1; @endphp
-                                                @elseif($j==4)
-                                                    <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                    @php $idx = $idx+1; @endphp
+                                                @if(\Illuminate\Support\Facades\Session::get('username')==null)
+                                                    @if($j==0)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==1)
+                                                        <div class="col-sm-2"><span></span></div>
+                                                    @elseif($j==2)
+                                                        <div class="col-sm-2"><span></span></div>
+                                                    @elseif($j==3)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==4)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @endif
+                                                @else
+                                                    @if($j==0)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==1)
+                                                        <div class="col-sm-2"><span></span></div>
+                                                    @elseif($j==2)
+                                                        <div class="col-sm-2"><span></span></div>
+                                                    @elseif($j==3)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==4)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @endif
                                                 @endif
-
                                             @endfor
                                         </div>
                                     </div>
@@ -414,8 +439,12 @@
                                         </div>
                                         <div id="buy-button">
                                             @php $usern=Session::get('username');      @endphp
-                                            <a href="{{url('/booking-details',['id'=>$usern,'tripID'=>$tripID])}}">
-                                            <button class="btn btn-success">Buy now</button></a>
+                                            @if($usern==null)
+                                                <button class="btn btn-success" onclick="login_alert()">Buy now</button>
+                                            @else
+                                                <a href="{{url('/booking-details',['id'=>$usern,'tripID'=>$tripID])}}">
+                                                <button class="btn btn-success">Buy now</button></a>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-sm-4">

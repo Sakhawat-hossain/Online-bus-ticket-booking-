@@ -59,9 +59,9 @@
 				<ul class="nav navbar-nav navbar-right">
                     @if(\Illuminate\Support\Facades\Session::has('username'))
                         <li><a href="profile"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
-                        <li><a href="../signin"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        <li><a href="../logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else
-					    <li><a href="../signin/create"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+					    <li><a href="../sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
                     @endif
 				</ul>
 			</div>

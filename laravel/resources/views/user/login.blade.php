@@ -11,11 +11,11 @@
 	<title>Bus Ticket Booking</title>
 
 	<!-- Google font -->
-	<link rel="stylesheet" href="../css/google.font.">
+	<link rel="stylesheet" href="css/google.font.">
 
 	<!-- Bootstrap -->
-	<link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
-	<link type="text/css" rel="stylesheet"  href="../css/header-design.css"/>
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet"  href="css/header-design.css"/>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -26,8 +26,8 @@
 
 
 	<!-- Custom stlylesheet -->
-	<link type="text/css" rel="stylesheet" href="../css/footer-design.css" />
-	<link type="text/css" rel="stylesheet" href="../css/login-style.css"/>
+	<link type="text/css" rel="stylesheet" href="css/footer-design.css" />
+	<link type="text/css" rel="stylesheet" href="css/login-style.css"/>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,11 +47,11 @@
 		<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="../home" style="color: white;"><span>
+					<a class="navbar-brand" href="home" style="color: white;"><span>
                         <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
 				</div>
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="../home">Home</a></li>
+					<li class="active"><a href="home">Home</a></li>
 					<li><a href="#footer">Contact</a></li>
 					<li><a href="#footer">About</a></li>
 				</ul>
@@ -59,10 +59,10 @@
 					@if(\Illuminate\Support\Facades\Session::has('username'))
 						@php $username=Session::get('username');@endphp
 						<li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
-						<li><a href="../signin"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+						<li><a href="logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
 
 					@else
-						<li><a href="../user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+						<li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
 					@endif
 				</ul>
 			</div>
@@ -76,7 +76,7 @@
 			</div>
 
 			<div class="card-body">
-				<form method="post" action="../sign-in">
+				<form method="post" action="sign-in">
 					{{csrf_field()}}
 					<div class="input-group form-group">
 						<div class="input-group-addon">
@@ -90,9 +90,9 @@
 						</div>
 						<input type="password" name="password" class="form-control" placeholder="password" required>
 					</div>
-					@if(\Illuminate\Support\Facades\Session::has('userwrong'))
+					@if(isset($userwrong))
 						<!--div class="alert-danger"-->
-							<p>{{\Illuminate\Support\Facades\Session::get('userwrong')}}</p>
+							<p>{{$userwrong}}</p>
 					@endif
 					<div class="form-group">
 						<input type="submit" value="Sign in" name="form" class="btn float-right login_btn" style="margin-left: 50%;margin-bottom: 15px;">

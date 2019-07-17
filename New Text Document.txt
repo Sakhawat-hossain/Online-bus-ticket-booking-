@@ -90,7 +90,6 @@
         }
 
         function removePrev(id) {
-
             var element=document.getElementById("pseats-"+id);
             element.remove();
         }

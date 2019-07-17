@@ -14,15 +14,16 @@
 Route::get('/', 'homeController@homepage');
 Route::get('/home', 'homeController@homepage');
 
-//Route::get('signin', array('uses' => 'MyController@showLogin'));
-Route::post('sign-in', 'MyController@doLogin');
+Route::get('logout', 'MyController@logout'); // logout
+Route::get('sign-in', 'MyController@showLogin'); // login
+Route::post('sign-in', 'MyController@doLogin'); // login
+//Route::post('register', 'MyController@doLogin'); // register
 
-Route::get('places','MyController@places' ); // log in controller
-//Route::post('signin/{id}','MyController@checkuser' );
+Route::get('login-from-seatlist/{id}', 'MyController@loginFrom'); // login from buslist / seatlist
+Route::post('login-from-seatlist/{id}', 'MyController@loginFromSeat'); // login from buslist / seatlist
 
-//Route::get('signup','MyController@signup' );
+Route::get('places','MyController@places' ); // places in controller
 
-Route::resource('signin','LoginController');
 
 Route::resource('user','UserController'); // sign up, show profile, edit profile
 
