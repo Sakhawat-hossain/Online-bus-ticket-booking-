@@ -65,6 +65,11 @@
       <path value="$PROJECT_DIR$/laravel/vendor/sebastian/recursion-context" />
       <path value="$PROJECT_DIR$/laravel/vendor/sebastian/object-enumerator" />
       <path value="$PROJECT_DIR$/laravel/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/laravel/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/laravel/vendor/barryvdh/laravel-dompdf" />
+      <path value="$PROJECT_DIR$/laravel/vendor/dompdf/dompdf" />
+      <path value="$PROJECT_DIR$/laravel/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/laravel/vendor/phenx/php-svg-lib" />
     </include_path>
   </component>
   <component name="PhpUnit">

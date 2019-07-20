@@ -76,35 +76,38 @@ INSERT INTO `seats` (`tripID`,`seatID`,`fare`,`status`) VALUES
 (8,70,1000,'available');
 
 
+<div id="bKashFrameWrapper" style="position: fixed; overflow-y: scroll; z-index: 50000; right: 0px; bottom: 0px; left: 0px; top: 0px;"><iframe id="bKash-iFrame-391" frameborder="0" src="https://client.pay.bka.sh/checkout" name="bKash_checkout_app" style="display: block; border: none; margin: 0px; padding: 0px; height: 100%; width: 100%; transform: translate3d(0px, 0px, 0px);"></iframe></div>
 
+<html lang="en"><head>
+    <link rel="stylesheet" href="/resource/css/external/skeleton.css">
+    <link rel="stylesheet" href="/resource/css/versions/1/checkout.css">
+    <script src="/resource/js/master/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="/resource/js/master/bpgw.cb.site-master-1.2.0.js" type="application/javascript"></script>
+    <script src="/resource/js/master/bpgw.cb.util-1.2.0.js" type="application/javascript"></script>
+    <script src="/resource/js/checkout/bpgw.cb.checkout-1.2.0.js" type="application/javascript"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>-->
+    <!--<meta http-equiv="Pragma" content="no-cache"/>-->
+    <!--<meta http-equiv="Expires" content="0"/>-->
+    <title>Checkout</title>
+</head>
+<body class="text-center fade-in">
+<span id="container-bg"></span>
+<span id="container"><form class="form-signin" action="#" method="POST" id="login_form">
+    <div id="logoHolder"><img id="logo" class="mb-4" src="/resource/img/bkash_payment.png" alt="bKash logo" height="72"></div>
+    <!--<h5 class='h3 mb-3 font-weight-normal' id='pageHeader'>bKash Checkout</h5>-->
+    <div id="trxInfo"><b>Merchant :</b> <span id="merchant_name">BUSBD</span><br><b>Invoice no : </b><span id="merchantInvoice">OCBBCJTT4RJQKNRYWBD338a7</span><br>
+        <b>Amount :</b> BDT <span id="amount_to_be_paid">1060</span>
+    </div>
+    <br>
+    <label for="wallet" class="sr-only">Your bKash account number</label>
+    <input type="text" id="wallet" name="wallet" class="form-control" placeholder="e.g 01XXXXXXXXX" required="">
+    <br><input type="checkbox" id="toc" value="agreement"> I agree to the <b><a href="https://www.bkash.com/terms-of-use-checkout" target="_blank">terms and conditions</a></b><br>
 
-                <div id="sort-option-container">
-                    <div class="row">
-                        <div class="col-sm-2"><p><span><i class="fas fa-sort"></i></span>Sort By</p></div>
-                        <div class="col-sm-2"><p  onclick="sortTable(0)"  id="opt">Operator name
-                                <span id="opt-up"><i class="fas fa-sort-up"></i></span>
-                                <span id="opt-down-1" hidden><i class="fas fa-sort-down"></i></span>
-                                <span id="opt-down-2"><i class="fas fa-sort-down"></i></span>
-                            </p></div>
-                        <div class="col-sm-2"><p  onclick="sortTable(3)" id="ctype">Coach type
-                                <span id="opt-up-1"><i class="fas fa-sort-up"></i></span>
-                                <span id="opt-down-3" hidden><i class="fas fa-sort-down"></i></span>
-                                <span id="opt-down-4"><i class="fas fa-sort-down"></i></span></p></div>
-                        <div class="col-sm-2"><p  onclick="sortTable(6)" id="savailable">Seat available
-                                <span id="opt-up-2"><i class="fas fa-sort-up"></i></span>
-                                <span id="opt-down-5" hidden><i class="fas fa-sort-down"></i></span>
-                                <span id="opt-down-6"><i class="fas fa-sort-down"></i></span></p></div>
-                        <div class="col-sm-2"><p  onclick="sortTable(7)" id="fare">Fare
-                                <span id="opt-up-3"><i class="fas fa-sort-up"></i></span>
-                                <span id="opt-down-7" hidden><i class="fas fa-sort-down"></i></span>
-                                <span id="opt-down-8"><i class="fas fa-sort-down"></i></span></p></div>
+    <button type="submit" id="submit_button">PROCEED</button>
+    <button type="button" id="close_button">CLOSE</button>
+    <div id="error"></div><div id="credit"><img src="/resource/img/16247.png" alt="16247" height="30"></div>
+</form></span>
 
-                        <div class="col-sm-2"><p id="filter">Filter  <span><i class="fas fa-sort-down"></i></span></p>
-                            <div id="filter-list">
-                                <ul>
-                                    <li>Bus Type</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+</body></html>

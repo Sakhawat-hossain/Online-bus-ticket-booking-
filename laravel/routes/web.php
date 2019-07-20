@@ -35,6 +35,13 @@ Route::get('/seat-list-details/{id}', 'BusSearchController@seat_list'); //seat l
 Route::get('booking-details/{id}/{tripID}', 'BusSearchController@booking'); //booking details
 Route::post('payment-details/{id}/{tripID}', 'BusSearchController@payment'); //payment details
 
+Route::post('confirm-ticket/{id}/{tripID}','BusSearchController@confirmTicket'); // confirm ticket
+
+Route::get('show-ticket/{id}/{ticketID}','TicketPrintController@showTicket'); // show ticket
+Route::get('download-ticket/{id}/{ticketID}','TicketPrintController@downloadTicket'); // download ticket
+Route::get('cancel-ticket/{id}/{ticketID}','TicketPrintController@cancelTicket'); // cancel ticket
+Route::get('cancel-refund-policy','TicketPrintController@cancelRefundPolicy'); // cancel-refund-policy ticket
+
 Route::get('/get-status/{id}','AjaxlController@getSeatStatus'); // get status of seat
 Route::get('/update-status/{id}/{status}/{userID}','AjaxlController@updateStatus'); // update status of seat
 Route::get('/get-userID/{id}','AjaxlController@getUserID'); // get userID

@@ -38,6 +38,7 @@ class AjaxlController extends Controller
     public function getSeatList($id){
         $list=DB::table('seats')
             ->where('seats.ticketID',$id)
+            ->where('seats.status','booked')
             ->join('seat_infos','seats.seatID','seat_infos.id')
             ->select('seat_infos.seatNo','seat_infos.category','seats.fare')->get();
 

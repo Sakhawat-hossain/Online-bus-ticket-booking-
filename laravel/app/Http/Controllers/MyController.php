@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Auth;
 
 class MyController extends Controller
 {
@@ -19,6 +20,9 @@ class MyController extends Controller
      */
     public function showLogin()
     {
+        if (Session::has('username')) echo  'ok-ckeck';
+
+        else
         return view('user.login');
     }
     public function places()

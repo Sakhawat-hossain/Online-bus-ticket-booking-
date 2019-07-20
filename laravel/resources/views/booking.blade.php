@@ -18,7 +18,6 @@
 
 </head>
 <body>
-<div id="pp" onclick="getcolor1()">Total : {{Session::get('username')}}</div>
 
 <div class="section">
 
@@ -26,11 +25,11 @@
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="../home" style="color: white;"><span>
+                    <a class="navbar-brand" href="../../home" style="color: white;"><span>
                         <i class="glyphicon glyphicon-home"></i></span>Online ticket booking</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="../home">Home</a></li>
+                    <li class="active"><a href="../../home">Home</a></li>
                     <li><a href="#footer">Contact</a></li>
                     <li><a href="#footer">About</a></li>
                     <li><a href="#operator-container">Operators</a></li>
@@ -40,10 +39,10 @@
                     @if(\Illuminate\Support\Facades\Session::has('username'))
                         @php $username=Session::get('username');@endphp
                         <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
-                        <li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        <li><a href="../../logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else
-                        <li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                        <li><a href="signin/create"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                        <li><a href="../../user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                        <li><a href="../../sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
                     @endif
                 </ul>
             </div>
@@ -101,8 +100,8 @@
                                             @endforeach
                                         @endif
                                     </select></p>
-                                @if(isset($berror))
-                                    <p style="color: red">{{$berror}}</p>
+                                @if(\Illuminate\Support\Facades\Session::has('berror'))
+                                    <p style="color: red">{{\Illuminate\Support\Facades\Session::get('berror')}}</p>
                                 @endif
                                 <p><strong>Dropping point</strong>
                                     <select name="dropping">
@@ -147,6 +146,9 @@
                                         <option>Rocket</option>
                                         <option>SureCash</option>
                                     </select></p>
+                                @if(\Illuminate\Support\Facades\Session::has('perror'))
+                                    <p style="color: red">{{\Illuminate\Support\Facades\Session::get('perror')}}</p>
+                                @endif
                                 <button class="btn btn-success">Pay now</button>
                             </div>
                         </div>

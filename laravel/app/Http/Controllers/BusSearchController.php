@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -314,8 +315,14 @@ class BusSearchController extends Controller
 
     public function payment(Request $request,$id,$tripID){
         if($request->get('boarding')=='Required'){
-            //return redirect()->route('/booking-details/'.$id.'/'.$tripID)->with('berror','select a boarding point');
-            return Redirect::back()->withInput(Input::all())->with('berror','select a boarding point');
+            if($request->get('payment-method')=='Option')
+                return redirect('booking-details/'.$id.'/'.$tripID)->with('berror','select a boarding point')
+                    ->with('perror','Select payment method');
+
+            return redirect('booking-details/'.$id.'/'.$tripID)->with('berror','select a boarding point');
+        }
+        else if($request->get('payment-method')=='Option'){
+                return redirect('booking-details/'.$id.'/'.$tripID)->with('perror','Select payment method');
         }
         $method=$request->get('payment-method');
         $senddata=collect();
@@ -323,8 +330,140 @@ class BusSearchController extends Controller
         $senddata->put('sc',$request->get('sc'));
         $senddata->put('boarding',$request->get('boarding'));
         $senddata->put('dropping',$request->get('dropping'));
+        $senddata->put('tripID',$tripID);
 
         return view('payment')->with('senddata',$senddata);
+    }
+
+    public function confirmTicket(Request $request,$id,$tripID){
+        $boarding=$request->get('boarding');
+        $dropping=$request->get('dropping');
+        $tripID=$request->get('tripID');
+        $trxID=$request->get('trxID');
+
+        $data=DB::table('payments')->where('trxID',$trxID)->value('id');
+
+        if($data==''){
+            //return redirect()->back();
+            return $this->payment($request,$id,$tripID);
+        }
+
+        $cdata=DB::table('tickets')->where('paymentID',$data)->value('id');
+        $request->input('trxIDstatus','Already accepted, try with your new trxID');
+
+        if($cdata==''){
+            $userID=DB::table('users')->where('username',$id)->value('id');
+            if($dropping=='Optional') $dropping='';
+
+            $ticket= new Ticket([
+                'boarding_point' => $boarding,
+                'dropping_point' => $dropping,
+                'paymentID' => $data,
+                'userID' => $userID,
+                'status' => 'active'
+            ]);
+
+            $ticket->save();
+
+            $cdata=DB::table('tickets')->where('paymentID',$data)->value('id');
+             DB::table('seats')->where('ticketID',$userID)
+                                ->where('status','selected')
+                                ->update(['status' => 'booked', 'ticketID' => $cdata]);
+        }
+
+//showing ticket
+        $user = DB::table('users')
+            ->select('first_name','last_name','email','phone no','gender','id','age')
+            ->where('username', $id)->get();
+
+        $first_name=$last_name=$phn=$gender=$email=$create=$update=$userID=$age="";
+        $i=0;
+        foreach ($user as $userdata){
+            foreach ($userdata as $data){
+                if($i==0) $first_name=$data;
+                elseif($i==1) $last_name=$data;
+                elseif($i==2) $email=$data;
+                elseif($i==3) $phn=$data;
+                elseif($i==4) $gender=$data;
+                elseif($i==5) $userID=$data;
+                else $age=$data;
+
+                $i=$i+1;
+            }
+        }
+        $userdata=(object)array(
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'email' => $email,
+            'phn' => $phn,
+            'gender' => $gender,
+            'age' => $age,
+        );
+
+        $ticketactive=DB::table('tickets')
+            ->where('tickets.id',$cdata)
+            ->join('seats','seats.ticketID', '=', 'tickets.id')
+            ->join('trips','seats.tripID', '=', 'trips.id')
+            ->join('buses','trips.busID', '=', 'buses.id')
+            ->join('routes','trips.routeID', '=', 'routes.id')
+            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.id',
+                'trips.departure_time','buses.coach_no','tickets.boarding_point')
+            ->groupBy('tickets.id')->get();
+
+        $from=$to=$date=$bname=$btype=$btime=$tid=$dtime=$bc=$bp='';
+
+        $i=0;
+        foreach ($ticketactive as $tdata){
+            foreach ($tdata as $data){
+                if($i==0) $from=$data;
+                elseif($i==1) $to=$data;
+                elseif($i==2) $date=$data;
+                elseif($i==3) $bname=$data;
+                elseif($i==4) $btype=$data;
+                elseif($i==5) $btime=$data;
+                elseif($i==6) $tid=$data;
+                elseif($i==7) $dtime=$data;
+                elseif($i==8) $bc=$data;
+                else $bp=$data;
+
+                $i=$i+1;
+            }
+        }
+
+        $ticketactive=(object)array(
+            'from' => $from,
+            'to' => $to,
+            'journey_date' => $date,
+            'bus_name' => $bname,
+            'bus_type' => $btype,
+            'booking_time' => $btime,
+            'tid' => $tid,
+            'departure_time' => $dtime,
+            'coach_no' => $bc,
+            'boarding_point' => $bp,
+        );
+
+        $seats=DB::table('seats')
+            ->where('seats.ticketID',$cdata)
+            ->where('seats.status','booked')
+            ->join('seat_infos','seat_infos.id','seats.seatID')
+            ->select('seat_infos.seatNo','seat_infos.category','seats.fare')->get();
+
+        $ticketInfo=collect();
+        $ticketInfo->put('ticket',$ticketactive);
+        $ticketInfo->put('seats',$seats);
+        $ticketInfo->put('userdata',$userdata);
+       // echo $ticketInfo->get('userdata')->phn;
+
+        $total=$request->get('total')-$request->get('sc');
+        $ticketInfo->put('total',$total);
+        $ticketInfo->put('sc',$request->get('total'));
+        $ticketInfo->put('ticketID',$cdata);
+
+        //return view('user.profile')->with('userdata',$userdata)->with('ticketInfo',$ticketInfo)->with('ticketNum',$ticketNum);
+
+        return view('ticket')->with('ticketInfo',$ticketInfo);
+
     }
 
 }

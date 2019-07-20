@@ -1,0 +1,40 @@
+#cancel-refund-container{
+    width: 100%;
+    margin-top: 20px;
+    background-color: white;
+}
+#link-background{
+    width: 80%;
+    height: 40px;
+    margin-left: 15px;
+    border-bottom: 1px dashed grey;
+    color: darkgreen;
+}
+#link-background ul{
+    list-style: none;
+    height: 100%;
+    font-size: 15px;
+    padding: 9px;
+}
+
+#link-background :hover{
+    background-color: whitesmoke;
+}
+#link-background a{
+    color: darkgreen;
+    text-decoration: none;
+}
+#link-background a:visited{
+    color: limegreen;
+}
+
+
+h3{
+    color: darkgreen;
+}
+h4{
+    color: green;
+}
+h5{
+    color: limegreen;
+}

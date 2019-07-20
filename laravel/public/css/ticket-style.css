@@ -1,0 +1,33 @@
+#download-section{
+    margin-right: 100px;
+}
+
+#ticket-container{
+    width: 90%;
+    margin-left: 5%;
+    border: 1px dashed grey;
+    margin-top: 10px;
+}
+
+#ticket-container-top{
+    min-height: 100px;
+    border-bottom: 2px solid black;
+}
+
+#ticket-container-bottom{
+    height: auto;
+    padding-left: 20px;
+}
+
+#btn{
+    position: absolute;
+    left: 30px;
+    top: 60px;
+    width: 120px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius:10px;
+    border:2px solid #b25552;
+    font-weight:bold;
+    margin:auto;
+}

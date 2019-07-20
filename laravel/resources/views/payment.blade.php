@@ -49,20 +49,30 @@
         }
     </style>
 
+    <script>
+
+        function checkTrxID() {
+            var trxID=document.getElementById("trxID").value;
+            document.getElementById('pp').innerHTML=trxID;
+        }
+
+    </script>
+
 </head>
 <body>
 @php //dd($seat_info[3]); @endphp
+<p id="pp"></p>
 <div class="section">
 
     <div id="header">
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="../home" style="color: white;"><span>
+                    <a class="navbar-brand" href="../../home" style="color: white;"><span>
                         <i class="glyphicon glyphicon-home"></i></span>Online ticket booking</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="../home">Home</a></li>
+                    <li class="active"><a href="../../home">Home</a></li>
                     <li><a href="#footer">Contact</a></li>
                     <li><a href="#footer">About</a></li>
                     <li><a href="#operator-container">Operators</a></li>
@@ -72,10 +82,10 @@
                     @if(\Illuminate\Support\Facades\Session::has('username'))
                         @php $username=Session::get('username');@endphp
                         <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
-                        <li><a href="signin"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        <li><a href="../../logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else
                         <li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                        <li><a href="signin/create"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                        <li><a href="../../sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
                     @endif
                 </ul>
             </div>
@@ -239,16 +249,23 @@
 
         <div id="payment-confirm">
             <div class="row">
-                <p><strong>Service charge : </strong>&nbsp; {{$senddata->get('sc')}} Tk</p>
-                <p><strong>Total : </strong>&nbsp; {{$senddata->get('total')}} Tk</p>
-                <input name="boarding" value="{{$senddata->get('boarding')}}" hidden>
-                <input name="dropping" value="{{$senddata->get('dropping')}}" hidden>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <span>Inter TrxID to confirm payment &nbsp;</span><input type="text" name="trxID" placeholder="Ex - XXXXXXXXXX">
+                <form method="post" action="../../confirm-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$senddata->get('tripID')}}">
+                    {{csrf_field()}}
+                    <p><strong>Service charge : </strong>&nbsp; {{$senddata->get('sc')}} Tk</p>
+                    <p><strong>Total : </strong>&nbsp; {{$senddata->get('total')}} Tk</p>
+                    <input name="boarding" value="{{$senddata->get('boarding')}}" hidden>
+                    <input name="dropping" value="{{$senddata->get('dropping')}}" hidden>
+                    <input name="tripID" value="{{$senddata->get('tripID')}}" hidden>
+                    <input name="total" value="{{$senddata->get('total')}}" hidden>
+                    <input name="sc" value="{{$senddata->get('sc')}}" hidden>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <span><strong>Inter TrxID to confirm payment</strong> &nbsp;</span>
+                            <input style="text-align: center;height: 35px; " type="text" id="trxID" name="trxID" placeholder="Ex - XXXXXXXXXX" required>
+                        </div>
+                        <div class="col-sm-1"><button class="btn btn-success" onclick="checkTrxID()">Confirm</button></div>
                     </div>
-                    <div class="col-sm-1"><button class="btn btn-success">Confirm</button></div>
-                </div>
+                </form>
             </div>
         </div>
 
