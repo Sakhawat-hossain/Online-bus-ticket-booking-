@@ -62,6 +62,7 @@
                         <li><a href="#footer">About</a></li>
                         <li><a href="#operator-container">Operators</a></li>
                         <li><a href="#operator-container">Routes</a></li>
+                        <li><a href="agent-sign-in">Agents</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if(\Illuminate\Support\Facades\Session::has('username'))

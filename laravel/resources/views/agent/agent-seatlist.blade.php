@@ -22,9 +22,9 @@
         var tripID = <?php echo json_encode($tripID); ?>;
 
         var seat_arr=<?php echo $seat_info; ?>;
-        var username=<?php echo json_encode(Session::get('username')); ?>
+        var username=<?php echo json_encode(Session::get('agent-username')); ?>
 
-        var userID=<?php echo json_encode(Session::get('userID')); ?>;
+        var userID=<?php echo json_encode(Session::get('agentID')); ?>;
         var i=0;
         var j=0;
 
@@ -124,7 +124,7 @@
                 if(seat_arr[id].status.localeCompare('available')==0){
                     seat_arr[id].status='selected';
 
-                       jQuery.ajax({
+                    jQuery.ajax({
                         type:'GET',
                         url:'../update-status/'+seat_arr[id].id+"/"+'selected/'+userID,
                         data:'',
@@ -208,7 +208,7 @@
 
             //document.getElementById("pp").innerHTML=username+tripID;
 
-             for(i=0;i<total_seat;i++){
+            for(i=0;i<total_seat;i++){
 
                 if(seat_arr[i].status.localeCompare('available')==0){
                     if (seat_arr[i].category.localeCompare('Business')==0) {
@@ -285,13 +285,14 @@
                     <li><a href="#operator-container">Routes</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    @if(\Illuminate\Support\Facades\Session::has('username'))
-                        @php $username=Session::get('username');@endphp
-                        <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
-                        <li><a href="logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                    @if(\Illuminate\Support\Facades\Session::has('agent-username'))
+                        @php $username=Session::get('agent-username');@endphp
+                        <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
+                                    {{\Illuminate\Support\Facades\Session::get('agent-username')}}</span></a> </li>
+                        <li><a href="agent-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else
-                        <li><a href="../user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                        <li><a href="../login-from-seatlist/{{$tripID}}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                        <li><a href="../agent/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                        <li><a href="../agent-sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
                     @endif
                 </ul>
             </div>
@@ -299,6 +300,8 @@
     </div>
 
     <div class="container" style="min-height: 500px;">
+        @if(\Illuminate\Support\Facades\Session::has('agent-username'))
+
         <div id="main-container">
             <div id="couch-text">
                 <div class="row">
@@ -336,7 +339,7 @@
                                     <div id="seat-view-group">
                                         <div class="row">
                                             @for($j=0;$j<5;$j++)
-                                                @if(\Illuminate\Support\Facades\Session::get('username')==null)
+                                                @if(\Illuminate\Support\Facades\Session::get('agent-username')==null)
                                                     @if($j==0)
                                                         <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
                                                         @php $idx = $idx+1; @endphp
@@ -383,7 +386,7 @@
                                     <div id="seat-view-group">
                                         <div class="row">
                                             @for($j=0;$j<5;$j++)
-                                                @if(\Illuminate\Support\Facades\Session::get('username')==null)
+                                                @if(\Illuminate\Support\Facades\Session::get('agent-username')==null)
                                                     @if($j==0)
                                                         <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
                                                         @php $idx = $idx+1; @endphp
@@ -424,42 +427,74 @@
                     </div>
                     <!--right side -->
                     <div class="col-sm-8">
-                        <div id="booking-details">
-                            <div id="booking-details-top"><h2>Booking information</h2></div>
-                            <div id="booking-details-bottom">
-                                <div class="row">
-                                    <div class="col-sm-7">
-                                        <h3>Selected seats : </h3>
-                                        <div id="seat-info">  </div>
-                                        <div id="service-total-info">
-                                            <div class="row"><p style="float: left;"><strong>Service charge : </strong></p>
-                                                <p id="sc" style="padding-left: 50px;">0 Tk</p></div>
-                                            <div class="row" ><p style="float: left;"><strong>Total : </strong></p>
-                                                <p id="total" style="padding-left: 50px;">0 Tk</p></div>
+                        <form method="post" action="#">
+                            <div id="booking-details">
+                                <div id="booking-details-top"><h2>Booking information</h2></div>
+                                <div id="booking-details-bottom">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h3>Selected seats : </h3>
+                                            <div id="seat-info">  </div>
+                                            <div id="service-total-info">
+                                                <div class="row"><p style="float: left;"><strong>Service charge : </strong></p>
+                                                    <p id="sc" style="padding-left: 50px;">0 Tk</p></div>
+                                                <div class="row" ><p style="float: left;"><strong>Total : </strong></p>
+                                                    <p id="total" style="padding-left: 50px;">0 Tk</p></div>
+                                            </div>
+                                            <div id="buy-button">
+                                                @php $usern=Session::get('agent-username');      @endphp
+                                                @if($usern==null)
+                                                    <button class="btn btn-success" onclick="login_alert()">Buy now</button>
+                                                @else
+                                                    <a href="{{url('#',['id'=>$usern,'tripID'=>$tripID])}}">
+                                                        <button class="btn btn-success">Buy now</button></a>
+                                                @endif
+                                            </div>
                                         </div>
-                                        <div id="buy-button">
-                                            @php $usern=Session::get('username');      @endphp
-                                            @if($usern==null)
-                                                <button class="btn btn-success" onclick="login_alert()">Buy now</button>
-                                            @else
-                                                <a href="{{url('/booking-details',['id'=>$usern,'tripID'=>$tripID])}}">
-                                                <button class="btn btn-success">Buy now</button></a>
-                                            @endif
+                                        <div class="col-sm-6" style="margin-top: 50px;">
+                                            <div class="row">
+                                                <div class="col-sm-10 col-sm-offset-1">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Mobile No</span>
+                                                        <input class="form-control" name="phone_no" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-10 col-sm-offset-1">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Name</span>
+                                                        <input class="form-control" name="name" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-10 col-sm-offset-1">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Gender</span>
+                                                        <select class="form-control">
+                                                            <option>male</option>
+                                                            <option>female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p><span><i class="fas fa-asterisk" style="color: red;"></i></span>You can buy maximum 6 tickets</p>
-                                        <p id="alert-2" style="margin-top: 70px;">
-                                            <span><i class="fas fa-asterisk" style="color: red;"></i></span>You exeed your limit</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
 
         </div>
+
+        @else
+            <h3 style="text-align: center;margin-top: 100px;">Pleage log in first</h3>
+
+        @endif
+
     </div>
 
     <div id="footer">
@@ -494,4 +529,5 @@
 
 </body>
 </html>
+
 

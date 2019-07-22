@@ -466,4 +466,145 @@ class BusSearchController extends Controller
 
     }
 
+    public function agent_search_bus_filter(Request $request)
+    {
+        //
+        //$form=$request->get('search-bus');
+        $from=$request->get('from');
+        $to=$request->get('to');
+        $departure=$request->get('departure');
+        $type=$request->get('type');
+
+        $username=$request->get('username');
+        $bus_name=DB::table('agents')
+                    ->where('agents.username',$username)
+                    ->join('admins','agents.adminID','admins.id')
+                    ->value('admins.enterprise');
+
+       // echo $bus_name;
+
+        //$returndate=$request->get('returndate');
+
+        // $departure=strtotime($departure,'Y-m-d')->yesterday();
+        if($request->get('sendval')=='prev')
+            $departure = date("Y-m-d", strtotime('-1 day',strtotime($departure)));
+        elseif($request->get('sendval')=='next')
+            $departure = date("Y-m-d", strtotime('+1 day',strtotime($departure)));
+
+        if($type != 'All'){
+            $data=DB::table('trips')
+                ->join('routes','trips.routeID', '=', 'routes.id')
+                ->join('buses','trips.busID', '=', 'buses.id')
+                ->where('date',$departure)
+                ->where('from',$from)
+                ->where('to',$to)
+                ->where('name',$bus_name)
+                ->where('type',$type)
+                ->select('buses.name', 'buses.coach_no','routes.starting_point','buses.type','trips.departure_time','trips.arrival_time','buses.available_seat','trips.b/e','trips.id')
+                ->get();
+        }
+        else{
+            $data=DB::table('trips')
+                ->join('routes','trips.routeID', '=', 'routes.id')
+                ->join('buses','trips.busID', '=', 'buses.id')
+                ->where('date',$departure)
+                ->where('from',$from)
+                ->where('to',$to)
+                ->where('name',$bus_name)
+                ->select('buses.name', 'buses.coach_no','routes.starting_point','buses.type','trips.departure_time','trips.arrival_time','buses.available_seat','trips.b/e','trips.id')
+                ->get();
+        }
+
+
+        $send_data=(object)array(
+            'from' => $from,
+            'to' => $to,
+            'departure' => $departure,
+        );
+
+        $places=DB::table('routes')->distinct()->select('to')->get();
+
+       return View::make('agent.agent-buslist')->with('searchdata',$data)->with('send_data',$send_data)->with('places',$places);
+
+    }
+
+    public function agent_seat_list($id){
+        //return view('seatList');
+
+        $prices=DB::table('seats')->select('fare','seatID','status','id','ticketID')->where('tripID',$id)->get();
+
+        $seat_fare=collect();
+        $fare=0;
+        $idx=0;
+        $status='';
+        $seatid=0;
+        $tid='';
+        foreach ($prices as $prc){
+            $j=0;
+            foreach($prc as $pr){
+                if($j==0) $fare=$pr;
+                elseif($j==1) $idx=$pr;
+                elseif($j==2) $status=$pr;
+                elseif($j==3) $seatid=$pr;
+                else $tid=$pr;
+                $j=$j+1;
+            }
+            $seat_temp=collect(['fare'=>$fare,'status'=>$status,'id'=>$seatid,'userID'=>$tid]);
+            $seat_fare->put($idx,$seat_temp);
+        }
+        //dd($seat_fare);
+
+        $seats=DB::table('trips')->where('trips.id',$id)
+            ->join('buses','trips.busID','=','buses.id')
+            ->join('seat_infos','buses.id','=','seat_infos.busID')
+            ->select('seat_infos.status','seat_infos.seatNo','seat_infos.category','seat_infos.id')->get();
+
+        $seat_info=collect();
+        $i=0;
+
+        foreach ($seats as $seat){
+            $j=0;
+            foreach ($seat as $st){
+                if($j==0)  $status=$st;
+                elseif($j==1) $seatNo=$st;
+                elseif($j==2) $category=$st;
+                else $idx=$st;
+
+                $j=$j+1;
+            }
+            $status_t='available';
+            $sfare=$seat_fare->get($idx);
+            if($sfare){
+                $status_t=$sfare->get('status');
+                $fare=$sfare->get('fare');
+                $seatid=$sfare->get('id');
+                $tid=$sfare->get('userID');
+            }
+
+            if($status != 'available'){
+                $collectData=collect(['status'=>$status,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare,'id'=>0,'userID'=>$tid]);
+            }else{
+                $collectData=collect(['status'=>$status_t,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare,'id'=>$seatid,'userID'=>$tid]);
+            }
+
+            $seat_info->put($i,$collectData);
+            $i=$i+1;
+        }
+//echo "hello<br>";
+//dd($seat_info);
+        //$s=json_encode($seat_info);
+
+        //$ss=$s.status;
+        //dd($s);
+
+        $total=DB::table('trips')->where('trips.id',$id)
+            ->join('buses','trips.busID','=','buses.id')
+            ->value('total_seat');
+
+        $seat_inf=json_encode($seat_info);
+
+        return view('agent.agent-seatlist')->with('seat_info',$seat_inf)->with('total',$total)->with('tripID',$id);
+
+    }
+
 }

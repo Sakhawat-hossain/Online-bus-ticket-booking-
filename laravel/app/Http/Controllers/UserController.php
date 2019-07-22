@@ -63,17 +63,8 @@ class UserController extends Controller
         $request->merge([
             'form' => 'done'
         ]);
-        /*if ($form='signin'){
-            $pass = DB::table('users')->where('username',$username)->value('password');
 
-            $password=Hash::make($password);
-            if($password != $pass){
-                return view('user.login')->with('userwrong','username or password wrong');
-            }
-
-        }
-        else*/
-            if($form='signup') {
+           // if($form='signup') {
             if ($password != $repassword) {
                 return redirect()->route('user.create')->with('wrong', 'password not matched');
             }
@@ -98,7 +89,7 @@ class UserController extends Controller
             ]);
 
             $user->save();
-        }
+        //}
             $id=DB::table('users')->where('username',$username)->value('id');
             Session::put('username',$username);
             Session::put('userID',$id);

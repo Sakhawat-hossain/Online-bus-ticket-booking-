@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Null_;
 
 class MyController extends Controller
 {
@@ -20,9 +21,9 @@ class MyController extends Controller
      */
     public function showLogin()
     {
-        if (Session::has('username')) echo  'ok-ckeck';
+        //if (Session::has('username')) echo  'ok-ckeck';
 
-        else
+        //else
         return view('user.login');
     }
     public function places()
@@ -46,6 +47,7 @@ class MyController extends Controller
 
     public function doLogin(Request $request)
     {
+
         //echo 'hello';
         $rules = array(
             'username' => 'required', // make sure the email is an actual email
@@ -111,6 +113,7 @@ class MyController extends Controller
         Session::forget('username');
         Session::forget('userID');
         //return redirect()->route('/');
+        //Auth::logout();
         return view('user.login');
     }
 
@@ -130,5 +133,65 @@ class MyController extends Controller
 
         }
         return view('home')->with('username',$username);
+    }
+
+    public function agentShowLogin()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
+
+        //else
+        return view('agent.agent-login');
+    }
+
+    public function agentDoLogin(Request $request)
+    {
+
+        //echo 'hello';
+        $this->validate($request, [
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $username=$request->get('username');
+        $password=$request->get('password');
+
+        //if ($form='signin'){
+        $pass = DB::table('agents')->where('username',$username)->value('password');
+
+        if(Hash::check($password,$pass)){
+            $admin=DB::table('agents')->where('username',$username)->value('adminID');
+
+            if($admin==Null){
+                return view('agent.agent-login')->with('agentwrong','Your account is not confirmed yet.');//redirect()->route('sign-in');
+            }
+            $id=DB::table('agents')->where('username',$username)->value('id');
+            Session::put('agent-username',$username);
+            Session::put('agentID',$id);
+
+            $places=DB::table('routes')->distinct()->select('to')->get();
+
+            return view('agent.agent-buslist')->with('places',$places);//redirect()->route('sign-in');
+        }
+
+        //}
+        //Session::put('username',$username);
+        return view('agent.agent-login')->with('agentwrong','username or password wrong');//redirect()->route('sign-in');
+
+    }
+
+    public function agentLogout(){
+        Session::forget('username');
+        Session::forget('userID');
+        //return redirect()->route('/');
+        //Auth::logout();
+        return view('user.login');
+    }
+
+    public function agentRegister()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
+
+        //else
+        return view('agent.after-register');
     }
 }
