@@ -51,7 +51,11 @@ Route::post('confirm-ticket/{id}/{tripID}','BusSearchController@confirmTicket');
 
 // for agent
 Route::post('agent-search-buses-with-filter','BusSearchController@agent_search_bus_filter'); // bus list with filter
+Route::get('agent-search-buses','BusSearchController@agent_search_bus'); // bus list with filter
 Route::get('agent-seat-list-details/{id}', 'BusSearchController@agent_seat_list'); //seat list details
+Route::post('agent-booking-details/{id}/{tripID}', 'BusSearchController@agent_booking'); //booking details
+Route::post('agent-confirm-ticket/{id}/{tripID}/{userID}','BusSearchController@agent_confirmTicket'); // confirm ticket
+Route::get('agent-confirm-ticket/{id}/{tripID}/{userID}','BusSearchController@send_from'); // confirm ticket
 
 
 Route::get('show-ticket/{id}/{ticketID}','TicketPrintController@showTicket'); // show ticket

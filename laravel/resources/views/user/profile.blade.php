@@ -156,7 +156,7 @@
     </script>
 </head>
 <body>
-<p id="pp">hello</p>
+<p id="pp"></p>
 @php
     $name=$phn=$gender=$email=$create=$update="";
     $i = 0;
@@ -193,7 +193,8 @@
         <div class="col-sm-10">
             <h1>{{\Illuminate\Support\Facades\Session::get('username')}}</h1></div>
         <div class="col-sm-2">
-            <a href="/users" class="pull-right"><img title="profile image" style="width: 150px;" class="img-circle img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png"></a>
+            <a href="/users" class="pull-right"><img title="profile image" style="width: 150px;" class="img-circle img-responsive"
+                                                     src="https://bootdey.com/img/Content/avatar/avatar1"></a>
         </div>
     </div>
     

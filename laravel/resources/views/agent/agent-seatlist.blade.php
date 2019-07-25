@@ -289,7 +289,7 @@
                         @php $username=Session::get('agent-username');@endphp
                         <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
                                     {{\Illuminate\Support\Facades\Session::get('agent-username')}}</span></a> </li>
-                        <li><a href="agent-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        <li><a href="../agent-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else
                         <li><a href="../agent/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                         <li><a href="../agent-sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
@@ -427,7 +427,9 @@
                     </div>
                     <!--right side -->
                     <div class="col-sm-8">
-                        <form method="post" action="#">
+                        @php $usern=Session::get('agent-username');      @endphp
+                        <form method="post" action="{{url('/agent-booking-details',['id'=>$usern,'tripID'=>$tripID])}}">
+                            {{csrf_field()}}
                             <div id="booking-details">
                                 <div id="booking-details-top"><h2>Booking information</h2></div>
                                 <div id="booking-details-bottom">
@@ -446,8 +448,7 @@
                                                 @if($usern==null)
                                                     <button class="btn btn-success" onclick="login_alert()">Buy now</button>
                                                 @else
-                                                    <a href="{{url('#',['id'=>$usern,'tripID'=>$tripID])}}">
-                                                        <button class="btn btn-success">Buy now</button></a>
+                                                        <button type="submit" class="btn btn-success">Buy now</button>
                                                 @endif
                                             </div>
                                         </div>
@@ -464,7 +465,7 @@
                                                 <div class="col-sm-10 col-sm-offset-1">
                                                     <div class="form-group">
                                                         <span class="form-label">Name</span>
-                                                        <input class="form-control" name="name" value="" required>
+                                                        <input class="form-control" name="fullname" value="" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -472,7 +473,7 @@
                                                 <div class="col-sm-10 col-sm-offset-1">
                                                     <div class="form-group">
                                                         <span class="form-label">Gender</span>
-                                                        <select class="form-control">
+                                                        <select class="form-control" name="gender">
                                                             <option>male</option>
                                                             <option>female</option>
                                                         </select>
