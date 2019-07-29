@@ -44,7 +44,7 @@ Route::resource('bus','BusController');
 Route::post('search-buses','BusSearchController@search_bus'); // bus list without filter
 Route::post('search-buses-with-filter','BusSearchController@search_bus_filter'); // bus list with filter
 Route::get('/seat-list-details/{id}', 'BusSearchController@seat_list'); //seat list details
-Route::get('booking-details/{id}/{tripID}', 'BusSearchController@booking'); //booking details
+Route::post('booking-details/{id}/{tripID}', 'BusSearchController@booking'); //booking details
 Route::post('payment-details/{id}/{tripID}', 'BusSearchController@payment'); //payment details
 
 Route::post('confirm-ticket/{id}/{tripID}','BusSearchController@confirmTicket'); // confirm ticket

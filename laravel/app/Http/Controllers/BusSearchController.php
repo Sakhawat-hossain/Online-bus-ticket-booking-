@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Payment;
 use App\Ticket;
 use App\User;
 use Illuminate\Http\Request;
@@ -213,24 +214,55 @@ class BusSearchController extends Controller
             $seat_info->put($i,$collectData);
             $i=$i+1;
         }
-//echo "hello<br>";
-//dd($seat_info);
-        //$s=json_encode($seat_info);
-
-        //$ss=$s.status;
-        //dd($s);
 
         $total=DB::table('trips')->where('trips.id',$id)
             ->join('buses','trips.busID','=','buses.id')
             ->value('total_seat');
 
+        $tripInfo=DB::table('trips')->where('trips.id',$id)
+            ->join('routes','trips.routeID','routes.id')
+            ->join('buses','trips.busID','buses.id')
+            ->select('routes.from','routes.to','buses.name','buses.type','trips.date','trips.departure_time')
+            ->get();
+        $from=$to=$busname=$bustype='';
+        $j=0;
+        foreach ($tripInfo as $trip){
+            foreach ($trip as $td){
+                if($j==0) $from=$td;
+                elseif ($j==1) $to=$td;
+                elseif ($j==2) $busname=$td;
+                elseif ($j==3) $bustype=$td;
+                $j++;
+            }
+        }
+
+        $boarding=DB::table('routes')->where('from',$from)->where('to',$to)
+            ->join('boardings','routes.id','boardings.routeID')
+            ->join('places','boardings.placeID','places.id')
+            ->select('places.name')->get();
+
+        $dropping=DB::table('routes')->where('from',$to)->where('to',$from)
+            ->join('boardings','routes.id','boardings.routeID')
+            ->join('places','boardings.placeID','places.id')
+            ->select('places.name')->get();
+
+        $bdtf=collect();
+        $bdtf->put('boarding',$boarding);
+        $bdtf->put('dropping',$dropping);
+        $bdtf->put('busname',$busname);
+        $bdtf->put('bustype',$bustype);
+
         $seat_inf=json_encode($seat_info);
 
-        return view('seatList')->with('seat_info',$seat_inf)->with('total',$total)->with('tripID',$id);
+        return view('seatList')->with('seat_info',$seat_inf)->with('total',$total)->with('tripID',$id)->with('bdtf',$bdtf);
 
     }
 
-    public function booking($id,$tripID){
+    public function booking(Request $request,$id,$tripID){
+
+        if($request->get('boarding')=='Required'){
+            return redirect('seat-list-details/'.$tripID)->with('berror','Select a Boarding Point');
+        }
 
         $user = DB::table('users')
             ->select('first_name','last_name','email','phone no','gender','id','age')
@@ -271,6 +303,7 @@ class BusSearchController extends Controller
             ->select('routes.from','routes.to','buses.name','buses.type','trips.date','trips.departure_time')
             ->get();
 
+
         $total=$sc=0;
 
         foreach ($seats as $trip){
@@ -283,6 +316,7 @@ class BusSearchController extends Controller
                 $j++;
             }
         }
+        $fare=$total;
         $total = $total+$sc;
 
         $from=$to='';
@@ -294,7 +328,8 @@ class BusSearchController extends Controller
                 $j++;
             }
         }
-        $boarding=DB::table('routes')->where('from',$from)->where('to',$to)
+
+      /*  $boarding=DB::table('routes')->where('from',$from)->where('to',$to)
             ->join('boardings','routes.id','boardings.routeID')
             ->join('places','boardings.placeID','places.id')
             ->select('places.name')->get();
@@ -303,40 +338,50 @@ class BusSearchController extends Controller
             ->join('boardings','routes.id','boardings.routeID')
             ->join('places','boardings.placeID','places.id')
             ->select('places.name')->get();
-
+*/
+        $boarding = $request->get('boarding');
+        $dropping = $request->get('dropping');
+        if($dropping=='Optional') $dropping='';
         $bdtf=collect();
         $bdtf->put('boarding',$boarding);
         $bdtf->put('dropping',$dropping);
         $bdtf->put('total',$total);
         $bdtf->put('sc',$sc);
+        $bdtf->put('fare',$fare);
         $bdtf->put('tripID',$tripID);
 
         return view('booking')->with('userdata',$userdata)->with('seats',$seats)->with('tripInfo',$tripInfo)->with('bdtf',$bdtf);
     }
 
     public function payment(Request $request,$id,$tripID){
-        if($request->get('boarding')=='Required'){
-            if($request->get('payment-method')=='Option')
-                return redirect('booking-details/'.$id.'/'.$tripID)->with('berror','select a boarding point')
-                    ->with('perror','Select payment method');
+        //$method='Select Payment Gateway';
 
-            return redirect('booking-details/'.$id.'/'.$tripID)->with('berror','select a boarding point');
-        }
-        else if($request->get('payment-method')=='Option'){
-                return redirect('booking-details/'.$id.'/'.$tripID)->with('perror','Select payment method');
-        }
+        //if($request->get('payment-method')=='Select Payment Gateway'){
+          //      return redirect('booking-details/'.$id.'/'.$tripID)->with('perror','Select payment method');
+        //}
         $method=$request->get('payment-method');
+        $error=$request->get('trxIDstatus');
+
         $senddata=collect();
+        $fare=$request->get('total')-$request->get('sc');
         $senddata->put('total',$request->get('total'));
         $senddata->put('sc',$request->get('sc'));
+        $senddata->put('fare',$fare);
         $senddata->put('boarding',$request->get('boarding'));
         $senddata->put('dropping',$request->get('dropping'));
         $senddata->put('tripID',$tripID);
+        $senddata->put('payment-method',$method);
+        $senddata->put('trxIDstatus',$error);
 
         return view('payment')->with('senddata',$senddata);
     }
 
     public function confirmTicket(Request $request,$id,$tripID){
+        //$this->validate($request,[
+            //'trxID' => 'required|unique:payments',
+        //]);
+        //
+
         $boarding=$request->get('boarding');
         $dropping=$request->get('dropping');
         $tripID=$request->get('tripID');
@@ -344,15 +389,24 @@ class BusSearchController extends Controller
 
         $data=DB::table('payments')->where('trxID',$trxID)->value('id');
 
-        if($data==''){
+        if($data != ''){
             //return redirect()->back();
+            //$trxError='Already accepted, try with your new trxID';
+            $request->input('trxIDstatus','Already accepted, try with your new trxID');
             return $this->payment($request,$id,$tripID);
+            //return back();
         }
+      //  echo 'hello';
 
-        $cdata=DB::table('tickets')->where('paymentID',$data)->value('id');
-        $request->input('trxIDstatus','Already accepted, try with your new trxID');
+        $payment=new Payment([
+            'trxID' => $trxID,
+            'amount' => $request->get('total'),
+            'status' => 'pending'
+        ]);
+        $payment->save();
 
-        if($cdata==''){
+        $data=DB::table('payments')->where('trxID',$trxID)->value('id');
+
             $userID=DB::table('users')->where('username',$id)->value('id');
             if($dropping=='Optional') $dropping='';
 
@@ -361,7 +415,7 @@ class BusSearchController extends Controller
                 'dropping_point' => $dropping,
                 'paymentID' => $data,
                 'userID' => $userID,
-                'status' => 'active'
+                'status' => 'pending'
             ]);
 
             $ticket->save();
@@ -370,10 +424,29 @@ class BusSearchController extends Controller
              DB::table('seats')->where('ticketID',$userID)
                                 ->where('status','selected')
                                 ->update(['status' => 'booked', 'ticketID' => $cdata]);
+
+             // update total available seat
+
+        $aseat=DB::table('trips')->where('trips.id',$tripID)->join('buses','trips.busID','buses.id')
+            ->select('available_seat','trips.busID')->get();
+        $tseat=$busID='';
+        foreach ($aseat as $st){
+            $j=0;
+            foreach ($st as $dt){
+                if($j==0) $tseat=$dt;
+                elseif ($j==1) $busID=$dt;
+                $j++;
+            }
         }
+        $tseat = $tseat - 1;
+        // echo $tseat;
+        DB::table('buses')->where('id',$busID)->update(['available_seat' => $tseat]);
+
+        //return $this->send_from($id,$tripID,$userID);
+
 
 //showing ticket
-        $user = DB::table('users')
+  /*      $user = DB::table('users')
             ->select('first_name','last_name','email','phone no','gender','id','age')
             ->where('username', $id)->get();
 
@@ -460,10 +533,10 @@ class BusSearchController extends Controller
         $ticketInfo->put('total',$total);
         $ticketInfo->put('sc',$request->get('total'));
         $ticketInfo->put('ticketID',$cdata);
-
+*/
         //return view('user.profile')->with('userdata',$userdata)->with('ticketInfo',$ticketInfo)->with('ticketNum',$ticketNum);
 
-        return view('ticket')->with('ticketInfo',$ticketInfo);
+        return view('user.confirm-mgs');
 
     }
 
@@ -611,7 +684,41 @@ class BusSearchController extends Controller
 
         $seat_inf=json_encode($seat_info);
 
-        return view('agent.agent-seatlist')->with('seat_info',$seat_inf)->with('total',$total)->with('tripID',$id);
+        $tripInfo=DB::table('trips')->where('trips.id',$id)
+            ->join('routes','trips.routeID','routes.id')
+            ->join('buses','trips.busID','buses.id')
+            ->select('routes.from','routes.to','buses.name','buses.type','trips.date','trips.departure_time')
+            ->get();
+        $from=$to=$busname=$bustype='';
+        $j=0;
+        foreach ($tripInfo as $trip){
+            foreach ($trip as $td){
+                if($j==0) $from=$td;
+                elseif ($j==1) $to=$td;
+                elseif ($j==2) $busname=$td;
+                elseif ($j==3) $bustype=$td;
+                $j++;
+            }
+        }
+
+        $boarding=DB::table('routes')->where('from',$from)->where('to',$to)
+            ->join('boardings','routes.id','boardings.routeID')
+            ->join('places','boardings.placeID','places.id')
+            ->select('places.name')->get();
+
+        $dropping=DB::table('routes')->where('from',$to)->where('to',$from)
+            ->join('boardings','routes.id','boardings.routeID')
+            ->join('places','boardings.placeID','places.id')
+            ->select('places.name')->get();
+
+        $bdtf=collect();
+        $bdtf->put('boarding',$boarding);
+        $bdtf->put('dropping',$dropping);
+        $bdtf->put('busname',$busname);
+        $bdtf->put('bustype',$bustype);
+
+        return view('agent.agent-seatlist')->with('seat_info',$seat_inf)->with('total',$total)->with('tripID',$id)
+            ->with('bdtf',$bdtf);
 
     }
 
@@ -622,7 +729,7 @@ class BusSearchController extends Controller
         $first_name=$last_name=$phn=$gender=$email=$userID=$age="";
 
         $userdata=(object)array(
-            'fullname' => $request->get('name'),
+            'fullname' => $request->get('fullname'),
             'phn' => $request->get('phone_no'),
             'gender' => $request->get('gender'),
         );
@@ -660,30 +767,17 @@ class BusSearchController extends Controller
             foreach ($trip as $td){
                 if($j==2) {
                     $total = $total + $td;
-                    $sc = $sc + 50;
+                    $sc = $sc + 0;
                 }
                 $j++;
             }
         }
 
         $from=$to='';
-        $j=0;
-        foreach ($tripInfo as $trip){
-            foreach ($trip as $td){
-                if($j==0) $from=$td;
-                elseif ($j==1) $to=$td;
-                $j++;
-            }
-        }
-        $boarding=DB::table('routes')->where('from',$from)->where('to',$to)
-            ->join('boardings','routes.id','boardings.routeID')
-            ->join('places','boardings.placeID','places.id')
-            ->select('places.name')->get();
 
-        $dropping=DB::table('routes')->where('from',$to)->where('to',$from)
-            ->join('boardings','routes.id','boardings.routeID')
-            ->join('places','boardings.placeID','places.id')
-            ->select('places.name')->get();
+        $boarding=$request->get('boarding');
+
+        $dropping=$request->get('dropping');
 
         $bdtf=collect();
         $bdtf->put('boarding',$boarding);
@@ -692,7 +786,8 @@ class BusSearchController extends Controller
         $bdtf->put('tripID',$tripID);
         $bdtf->put('userID',$userID);
 
-        return view('agent.agent-booking')->with('userdata',$userdata)->with('seats',$seats)->with('tripInfo',$tripInfo)->with('bdtf',$bdtf);
+        return view('agent.agent-booking')->with('userdata',$userdata)->with('seats',$seats)
+            ->with('tripInfo',$tripInfo)->with('bdtf',$bdtf);
     }
 
     public function agent_confirmTicket(Request $request,$id,$tripID,$userID){
@@ -712,7 +807,7 @@ class BusSearchController extends Controller
         //if($cdata==''){
             $agentID=DB::table('agents')->where('username',$id)->value('id');
             if($dropping=='Optional') $dropping='';
-//echo $agentID;
+
             $ticket= new Ticket([
                 'boarding_point' => $boarding,
                 'dropping_point' => $dropping,
@@ -721,8 +816,22 @@ class BusSearchController extends Controller
                 'status' => 'active',
             ]);
 
-            //$ticket->save();
+            $ticket->save();
 
+            $aseat=DB::table('trips')->where('trips.id',$tripID)->join('buses','trips.busID','buses.id')
+                ->select('available_seat','trips.busID')->get();
+            $tseat=$busID='';
+            foreach ($aseat as $st){
+                $j=0;
+                foreach ($st as $dt){
+                    if($j==0) $tseat=$dt;
+                    elseif ($j==1) $busID=$dt;
+                    $j++;
+                }
+            }
+            $tseat = $tseat - 1;
+           // echo $tseat;
+            DB::table('buses')->where('id',$busID)->update(['available_seat' => $tseat]);
             return $this->send_from($id,$tripID,$userID);
 
             //return redirect('agent-confirm-ticket',['id'=>$id,'tripID'=>$tripID,'userID'=>$userID]);

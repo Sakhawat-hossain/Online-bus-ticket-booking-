@@ -77,6 +77,12 @@
                                         @endforeach
                                     @endforeach
                                 @endif
+                                <p style="margin-top: 10px;"><strong>Boarding point : </strong>
+                                    @if(isset($bdtf)){{$bdtf->get('boarding')}}    @endif
+                                </p>
+                                <p style="margin-top: 10px;"><strong>Dropping point : </strong>
+                                    @if(isset($bdtf)){{$bdtf->get('dropping')}}    @endif
+                                </p>
                                 <p><strong>Seats : </strong></p>
                                 @if(isset($seats))
                                     @foreach($seats as $seat)
@@ -92,31 +98,6 @@
                                         </p>
                                     @endforeach
                                 @endif
-                                <p style="margin-top: 10px;"><strong>Boarding point</strong>
-                                    <select name="boarding">
-                                        <option>Required</option>
-                                        @if(isset($bdtf))
-                                            @foreach($bdtf->get('boarding') as $bd)
-                                                @foreach($bd as $dt)
-                                                    <option>{{$dt}}</option>
-                                                @endforeach
-                                            @endforeach
-                                        @endif
-                                    </select></p>
-                                @if(\Illuminate\Support\Facades\Session::has('berror'))
-                                    <p style="color: red">{{\Illuminate\Support\Facades\Session::get('berror')}}</p>
-                                @endif
-                                <p><strong>Dropping point</strong>
-                                    <select name="dropping">
-                                        <option>Optional</option>
-                                        @if(isset($bdtf))
-                                            @foreach($bdtf->get('dropping') as $bd)
-                                                @foreach($bd as $dt)
-                                                    <option>{{$dt}}</option>
-                                                @endforeach
-                                            @endforeach
-                                        @endif
-                                    </select></p>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -136,8 +117,12 @@
                     <div class="row">
                         <div class="col-sm-5">
                             <div id="payment-details-left">
+                                <p><strong>Seat Fare : </strong>&nbsp; {{$bdtf->get('total')}} Tk</p>
                                 <p><strong>Total : </strong>&nbsp; {{$bdtf->get('total')}} Tk</p>
                                 <input name="total" value="{{$bdtf->get('total')}}" hidden>
+                                @if(isset($bdtf))<input name="boarding" value="{{$bdtf->get('boarding')}}" hidden>   @endif
+                                @if(isset($bdtf))<input name="dropping" value="{{$bdtf->get('dropping')}}" hidden>   @endif
+
                                 <button class="btn btn-success">Confirm Ticket</button>
                             </div>
                         </div>

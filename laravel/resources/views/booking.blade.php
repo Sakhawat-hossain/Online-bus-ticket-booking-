@@ -16,11 +16,38 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
+    <script type="text/javascript">
+
+        function toggle_button(){
+            var temp=document.getElementById('option-d').getAttribute;
+
+            jQuery("#pp").html("<p>faltu"+temp+"</p>");
+        }
+        $(document).ready(function(){
+            $("#payment").change(function(){
+                var method = $(this).children("option:selected").text();
+                if(method=='Payment Gateway'){
+                    $("#error-mgs").hide();
+                    $("#btn-1").hide();
+                    $("#btn-2").show();
+                }
+                else{
+                    $("#error-mgs").hide();
+                    $("#btn-2").hide();
+                    $("#btn-1").show();
+                }
+            }),
+            $("#btn-2").click(function () {
+                $("#error-mgs").show();
+            });
+        });
+
+    </script>
 </head>
 <body>
 
 <div class="section">
-
+<div id="pp"></div>
     <div id="header">
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
             <div class="container-fluid">
@@ -51,9 +78,6 @@
 
     <div class="container" style="min-height: 500px;">
         <div id="ticket-user-details">
-            @php $usern=Session::get('username');      @endphp
-            <form method="post" action="{{url('payment-details',['id'=>$usern,'tripID'=>$bdtf->get('tripID')])}}">
-                {{csrf_field()}}
                 <div id="ticket-user-details-upper">
                     <div class="row">
                         <div class="col-sm-6">
@@ -74,46 +98,27 @@
                                             @endforeach
                                     @endforeach
                                 @endif
+                                <p style="margin-top: 10px;"><strong>Boarding point : </strong>
+                                        @if(isset($bdtf)){{$bdtf->get('boarding')}}    @endif
+                                </p>
+                                <p style="margin-top: 10px;"><strong>Dropping point : </strong>
+                                    @if(isset($bdtf)){{$bdtf->get('dropping')}}    @endif
+                                </p>
                                 <p><strong>Seats : </strong></p>
                                 @if(isset($seats))
                                     @foreach($seats as $seat)
                                         @php $j=0; @endphp
                                         <p style="padding-left: 70px;">
-                                        @foreach($seat as $st)
-                                            @if($j==0) Class : {{$st}},
-                                            @elseif($j==1) Seat No : {{$st}},
-                                            @else Fare : {{$st}} Tk
-                                            @endif
+                                            @foreach($seat as $st)
+                                                @if($j==0) Class : {{$st}},
+                                                @elseif($j==1) Seat No : {{$st}},
+                                                @else Fare : {{$st}} Tk
+                                                @endif
                                                 @php $j=$j+1; @endphp
-                                        @endforeach
+                                            @endforeach
                                         </p>
                                     @endforeach
                                 @endif
-                                <p style="margin-top: 10px;"><strong>Boarding point</strong>
-                                    <select name="boarding">
-                                        <option>Required</option>
-                                        @if(isset($bdtf))
-                                            @foreach($bdtf->get('boarding') as $bd)
-                                                @foreach($bd as $dt)
-                                                    <option>{{$dt}}</option>
-                                                @endforeach
-                                            @endforeach
-                                        @endif
-                                    </select></p>
-                                @if(\Illuminate\Support\Facades\Session::has('berror'))
-                                    <p style="color: red">{{\Illuminate\Support\Facades\Session::get('berror')}}</p>
-                                @endif
-                                <p><strong>Dropping point</strong>
-                                    <select name="dropping">
-                                        <option>Optional</option>
-                                        @if(isset($bdtf))
-                                            @foreach($bdtf->get('dropping') as $bd)
-                                                @foreach($bd as $dt)
-                                                    <option>{{$dt}}</option>
-                                                @endforeach
-                                            @endforeach
-                                        @endif
-                                    </select></p>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -135,21 +140,29 @@
                     <div class="row">
                         <div class="col-sm-5">
                             <div id="payment-details-left">
-                                <p><strong>Service charge : </strong>&nbsp; {{$bdtf->get('sc')}} Tk</p>
-                                <p><strong>Total : </strong>&nbsp; {{$bdtf->get('total')}} Tk</p>
-                                <input name="total" value="{{$bdtf->get('total')}}" hidden>
-                                <input name="sc" value="{{$bdtf->get('sc')}}" hidden>
-                                <p><strong>Payment method : </strong>
-                                    <select name="payment-method">
-                                        <option>Option</option>
-                                        <option>Bkash</option>
-                                        <option>Rocket</option>
-                                        <option>SureCash</option>
-                                    </select></p>
-                                @if(\Illuminate\Support\Facades\Session::has('perror'))
-                                    <p style="color: red">{{\Illuminate\Support\Facades\Session::get('perror')}}</p>
-                                @endif
-                                <button class="btn btn-success">Pay now</button>
+                                @php $usern=Session::get('username');      @endphp
+                                <form method="post" action="{{url('payment-details',['id'=>$usern,'tripID'=>$bdtf->get('tripID')])}}">
+                                    {{csrf_field()}}
+                                    <p><strong>Seat Fare : </strong>&nbsp; {{$bdtf->get('fare')}} Tk</p>
+                                    <p><strong>Service Charge : </strong>&nbsp; {{$bdtf->get('sc')}} Tk</p>
+                                    <p><strong>Total : </strong>&nbsp; {{$bdtf->get('total')}} Tk</p>
+                                    <input name="total" value="{{$bdtf->get('total')}}" hidden>
+                                    <input name="sc" value="{{$bdtf->get('sc')}}" hidden>
+                                    @if(isset($bdtf))<input name="boarding" value="{{$bdtf->get('boarding')}}" hidden>   @endif
+                                    @if(isset($bdtf))<input name="dropping" value="{{$bdtf->get('dropping')}}" hidden>   @endif
+                                    <p><strong>Payment method : </strong>
+                                        <select name="payment-method" id="payment">
+                                            <option id="option-d" selected>Payment Gateway</option>
+                                            <option id="option-b">Bkash</option>
+                                            <option id="option-r">Rocket</option>
+                                            <option id="option-s">SureCash</option>
+                                        </select></p>
+                                    <button class="btn btn-success" id="btn-1" style="display: none;">Pay now</button>
+                                </form>
+                                <span class="help-block" id="error-mgs" style="color:brown; padding-left: 150px;display: none;">
+                                            <strong>Select a payment gateway </strong>
+                                        </span>
+                                <button class="btn btn-success" id="btn-2">Pay now</button>
                             </div>
                         </div>
                         <div class="col-sm-7">
@@ -161,7 +174,6 @@
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 

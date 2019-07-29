@@ -30,7 +30,7 @@
 
         var total_selected=0;
         var charge=0;
-        var unit_charge=50;
+        var unit_charge=0;
         var total_price=0;
 
 
@@ -333,7 +333,9 @@
                     <div class="col-sm-4">
                         @if($total>30)
                             <div id="details-seat-view">
-                                <div id="front-side"><p>Front</p></div>
+                                <div id="front-side"><div class="row">
+                                        <div class="col-sm-4"><strong>Gate</strong></div>
+                                        <div class="col-sm-6 col-sm-offset-2"><strong>Driver</strong></div> </div> </div>
                                 @php $idx=0; @endphp
                                 @for($i=0;$i<10;$i++)
                                     <div id="seat-view-group">
@@ -379,8 +381,10 @@
 
                             </div>
                         @else
-                            <div id="details-seat-view">
-                                <div id="front-side"><p>Front</p></div>
+                            <div id="details-seat-view" style="margin-left: 10%;width: 80%;">
+                                <div id="front-side"><div class="row">
+                                        <div class="col-sm-4"><strong>Gate</strong></div>
+                                        <div class="col-sm-6 col-sm-offset-1"><strong>Driver</strong></div> </div> </div>
                                 @php $idx=0; @endphp
                                 @for($i=0;$i<10;$i++)
                                     <div id="seat-view-group">
@@ -392,10 +396,8 @@
                                                         @php $idx = $idx+1; @endphp
                                                     @elseif($j==1)
                                                         <div class="col-sm-2"><span></span></div>
-                                                    @elseif($j==2)
-                                                        <div class="col-sm-2"><span></span></div>
                                                     @elseif($j==3)
-                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        <div class="col-sm-2 col-sm-offset-1"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
                                                         @php $idx = $idx+1; @endphp
                                                     @elseif($j==4)
                                                         <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
@@ -407,10 +409,8 @@
                                                         @php $idx = $idx+1; @endphp
                                                     @elseif($j==1)
                                                         <div class="col-sm-2"><span></span></div>
-                                                    @elseif($j==2)
-                                                        <div class="col-sm-2"><span></span></div>
                                                     @elseif($j==3)
-                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        <div class="col-sm-2 col-sm-offset-1"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
                                                         @php $idx = $idx+1; @endphp
                                                     @elseif($j==4)
                                                         <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
@@ -431,7 +431,14 @@
                         <form method="post" action="{{url('/agent-booking-details',['id'=>$usern,'tripID'=>$tripID])}}">
                             {{csrf_field()}}
                             <div id="booking-details">
-                                <div id="booking-details-top"><h2>Booking information</h2></div>
+                                <div id="booking-details-top"><h2>Booking information</h2>
+                                    <h4>
+                                        @if(isset($bdtf))
+                                            {{$bdtf->get('busname')}} - {{$bdtf->get('bustype')}}
+                                        @endif
+                                    </h4>
+                                </div>
+
                                 <div id="booking-details-bottom">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -452,7 +459,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-sm-6" style="margin-top: 50px;">
+                                        <div class="col-sm-6" style="margin-top: 10px;">
                                             <div class="row">
                                                 <div class="col-sm-10 col-sm-offset-1">
                                                     <div class="form-group">
@@ -476,6 +483,40 @@
                                                         <select class="form-control" name="gender">
                                                             <option>male</option>
                                                             <option>female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-10 col-sm-offset-1">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Boarding Point</span>
+                                                        <select class="form-control" name="boarding">
+                                                            <option>Required</option>
+                                                            @if(isset($bdtf))
+                                                                @foreach($bdtf->get('boarding') as $bd)
+                                                                    @foreach($bd as $dt)
+                                                                        <option>{{$dt}}</option>
+                                                                    @endforeach
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-10 col-sm-offset-1">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Dropping Point</span>
+                                                        <select class="form-control" name="dropping">
+                                                            <option>Optional</option>
+                                                            @if(isset($bdtf))
+                                                                @foreach($bdtf->get('dropping') as $bd)
+                                                                    @foreach($bd as $dt)
+                                                                        <option>{{$dt}}</option>
+                                                                    @endforeach
+                                                                @endforeach
+                                                            @endif
                                                         </select>
                                                     </div>
                                                 </div>

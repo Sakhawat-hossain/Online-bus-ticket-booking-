@@ -53,15 +53,13 @@
 
         function checkTrxID() {
             var trxID=document.getElementById("trxID").value;
-            document.getElementById('pp').innerHTML=trxID;
+           // document.getElementById('pp').innerHTML=trxID;
         }
 
     </script>
 
 </head>
 <body>
-@php //dd($seat_info[3]); @endphp
-<p id="pp"></p>
 <div class="section">
 
     <div id="header">
@@ -92,184 +90,201 @@
         </nav>
     </div>
 
-    <div class="container" style="min-height: 500px;width: 90%;">
+        <div class="container" style="min-height: 500px;width: 90%;">
+            @if(isset($senddata))
+                @if($senddata->get('payment-method')=='Bkash')
 
-        <div class="kl-main-content">
+                <div class="kl-main-content">
 
-            <div style="text-align:center;width:100%;">
+                    <div style="text-align:center;width:100%;">
 
-                <div style="display:inline-block;min-width:70%;padding:5px 8px">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div style="float:left;clear:both;text-align:left;">
-                                <div style="color:#ff3399;text-decoration:underline;">Please use the following steps to pay now!</div>
-                                <ul style="padding:15px 0px 15px 45px;list-style-type:decimal;">
-                                    <li>Go to bKash Menu by dialing *247#</li>
-                                    <li>Choose 'Payment' option by pressing '3'</li>
-                                    <li>Enter our Merchant wallet number : 01780941550</li>
-                                    <li>Enter BDT. amount you have to pay : xxxx</li>
-                                    <li>Enter a reference against your payment : xxxx</li>
-                                    <li>Enter the counter number : 1</li>
-                                    <li>Now enter your PIN to confirm: xxxx</li>
-                                    <li>Done! You will get a confirmation SMS</li>
-                                </ul>
+                        <div style="display:inline-block;min-width:70%;padding:5px 8px">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div style="float:left;clear:both;text-align:left;">
+                                        <div style="color:#ff3399;text-decoration:underline;">Please use the following steps to pay now!</div>
+                                        <ul style="padding:15px 0px 15px 45px;list-style-type:decimal;">
+                                            <li>Go to bKash Menu by dialing *247#</li>
+                                            <li>Choose 'Payment' option by pressing '3'</li>
+                                            <li>Enter our Merchant wallet number : 01780941550</li>
+                                            <li>Enter BDT. amount you have to pay : xxxx</li>
+                                            <li>Enter a reference against your payment : xxxx</li>
+                                            <li>Enter the counter number : 1</li>
+                                            <li>Now enter your PIN to confirm: xxxx</li>
+                                            <li>Done! You will get a confirmation SMS</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div style="float:right;">
+                                        <img src="../../img/bkash-logo.png" style="float:right;padding-right:10px;max-width:200px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="clear:both;position:relative;">
+                                <label style="background-color:#963637;color:white;padding:3px 8px;float:left">How to Make Payment Through bKash <span style="font-weight:bold">:</span> </label>
+                                <div class="row" style="padding:0px;clear:both">
+                                    <div class="col-sm-3 payment-step-container">
+                                        <div class="payment-step" style="display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:1.3em">
+                                            <div class="index">1</div>
+                                            *247#
+                                        </div>
+                                        <div style="padding:5px">
+                                            Dial *247# on your bKash activated mobile phone
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 payment-step-container">
+                                        <div class="payment-step">
+                                            <div class="index">2</div>
+                                            <ul style="text-align:left;display:inline-block;list-style-type:decimal;">
+                                                <li>Send Money</li>
+                                                <li>Buy Airtime</li>
+                                                <li style="color:red;font-size:1.4em;font-weight:bold">Payment</li>
+                                                <li>Cash Out</li>
+                                                <li>Remittance</li>
+                                                <li>My bKash</li>
+                                                <li>Helpline</li>
+                                            </ul>
+                                            <!--div style="position:absolute;width:100%;bottom:10px">
+                                                <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">3</div>
+                                            </div-->
+                                        </div>
+                                        <div style="padding:5px;font-weight:bold">
+                                            Press '3' to select 'Payment'
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 payment-step-container">
+                                        <div class="payment-step">
+                                            <div class="index">3</div>
+                                            <span style="font-weight:bold">Enter Merchant bKash No.</span>
+                                            <div style="position:absolute;width:100%;bottom:10px">
+                                                <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">01780941550</div>
+                                            </div>
+                                        </div>
+                                        <div style="padding:5px;font-weight:bold">
+                                            Enter '01780941550'
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 payment-step-container">
+                                        <div class="payment-step">
+                                            <div class="index">4</div>
+                                            <span style="font-weight:bold">Enter Amount:</span>
+                                            <div style="position:absolute;width:100%;bottom:10px">
+                                                <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">xxxx</div>
+                                            </div>
+                                        </div>
+                                        <div style="padding:5px;font-weight:bold">
+                                            Enter 'Amount'
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding:0px;clear:both">
+                                    <div class="col-sm-3 payment-step-container">
+                                        <div class="payment-step">
+                                            <div class="index">5</div>
+                                            <span style="font-weight:bold">Enter Reference:</span>
+                                            <div style="position:absolute;width:100%;bottom:10px">
+                                                <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">xxxx</div>
+                                            </div>
+                                        </div>
+                                        <div style="padding:5px;font-weight:bold">
+                                            Enter your reference number 'xxxx'
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 payment-step-container">
+                                        <div class="payment-step">
+                                            <div class="index">6</div>
+                                            <span style="font-weight:bold">Enter Counter No:</span>
+                                            <div style="position:absolute;width:100%;bottom:10px">
+                                                <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">1</div>
+                                            </div>
+                                        </div>
+                                        <div style="padding:5px;font-weight:bold">
+                                            Press '1' to proceed
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 payment-step-container">
+                                        <div class="payment-step">
+                                            <div class="index">7</div>
+                                            Payment
+                                            <ul>
+                                                <li>To: 01780941550</li>
+                                                <li>Amount: TK xxxx</li>
+                                                <li>Reference: xxxx</li>
+                                                <li>Counter: 1</li>
+                                            </ul>
+                                            Enter PIN to confirm:
+                                            <div style="position:absolute;width:100%;bottom:10px">
+                                                <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">xxxx</div>
+                                            </div>
+                                        </div>
+                                        <div style="padding:5px;font-weight:bold">
+                                            Enter your bKash Menu PIN to confirm payment
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 payment-step-container">
+                                        <div class="payment-step">
+                                            <div class="index">8</div>
+                                            <label style="font-weight:bold">bKash</label>
+                                            <ul style="text-align:left;padding:5px 10px;">
+                                                <li>Payment TK.xxxx to 01780941550 successful.</li>
+                                                <li>Ref xxxx.Counter.1</li>
+                                                <li>Fee TK. XX.XX</li>
+                                                <li>Balance TK.XXXX.XX</li>
+                                                <li>TrxID XXXXXXX at 16/07/2019 14:35</li>
+                                            </ul>
+                                        </div>
+                                        <div style="padding:5px;font-weight:bold">
+                                            Customer will receive a payment confirmation SMS
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div style="float:right;">
-                                <img src="../../img/bkash-logo.png" style="float:right;padding-right:10px;max-width:200px;">
-                            </div>
-                        </div>
+
                     </div>
-                    <div style="clear:both;position:relative;">
-                        <label style="background-color:#963637;color:white;padding:3px 8px;float:left">How to Make Payment Through bKash <span style="font-weight:bold">:</span> </label>
-                        <div class="row" style="padding:0px;clear:both">
-                            <div class="col-sm-3 payment-step-container">
-                                <div class="payment-step" style="display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:1.3em">
-                                    <div class="index">1</div>
-                                    *247#
-                                </div>
-                                <div style="padding:5px">
-                                    Dial *247# on your bKash activated mobile phone
-                                </div>
-                            </div>
-                            <div class="col-sm-3 payment-step-container">
-                                <div class="payment-step">
-                                    <div class="index">2</div>
-                                    <ul style="text-align:left;display:inline-block;list-style-type:decimal;">
-                                        <li>Send Money</li>
-                                        <li>Buy Airtime</li>
-                                        <li style="color:red;font-size:1.4em;font-weight:bold">Payment</li>
-                                        <li>Cash Out</li>
-                                        <li>Remittance</li>
-                                        <li>My bKash</li>
-                                        <li>Helpline</li>
-                                    </ul>
-                                    <!--div style="position:absolute;width:100%;bottom:10px">
-                                        <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">3</div>
-                                    </div-->
-                                </div>
-                                <div style="padding:5px;font-weight:bold">
-                                    Press '3' to select 'Payment'
-                                </div>
-                            </div>
-                            <div class="col-sm-3 payment-step-container">
-                                <div class="payment-step">
-                                    <div class="index">3</div>
-                                    <span style="font-weight:bold">Enter Merchant bKash No.</span>
-                                    <div style="position:absolute;width:100%;bottom:10px">
-                                        <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">01979996565</div>
-                                    </div>
-                                </div>
-                                <div style="padding:5px;font-weight:bold">
-                                    Enter '01780941550'
-                                </div>
-                            </div>
-                            <div class="col-sm-3 payment-step-container">
-                                <div class="payment-step">
-                                    <div class="index">4</div>
-                                    <span style="font-weight:bold">Enter Amount:</span>
-                                    <div style="position:absolute;width:100%;bottom:10px">
-                                        <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">xxxx</div>
-                                    </div>
-                                </div>
-                                <div style="padding:5px;font-weight:bold">
-                                    Enter 'Amount'
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row" style="padding:0px;clear:both">
-                            <div class="col-sm-3 payment-step-container">
-                                <div class="payment-step">
-                                    <div class="index">5</div>
-                                    <span style="font-weight:bold">Enter Reference:</span>
-                                    <div style="position:absolute;width:100%;bottom:10px">
-                                        <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">xxxx</div>
-                                    </div>
+                </div>
+
+                <div id="payment-confirm">
+                    <div class="row">
+                        <form method="post" action="../../confirm-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$senddata->get('tripID')}}">
+                            {{csrf_field()}}
+                            <p><strong>Seat Fare : </strong>&nbsp; {{$senddata->get('fare')}} Tk</p>
+                            <p><strong>Service Charge : </strong>&nbsp; {{$senddata->get('sc')}} Tk</p>
+                            <p><strong>Total : </strong>&nbsp; {{$senddata->get('total')}} Tk</p>
+                            <input name="boarding" value="{{$senddata->get('boarding')}}" hidden>
+                            <input name="dropping" value="{{$senddata->get('dropping')}}" hidden>
+                            <input name="tripID" value="{{$senddata->get('tripID')}}" hidden>
+                            <input name="total" value="{{$senddata->get('total')}}" hidden>
+                            <input name="sc" value="{{$senddata->get('sc')}}" hidden>
+                            <input name="payment-method" value="{{$senddata->get('payment-method')}}" hidden>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <span><strong>Inter TrxID to confirm payment</strong> &nbsp;</span>
+                                    <input style="text-align: center;height: 35px; " type="text" id="trxID" name="trxID" placeholder="Ex - XXXXXXXXXX" required>
+                                    @if ($senddata->has('trxIDstatus'))
+                                        <span class="help-block">
+                                        <strong>{{ $senddata->get('trxIDstatus') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
-                                <div style="padding:5px;font-weight:bold">
-                                    Enter your reference number 'xxxx'
-                                </div>
+                                <div class="col-sm-1"><button class="btn btn-success">Confirm</button></div>
                             </div>
-                            <div class="col-sm-3 payment-step-container">
-                                <div class="payment-step">
-                                    <div class="index">6</div>
-                                    <span style="font-weight:bold">Enter Counter No:</span>
-                                    <div style="position:absolute;width:100%;bottom:10px">
-                                        <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">1</div>
-                                    </div>
-                                </div>
-                                <div style="padding:5px;font-weight:bold">
-                                    Press '1' to proceed
-                                </div>
-                            </div>
-                            <div class="col-sm-3 payment-step-container">
-                                <div class="payment-step">
-                                    <div class="index">7</div>
-                                    Payment
-                                    <ul>
-                                        <li>To: 01780941550</li>
-                                        <li>Amount: TK xxxx</li>
-                                        <li>Reference: xxxx</li>
-                                        <li>Counter: 1</li>
-                                    </ul>
-                                    Enter PIN to confirm:
-                                    <div style="position:absolute;width:100%;bottom:10px">
-                                        <div style="width:100px;border-radius:5px;border:2px solid #b25552;font-weight:bold;margin:auto">xxxx</div>
-                                    </div>
-                                </div>
-                                <div style="padding:5px;font-weight:bold">
-                                    Enter your bKash Menu PIN to confirm payment
-                                </div>
-                            </div>
-                            <div class="col-sm-3 payment-step-container">
-                                <div class="payment-step">
-                                    <div class="index">8</div>
-                                    <label style="font-weight:bold">bKash</label>
-                                    <ul style="text-align:left;padding:5px 10px;">
-                                        <li>Payment TK.xxxx to 01780941550 successful.</li>
-                                        <li>Ref xxxx.Counter.1</li>
-                                        <li>Fee TK. XX.XX</li>
-                                        <li>Balance TK.XXXX.XX</li>
-                                        <li>TrxID XXXXXXX at 16/07/2019 14:35</li>
-                                    </ul>
-                                </div>
-                                <div style="padding:5px;font-weight:bold">
-                                    Customer will receive a payment confirmation SMS
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
 
-            </div>
+                @else
+                    <h3>Payment method not allowed</h3>
+                @endif
+            @else
+                <h2>Go home</h2>
+            @endif
+
 
         </div>
-
-        <div id="payment-confirm">
-            <div class="row">
-                <form method="post" action="../../confirm-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$senddata->get('tripID')}}">
-                    {{csrf_field()}}
-                    <p><strong>Service charge : </strong>&nbsp; {{$senddata->get('sc')}} Tk</p>
-                    <p><strong>Total : </strong>&nbsp; {{$senddata->get('total')}} Tk</p>
-                    <input name="boarding" value="{{$senddata->get('boarding')}}" hidden>
-                    <input name="dropping" value="{{$senddata->get('dropping')}}" hidden>
-                    <input name="tripID" value="{{$senddata->get('tripID')}}" hidden>
-                    <input name="total" value="{{$senddata->get('total')}}" hidden>
-                    <input name="sc" value="{{$senddata->get('sc')}}" hidden>
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <span><strong>Inter TrxID to confirm payment</strong> &nbsp;</span>
-                            <input style="text-align: center;height: 35px; " type="text" id="trxID" name="trxID" placeholder="Ex - XXXXXXXXXX" required>
-                        </div>
-                        <div class="col-sm-1"><button class="btn btn-success" onclick="checkTrxID()">Confirm</button></div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
 
     <div id="footer">
         <div class="container">
