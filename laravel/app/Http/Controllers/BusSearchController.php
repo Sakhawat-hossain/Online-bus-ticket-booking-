@@ -162,7 +162,7 @@ class BusSearchController extends Controller
         $idx=0;
         $status='';
         $seatid=0;
-        $tid='';
+        $tid=$busID='';
         foreach ($prices as $prc){
             $j=0;
             foreach($prc as $pr){
@@ -181,7 +181,7 @@ class BusSearchController extends Controller
         $seats=DB::table('trips')->where('trips.id',$id)
             ->join('buses','trips.busID','=','buses.id')
             ->join('seat_infos','buses.id','=','seat_infos.busID')
-            ->select('seat_infos.status','seat_infos.seatNo','seat_infos.category','seat_infos.id')->get();
+            ->select('seat_infos.status','seat_infos.seatNo','seat_infos.category','seat_infos.id','trips.busID')->get();
 
         $seat_info=collect();
         $i=0;
@@ -192,7 +192,8 @@ class BusSearchController extends Controller
                 if($j==0)  $status=$st;
                 elseif($j==1) $seatNo=$st;
                 elseif($j==2) $category=$st;
-                else $idx=$st;
+                elseif($j==3) $idx=$st;
+                else $busID=$st;
 
                 $j=$j+1;
             }
@@ -246,11 +247,38 @@ class BusSearchController extends Controller
             ->join('places','boardings.placeID','places.id')
             ->select('places.name')->get();
 
+        $layoutRow = DB::table('buses')->where('buses.id',$busID)
+            ->join('bus_layouts','buses.id','bus_layouts.busID')
+            ->select('decker_num','rows','columns','layout')->get();
+        $idx = 1;
+        $decker=$rows=$columns=$layoutStr='';
+        foreach ($layoutRow as $row){
+            foreach ($row as $data){
+                if($idx==1) $decker=$data;
+                else if($idx==2) $rows=$data;
+                else if($idx==3) $columns=$data;
+                else if($idx==4) $layoutStr=$data;
+
+                $idx=$idx+1;
+            }
+        }
+
+        $layoutArr = explode(";",$layoutStr);
+        $layout='';
+        for($i=0;$i<$rows;$i++)
+            $layout[$i] = explode(",",$layoutArr[$i]);
+
+        $layout['decker'] = $decker;
+        $layout['rows'] = $rows;
+        $layout['columns'] = $columns;
+
         $bdtf=collect();
         $bdtf->put('boarding',$boarding);
         $bdtf->put('dropping',$dropping);
         $bdtf->put('busname',$busname);
         $bdtf->put('bustype',$bustype);
+
+        $seat_info->put('layout',$layout);
 
         $seat_inf=json_encode($seat_info);
 
@@ -539,6 +567,8 @@ class BusSearchController extends Controller
         return view('user.confirm-mgs');
 
     }
+
+
 
     public function agent_search_bus_filter(Request $request)
     {
@@ -952,6 +982,11 @@ class BusSearchController extends Controller
 
         return view('agent.agent-ticket')->with('ticketInfo',$ticketInfo);
 
+    }
+
+
+    public function search_ticket(){
+        return view('ticket-list');
     }
 
 }

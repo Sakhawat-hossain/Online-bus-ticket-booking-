@@ -45,4 +45,33 @@ class AjaxlController extends Controller
         //dd($list);
         return response()->json($list,200);
     }
+
+    public function getBusLayout($id){
+        $layoutRow = DB::table('bus_layouts')->where('id',$id)->
+            select('id','busID','decker_num','rows','columns','layout')->get();
+        $idx = 1;
+        $decker=$rows=$columns=$layoutStr='';
+        foreach ($layoutRow as $row){
+            foreach ($row as $data){
+                if($idx==3) $decker=$data;
+                else if($idx==4) $rows=$data;
+                else if($idx==5) $columns=$data;
+                else if($idx==6) $layoutStr=$data;
+
+                $idx=$idx+1;
+            }
+        }
+
+        $layoutArr = explode(";",$layoutStr);
+        $layout='';
+        for($i=0;$i<$rows;$i++)
+            $layout[$i] = explode(",",$layoutArr[$i]);
+
+        $layout['decker'] = $decker;
+        $layout['rows'] = $rows;
+        $layout['columns'] = $columns;
+
+
+        return response()->json($layout,200);
+    }
 }

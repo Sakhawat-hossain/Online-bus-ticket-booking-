@@ -194,4 +194,124 @@ class MyController extends Controller
         //else
         return view('agent.after-register');
     }
+
+    public function adminDoLogin(Request $request)
+    {
+
+        //echo 'hello';
+        $this->validate($request, [
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $username=$request->get('username');
+        $password=$request->get('password');
+
+        //if ($form='signin'){
+        $pass = DB::table('super_admins')->where('username',$username)->value('password');
+        //Hash::check($password,$pass)
+        if($password==$pass){
+
+            $id=DB::table('super_admins')->where('username',$username)->value('id');
+            Session::put('admin-username',$username);
+            Session::put('adminID',$id);
+
+            $places=DB::table('buses')->distinct()->select('name')->get();
+            $tickets=DB::table('tickets')->where('tickets.status','pending')
+                ->join('payments','tickets.paymentID','payments.id')
+                ->join('users','tickets.userID','users.id')
+                ->select('users.username','users.phone no','tickets.boarding_point','tickets.booking_time',
+                    'payments.trxID','payments.amount','tickets.status','tickets.id')->get();
+
+            return view('admin.ticket-list')->with('buses',$places)->with('tickets',$tickets);//redirect()->route('sign-in');
+        }
+
+        //}
+        //Session::put('username',$username);
+        return view('admin.admin-login')->with('agentwrong','username or password wrong');//redirect()->route('sign-in');
+
+    }
+
+    public function adminConfirmTicket($id){
+        DB::table('tickets')->where('id',$id)
+            ->update(['status' => 'active']);
+
+        $paymentID=DB::table('tickets')->where('id',$id)->value('paymentID');
+        DB::table('tickets')->where('id',$paymentID)
+            ->update(['status' => 'paid']);
+
+        $places=DB::table('buses')->distinct()->select('name')->get();
+        $tickets=DB::table('tickets')->where('tickets.status','pending')
+            ->join('payments','tickets.paymentID','payments.id')
+            ->join('users','tickets.userID','users.id')
+            ->select('users.username','users.phone no','tickets.boarding_point','tickets.booking_time',
+                'payments.trxID','payments.amount','tickets.status','tickets.id')->get();
+
+        return view('admin.ticket-list-confirm')->with('buses',$places)->with('tickets',$tickets);
+
+    }
+
+
+    public function reptShowLogin()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
+
+        //else
+        return view('representative.representative-login');
+    }
+
+    public function reptDoLogin(Request $request)
+    {
+
+        //echo 'hello';
+        $this->validate($request, [
+            'username' => 'required|string|max:255',
+            'password' => 'required|string',
+        ]);
+
+        $username=$request->get('username');
+        $password=$request->get('password');
+
+
+        $admin=DB::table('representatives')->where('username',$username)->value('adminID');
+
+        if($admin==null)
+            return view('representative.representative-login')->with('rep_wrong','This account is not confirmed yet.');
+
+        //if ($form='signin'){
+        $pass = DB::table('representatives')->where('username',$username)->value('password');
+
+        if(Hash::check($password,$pass)){
+
+            $id=DB::table('representatives')->where('username',$username)->value('id');
+            Session::put('rep-username',$username);
+            Session::put('repID',$id);
+
+            return redirect('representative-home');//redirect()->route('sign-in');
+        }
+
+        //}
+        //Session::put('username',$username);
+        return view('representative.representative-login')->with('rep_wrong','username or password wrong');//redirect()->route('sign-in');
+
+    }
+
+    public function reptLogout(){
+        Session::forget('rep-username');
+        Session::forget('repID');
+        //return redirect()->route('/');
+        //Auth::logout();
+        return view('representative.representative-login');
+    }
+
+    public function reptHome()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
+
+        //else
+        //$admin=DB::table('representatives')->where('username',$id)->value('adminID');
+
+            return view('representative.representative-home');
+    }
+
 }

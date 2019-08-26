@@ -27,24 +27,24 @@
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
-                 <li class="dropdown">
+                <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-              <!--login/logout area starts-->
-              <li>
-                              <a href="admin/pageHome.php" class="btn btn-danger navbar-btn btn-sm hidden-xs"><i class="fa fa-cog"></i> <strong>Admin Area</strong></a>
-                   <a href="admin/pageHome.php" class="btn btn-danger navbar-btn btn-sm visible-xs btn-sm"><i class="fa fa-cog"></i> <strong>Admin Area</strong></a>
-                                                               <ul class="nav navbar-nav navbar-right hidden-xs" style="min-width: 330px;">
-                  </ul>
-                  <ul class="nav navbar-nav visible-xs">
-                  </ul>
-              </li>
-            <!--login/logout area ends-->
-            <li class="divider"></li>
-            <li><a class="btn navbar-btn btn-primary" href="index.php?signOut=1"><i class="fa fa-power-off"></i> <strong style="color:white">Sign Out</strong> </a></li>
-          </ul>
+                        <!--login/logout area starts-->
+                        <li>
+                            <a href="admin/pageHome.php" class="btn btn-danger navbar-btn btn-sm hidden-xs"><i class="fa fa-cog"></i> <strong>Admin Area</strong></a>
+                            <a href="admin/pageHome.php" class="btn btn-danger navbar-btn btn-sm visible-xs btn-sm"><i class="fa fa-cog"></i> <strong>Admin Area</strong></a>
+                            <ul class="nav navbar-nav navbar-right hidden-xs" style="min-width: 330px;">
+                            </ul>
+                            <ul class="nav navbar-nav visible-xs">
+                            </ul>
+                        </li>
+                        <!--login/logout area ends-->
+                        <li class="divider"></li>
+                        <li><a class="btn navbar-btn btn-primary" href="index.php?signOut=1"><i class="fa fa-power-off"></i> <strong style="color:white">Sign Out</strong> </a></li>
+                    </ul>
                     <!-- /.dropdown-user -->
                 </li>
                 <!-- /.dropdown -->
@@ -61,13 +61,13 @@
                     <li>
                         <a href="customers_view"><i class="fa fa-users"></i>Customers</a>
                     </li>
-					<li>
+                    <li>
                         <a href="bookings_view"><i class="fa fa-money"></i>Bookings</a>
                     </li>
                     <li>
                         <a href="buses_view"><i class="fa fa-truck"></i>Buses</a>
                     </li>
-                    
+
                     <li>
                         <a href="seats_view"><i class="fa fa-sitemap"></i>Seats</a>
                     </li>
@@ -77,10 +77,10 @@
                     <li>
                         <a href="routes_view"><i class="fa fa-road"></i> Routes</a>
                     </li>
-                     <li>
+                    <li>
                         <a href="hooks/summary-reports"><i class="fa fa-list"></i> Reports</a>
                     </li>                        </ul>
-                    </li>
+                </li>
                 </ul>
 
             </div>
@@ -89,15 +89,15 @@
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper" >
             <div id="page-inner">
-			 <div class="row">
+                <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
                             Welcome  <small> admin</small>
                         </h1>
-                                            </div>
-                  </div> 
-                 <!--user widgets-->
- <div class="row">
+                    </div>
+                </div>
+                <!--user widgets-->
+                <div class="row">
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-red">
                             <div class="panel-body">
@@ -147,8 +147,8 @@
                         </div>
                     </div>
                 </div>
-<!--admin widgets row-->
- <div class="row">
+                <!--admin widgets row-->
+                <div class="row">
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-green">
                             <div class="panel-body">
@@ -180,7 +180,7 @@
                                 <h3>3 </h3>
                             </div>
                             <div class="panel-footer back-footer-red">
-                               <a href="availability_view.php" style="text-decoration: none;color: white"><strong>Availability</strong></a>
+                                <a href="availability_view.php" style="text-decoration: none;color: white"><strong>Availability</strong></a>
 
                             </div>
                         </div>
@@ -192,7 +192,7 @@
                                 <h3>2 </h3>
                             </div>
                             <div class="panel-footer back-footer-brown">
-                               <a href="routes_view.php" style="text-decoration: none;color: white"> <strong>Routes</strong></a>
+                                <a href="routes_view.php" style="text-decoration: none;color: white"> <strong>Routes</strong></a>
 
                             </div>
                         </div>
@@ -201,44 +201,43 @@
                 <!--row ends here-->
                 <div class="col-md-12 col-sm-12 col-xs-12">
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span class="fa fa-bell"> <strong>Bookings Due Today</strong></span>
-                            </div> 
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>ID No.</th>
-                                                <th>FullName</th>
-                                                <th>Phone</th>
-                                                <th>Bus</th>
-                                                <th>Seat</th>
-                                                <th>Date</th>
-                                                <th>DepartureTime</th>
-                                                <th>Amount</th>
-                                                <th>DateBooked</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <div class="alert alert-success">
-		<strong>No Bookings Due Today</strong>.
-		</div>                                        </tbody>
-                                    </table>
-                                    <a href="http://localhost/busbooking/bookings_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=8&FilterOperator%5B1%5D=like&FilterValue%5B1%5D=06%/29%/2019" class="btn btn-info btn-block fa fa-list">See All Due Today</a>
-                                </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="fa fa-bell"> <strong>Bookings Due Today</strong></span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>ID No.</th>
+                                        <th>FullName</th>
+                                        <th>Phone</th>
+                                        <th>Bus</th>
+                                        <th>Seat</th>
+                                        <th>Date</th>
+                                        <th>DepartureTime</th>
+                                        <th>Amount</th>
+                                        <th>DateBooked</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <div class="alert alert-success">
+                                        <strong>No Bookings Due Today</strong>.
+                                    </div>                                        </tbody>
+                                </table>
+                                <a href="http://localhost/busbooking/bookings_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=and&FilterField%5B1%5D=8&FilterOperator%5B1%5D=like&FilterValue%5B1%5D=06%/29%/2019" class="btn btn-info btn-block fa fa-list">See All Due Today</a>
                             </div>
                         </div>
-
                     </div>
-                </div>                                 <!-- /. ROW  -->
-            <footer><strong><p><center>Bus Booking System.</center></p></strong></footer>
-				</div>
-             <!-- /. PAGE INNER  -->
+
+                </div>
             </div>
-         <!-- /. PAGE WRAPPER  -->
-     <!-- /. WRAPPER  -->
+            <!-- /. PAGE INNER  -->                                <!-- /. ROW  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
     <!-- JS Scripts-->
     <!-- jQuery Js -->
     <script src="assets/js/jquery-1.10.2.js"></script>

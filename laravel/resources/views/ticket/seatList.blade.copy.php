@@ -22,7 +22,6 @@
         var tripID = <?php echo json_encode($tripID); ?>;
 
         var seat_arr=<?php echo $seat_info; ?>;
-        var layout = seat_arr['layout'];
         var username=<?php echo json_encode(Session::get('username')); ?>
 
         var userID=<?php echo json_encode(Session::get('userID')); ?>;
@@ -205,89 +204,9 @@
             alert("Sign in First");
         }
 
-        function set_width(columns) {
-            var div = document.getElementById("details-seat-view");
-            if(columns==6){
-                div.style.width = "96%";
-                div.style.marginLeft = "2%";
-            }
-            else if(columns==5){
-                div.style.width = "90%";
-                div.style.marginLeft = "5%";
-            }
-            else if(columns==4){
-                div.style.width = "80%";
-                div.style.marginLeft = "10%";
-            }
-            else if(columns==3){
-                div.style.width = "60%";
-                div.style.marginLeft = "20%";
-            }
-            else if(columns==2){
-                div.style.width = "60%";
-                div.style.marginLeft = "20%";
-            }
-        }
-
         function initialization() {
 
             //document.getElementById("pp").innerHTML=username+tripID;
-            var decker_num = layout['decker'];
-            var rows = layout['rows'];
-            var columns = layout['columns'];
-
-            var bus_layout = layout;
-            //left.innerHTML = "<p><strong>Decker Number : &nbsp; </strong>" + decker_num + "</p>" +
-              //  "<p><strong>Rows : &nbsp; </strong>" + rows + "</p>" +
-                //"<p><strong>Columns : &nbsp; </strong>" + columns + "</p>" ;
-
-            var right = document.getElementById("details-seat-view");
-            // if( !isNaN(rows) && !isNaN(columns)){
-            set_width(columns);
-            var up = "<div id=\"preview-front-side\">\n" +
-                "                                <div class=\"row\">\n" +
-                "                                    <div class=\"col-sm-3 col-sm-offset-1\"><strong>Gate</strong></div>\n" +
-                "                                    <div class=\"col-sm-4 col-sm-offset-4\"><strong>Driver</strong></div>\n" +
-                "                                </div>\n" +
-                "                            </div>\n";
-
-            var idx,idx1;
-            for(idx=0; idx<rows; idx++){
-                up = up  + "<div id=\"seat-view-group\">";
-                if(columns==4){
-                    for(idx1=0; idx1<3; idx1++){
-                        if(bus_layout[idx][idx1].localeCompare("_")){
-                            up = up + "<div class=\"col-sm-2\">" +
-                                "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
-                        }
-                    }
-                    up = up + "<div class=\"col-sm-2\"><span></span></div>";
-                    for(idx1=3; idx1<6; idx1++){
-                        if(bus_layout[idx][idx1].localeCompare("_")){
-                            up = up + "<div class=\"col-sm-2\">" +
-                                "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
-                        }
-                    }
-                }
-                else if(columns==3){
-                    for(idx1=0; idx1<3; idx1++){
-                        if(bus_layout[idx][idx1].localeCompare("_")){
-                            up = up + "<div class=\"col-sm-3\">" +
-                                "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
-                        }
-                    }
-                    up = up + "<div class=\"col-sm-2\"><span></span></div>";
-                    for(idx1=3; idx1<6; idx1++){
-                        if(bus_layout[idx][idx1].localeCompare("_")){
-                            up = up + "<div class=\"col-sm-3\">" +
-                                "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
-                        }
-                    }
-                }
-                up = up + "</div>";
-            }
-
-            right.innerHTML = up;
 
              for(i=0;i<total_seat;i++){
 
@@ -343,7 +262,6 @@
             if(total_selected<6) {
                 jQuery("#alert-2").hide();
             }
-
         }
 
 
@@ -411,9 +329,100 @@
                 <div class="row">
                     <!--left side -->
                     <div class="col-sm-4">
-                        <div id="details-seat-view">
+                        @if($total>30)
+                            <div id="details-seat-view">
+                                <div id="front-side"><div class="row">
+                                        <div class="col-sm-4"><strong>Gate</strong></div>
+                                        <div class="col-sm-6 col-sm-offset-2"><strong>Driver</strong></div> </div></div>
+                                @php $idx=0; @endphp
+                                @for($i=0;$i<10;$i++)
+                                    <div id="seat-view-group">
+                                        <div class="row">
+                                            @for($j=0;$j<5;$j++)
+                                                @if(\Illuminate\Support\Facades\Session::get('username')==null)
+                                                    @if($j==0)
+                                                        <div class="col-sm-2"><span onclick="login_alert()">
+                                                                <i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==1)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==2)
+                                                        <div class="col-sm-2"><span></span></div>
+                                                    @elseif($j==3)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==4)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @endif
+                                                @else
+                                                    @if($j==0)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==1)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==2)
+                                                        <div class="col-sm-2"><span></span></div>
+                                                    @elseif($j==3)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==4)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @endif
+                                                @endif
+                                            @endfor
+                                        </div>
+                                    </div>
+                                @endfor
 
-                        </div>
+                            </div>
+                        @else
+                            <div id="details-seat-view" style="margin-left: 10%;width: 80%;">
+                                <div id="front-side" style="padding-left: 20px;"><div class="row">
+                                        <div class="col-sm-4"><strong>Gate</strong></div>
+                                        <div class="col-sm-6 col-sm-offset-1"><strong>Driver</strong></div> </div> </div>
+                                @php $idx=0; @endphp
+                                @for($i=0;$i<10;$i++)
+                                    <div id="seat-view-group">
+                                        <div class="row">
+                                            @for($j=0;$j<5;$j++)
+                                                @if(\Illuminate\Support\Facades\Session::get('username')==null)
+                                                    @if($j==0)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==1)
+                                                        <div class="col-sm-2"><span></span></div>
+                                                    @elseif($j==3)
+                                                        <div class="col-sm-2 col-sm-offset-1"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==4)
+                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @endif
+                                                @else
+                                                    @if($j==0)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==1)
+                                                        <div class="col-sm-2"><span></span></div>
+                                                    @elseif($j==3)
+                                                        <div class="col-sm-2 col-sm-offset-1"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @elseif($j==4)
+                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
+                                                        @php $idx = $idx+1; @endphp
+                                                    @endif
+                                                @endif
+                                            @endfor
+                                        </div>
+                                    </div>
+                                @endfor
+
+                            </div>
+                        @endif
                     </div>
                     <!--right side -->
                     <div class="col-sm-8">

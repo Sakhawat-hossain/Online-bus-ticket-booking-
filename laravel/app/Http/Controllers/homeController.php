@@ -13,4 +13,12 @@ class homeController extends Controller
 
         return view('home')->with('times',$times);
     }
+
+    public function adminHomepage(){
+        //$times=DB::table('trips')->distinct()->select('departure_time')->where('comment','available')->get();
+        //comment -> available, done, cancelled
+
+        return view('admin.admin-login');
+    }
+
 }
