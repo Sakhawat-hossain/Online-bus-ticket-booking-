@@ -39,6 +39,7 @@
     <style>
         #preview-container{
             min-height: 200px;
+            max-height: 98%;
             width: 50%;
             position: fixed;
             left: 25%;
@@ -46,6 +47,7 @@
             background-color: whitesmoke;
             border: 1px solid grey;
             display: none;
+            overflow-y: scroll;
         }
         #preview-container-top{
             text-align: center;
@@ -102,7 +104,7 @@
 
         #add-label-container{
             height: 100px;
-            width: 550px;
+            width: 600px;
             position: fixed;
             display: none;
             background-color:  #555;//"#F4F6F6";
@@ -125,10 +127,10 @@
     <script>
 
         var layout,label;
-        layout = new Array(12);
-        label = new Array(12);
+        layout = new Array(10);
+        label = new Array(10);
         var i,j;
-        for(i=0;i<12;i++){
+        for(i=0;i<10;i++){
             label[i] = new Array(6);
             layout[i] = new Array(6);
             for(j=0;j<6;j++){
@@ -138,25 +140,69 @@
         }
         function select_seat(i,j) {
             //jQuery("#id-"+i+"-"+j).append("<div class='add-label-container'>hello</div>");
-            if(label[i][j].localeCompare("X")==0) {
+            var hval = document.getElementById("row-column-label").innerText;
+            var str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if(hval.localeCompare("Click the seat of the first row and column")==0){
+                var rlabel = document.getElementById("row-col-label").value;
+                var row = document.getElementById("rows").value;
+                var column = document.getElementById("columns").value;
+                row = parseInt(row);
+                column = parseInt(column);
+                var m;
+                var n;
+                if(i != 0 ){ alert("Please select a seat from first row.");}
+                else if((j+column) > 6){alert("Please select a seat from previous columns.");}
+                else if( isNaN(row) || isNaN(column)){alert("Please insert number of rows and columns.");}
+                else{
+                    if (rlabel.localeCompare("Label by rows") == 0) {
+                        for(m=0; m<row; m++){
+                            for(n=j; n<(column+j); n++){
+                                var l = n-j+1;
+                                label[m][n] = str.charAt(m)+l.toString(10);
+                                layout[m][n] = "Economy";
+                                document.getElementById(m+"-"+n).style.color = "forestgreen";
+                            }
+                        }
+                    } else {
+                        for(m=j; m<column+j; m++){
+                            for(n=i; n<row+i; n++){
+                                var l = toString(n-i+1);
+                                layout[m][n] = str.charAt(m-j)+l;
+                                label[m][n] = "Economy";
+                                document.getElementById(n+"-"+m).style.color = "forestgreen";
+                            }
+                        }
+                    }
+                    document.getElementById("row-column-label").innerText = "Edit seat";
+                    document.getElementById("layout-input").value = JSON.stringify(layout);
+                    document.getElementById("label-input").value = JSON.stringify(label);
+                }
+            }
+            else {
                 var div = document.createElement("row");
                 //div.setAttribute("class", "add-label-container");
                 div.setAttribute("id", "selected-seat");
 
-                div.innerHTML =
-                    "<div class='col-sm-4'>" +
+                var innerhtml =
+                    "<div class='col-sm-3'>" +
                     "<div class='form-group'>" +
                     "<span class='form-label'>Label</span>" +
-                    "<input class='form-control' name='label' id='label'>" +
+                    "<input class='form-control' name='label' id='label' value='"+label[i][j]+"'> " +
                     "</div>" +
                     "</div>" +
-                    "<div class='col-sm-4'>" +
+                    "<div class='col-sm-3'>" +
                     "<div class='form-group'>" +
                     "<span class='form-label'>Category</span>" +
-                    "<select class='form-control' name='category' id='category'>" +
-                    "<option>Business</option>" +
-                    "<option>Economy</option>" +
-                    "</select>" +
+                    "<select class='form-control' name='category' id='category'>" ;
+                    if(layout[i][j].localeCompare("Economy")==0){
+                        innerhtml = innerhtml + "<option>Economy</option>" +
+                            "<option>Business</option>" ;
+                    }
+                    else{
+                        innerhtml = innerhtml + "<option>Business</option>" +
+                            "<option>Economy</option>" ;
+                    }
+                    innerhtml = innerhtml +    "</select>" +
                     "</div>" +
                     "</div>" +
                     "<div class='col-sm-2'>" +
@@ -167,48 +213,71 @@
                     "</div>" +
                     "<div class='col-sm-2'>" +
                     "<div class='form-group'>" +
+                    "<button class='form-control input-3 btn-success' type='button' onclick='remove_seat(" + i + "," + j + ")'>" +
+                    "Remove </button>" +
+                    "</div>" +
+                    "</div>" +
+                    "<div class='col-sm-2'>" +
+                    "<div class='form-group'>" +
                     "<button class='form-control input-3 btn-warning' type='button' style='margin-left: -10px;' onclick='cancel_seat()'>" +
                     "Cancel </button>" +
                     "</div>" +
                     "</div>";
+
+                div.innerHTML = innerhtml;
 
                 //div.appendChild(row);
                 var add_div = document.getElementById("add-label-container");
                 add_div.appendChild(div);
                 add_div.style.display = "block";
             }
-            else{
-                label[i][j] = "X";
-                layout[i][j] = "_";
-                document.getElementById(i+"-"+j).style.color = "#CCCCCB";
-                document.getElementById("layout-input").value = JSON.stringify(layout);
-                document.getElementById("label-input").value = JSON.stringify(label);
+       /*     else{
 
                 alert("Seat has been removed from list");
-            }
+            } */
 
         }
-
-        function add_seat(i,j) {
-            //alert("hello");
-            var category = document.getElementById("category").value;
-            layout[i][j] = category;
-            var lab = document.getElementById("label").value;
-            label[i][j] = lab;
+        function remove_seat(i,j) {
+            label[i][j] = "X";
+            layout[i][j] = "_";
+            document.getElementById(i+"-"+j).style.color = "#CCCCCB";
+            document.getElementById("layout-input").value = JSON.stringify(layout);
+            document.getElementById("label-input").value = JSON.stringify(label);
 
             var div = document.getElementById("selected-seat");
             div.parentNode.removeChild(div);
             document.getElementById("add-label-container").style.display = "none";
+        }
 
-            document.getElementById(i+"-"+j).style.color = "forestgreen";
+        function add_seat(i,j) {
+            //alert("hello");
+            var row = document.getElementById("rows").value;
+            row = parseInt(row);
+            if(i<row) {
+                var category = document.getElementById("category").value;
+                layout[i][j] = category;
+                var lab = document.getElementById("label").value;
+                label[i][j] = lab;
 
-            document.getElementById("layout-input").value = JSON.stringify(layout);
-            document.getElementById("label-input").value = JSON.stringify(label);
+                var div = document.getElementById("selected-seat");
+                div.parentNode.removeChild(div);
+                document.getElementById("add-label-container").style.display = "none";
 
-            document.getElementById("h").innerHTML = "checked " + " " +layout[i][j] + " " +label[i][j];
+                if (category.localeCompare("Economy")==0)
+                    document.getElementById(i + "-" + j).style.color = "forestgreen";
+                else {
+                    document.getElementById(i + "-" + j).style.color = "#33D1FF";
+                }
+
+                document.getElementById("layout-input").value = JSON.stringify(layout);
+                document.getElementById("label-input").value = JSON.stringify(label);
+            }
+            else {
+                alert("You can't add this seat.");
+            }
+
         }
         function cancel_seat() {
-
             var div = document.getElementById("selected-seat");
             div.parentNode.removeChild(div);
             document.getElementById("add-label-container").style.display = "none";
@@ -303,6 +372,36 @@
                             }
                         }
                     }
+                    else if(columns==5){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(label[idx][idx1].localeCompare("X")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-1\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(label[idx][idx1].localeCompare("X")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                            }
+                        }
+                    }
+                    else if(columns==6){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(label[idx][idx1].localeCompare("X")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                            }
+                        }
+                        //up = up + "<div class=\"col-sm-1\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(label[idx][idx1].localeCompare("X")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                            }
+                        }
+                    }
                     up = up + "</div>";
                 }
 
@@ -322,6 +421,64 @@
         }
         function cancel_preview() {
             document.getElementById("preview-container").style.display = "none";
+        }
+
+        function row_column_label() {
+            var div = document.getElementById("row-column-label");
+
+            var select = document.getElementById("row-col-label").value;
+
+            if(select.localeCompare("Label by rows")==0)
+                div.innerText = "Click the seat of the rows";
+            else div.innerText = "Click the seat of the columns";
+        }
+
+        function resize_layout() {
+            var value = document.getElementById("rows").value;
+
+            var rows = layout.length;
+            var temp1 = new Array(6);
+            var temp2 = new Array(6);
+            var seats = '';
+            var i = 0;
+            if(rows < value) {
+                while (rows < value) {
+                    seats = seats + "<div id='row-"+rows+"'><div id=\"seat-view-group\">\n" + "<div class=\"row\">\n";
+                    for (i = 0; i < 6; i++) {
+                        if (i == 2) {
+                            seats = seats + "<div class='col-sm-2' id='id-" + rows + "-" + i + "'" +
+                                " style='border-right: 2px dashed grey;'>" +
+                                "<span class='hoverable' onclick='select_seat(" + rows + "," + i + ")'>\n" +
+                                "<i class='fas fa-couch fa-2x' id='" + rows + "-" + i + "' style='color: #CCCCCB;'></i></span></div>";
+                        } else {
+                            seats = seats + "<div class='col-sm-2' id='id-" + rows + "-" + i + "'" +
+                                "<span class='hoverable' onclick='select_seat(" + rows + "," + i + ")'>\n" +
+                                "<i class='fas fa-couch fa-2x' id='" + rows + "-" + i + "' style='color: #CCCCCB;'></i></span></div>";
+                        }
+                        temp1[i] = "_";
+                        temp2[i] = "X";
+                    }
+                    seats = seats + "</div></div></div>";
+                    rows = rows + 1;
+                    layout.push(temp1);
+                    label.push(temp2);
+                }
+                var div = document.createElement("div");
+                div.innerHTML = seats;
+                document.getElementById("details-seat-view").appendChild(div);
+            }
+            else if(rows > value){
+                while(rows > value){
+                    if(rows <= 10)
+                        break;
+                    rows = rows - 1;
+                    var temp = document.getElementById("row-"+rows);
+                    temp.parentNode.removeChild(temp);
+                    layout.pop();
+                    label.pop();
+                }
+            }
+
         }
 
     </script>
@@ -449,7 +606,7 @@
                         <div id="bus-layout-bottom">
 
                             <div class="form-group{{ $errors->has('decker_num') ? ' has-error' : '' }}">
-                                <label for="decker_num" class="col-md-4 control-label">Decker Number</label>
+                                <label for="decker_num" class="col-md-4 control-label">Number of Decker</label>
 
                                 <div class="col-md-6">
                                     <input id="decker_num" type="number" class="form-control" name="decker_num" value="{{ old('decker_num') }}" required>
@@ -466,7 +623,8 @@
                                 <label for="rows" class="col-md-4 control-label">Rows</label>
 
                                 <div class="col-md-6">
-                                    <input id="rows" type="number" class="form-control" name="rows" value="{{ old('rows') }}" required>
+                                    <input id="rows" type="number" class="form-control" name="rows"
+                                           oninput="resize_layout()" value="{{ old('rows') }}" required>
 
                                     @if ($errors->has('rows'))
                                         <span class="help-block">
@@ -490,9 +648,21 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <select id="row-col-label" class="form-control">
+                                        <option>Label by rows</option>
+                                        <option>Label by columns</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="form-group{{ $errors->has('bus_layout') ? ' has-error' : '' }}">
                                 <label for="bus_layout" class="col-md-3 control-label">Layout</label>
                                 <div class="col-md-8">
+
+                                    <h4 id="row-column-label" style="text-align: center;color: forestgreen;">
+                                        Click the seat of the first row and column</h4>
 
                                     <div id="details-seat-view" style="margin-left: 0%;width: 100%;">
                                         <div id="front-side"><div class="row">
@@ -500,7 +670,7 @@
                                                 <div class="col-sm-4 col-sm-offset-4"><strong>Driver</strong></div> </div>
                                         </div>
 
-                                        @for($i=0;$i<12;$i++)
+                                        @for($i=0;$i<10;$i++)
                                             <div id="seat-view-group">
                                                 <div class="row">
                                                     @for($j=0;$j<6;$j++)
@@ -545,31 +715,6 @@
     </div>
 
     <div id="add-label-container"></div>
-    <div id="preview-container">
-        <div id="preview-container-top">
-            <h3>Bus Layout Preview</h3>
-        </div>
-        <div id="preview-container-middle">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div id="preview-container-left">
-                        <h4>check</h4>
-                    </div>
-                </div>
-                <div class="col-sm-6" style="border-left: 1px solid grey;">
-                    <div id="preview-container-right">
-                        <div id="preview-details-seat-view"> <!-- should be adjust -->
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="preview-container-bottom">
-            <button type="button" class="btn btn-warning" style="margin-left: 100px;" onclick="cancel_preview()">Cancel</button>
-            <button type="submit" class="btn btn-success" form="send-form">Confirm</button>
-        </div>
-    </div>
 </div>
 
 <div id="footer">
@@ -594,6 +739,32 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="preview-container">
+    <div id="preview-container-top">
+        <h3>Bus Layout Preview</h3>
+    </div>
+    <div id="preview-container-middle">
+        <div class="row">
+            <div class="col-sm-6">
+                <div id="preview-container-left">
+                    <h4>check</h4>
+                </div>
+            </div>
+            <div class="col-sm-6" style="border-left: 1px solid grey;">
+                <div id="preview-container-right">
+                    <div id="preview-details-seat-view"> <!-- should be adjust -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="preview-container-bottom">
+        <button type="button" class="btn btn-warning" style="margin-left: 100px;" onclick="cancel_preview()">Cancel</button>
+        <button type="submit" class="btn btn-success" form="send-form">Confirm</button>
     </div>
 </div>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->

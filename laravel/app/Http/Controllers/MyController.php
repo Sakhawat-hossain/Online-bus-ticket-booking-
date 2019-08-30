@@ -65,7 +65,7 @@ class MyController extends Controller
                 $id=DB::table('users')->where('username',$username)->value('id');
                 Session::put('username',$username);
                 Session::put('userID',$id);
-                return view('user.login');//redirect()->route('sign-in');
+                return redirect('home');//redirect()->route('sign-in');
             }
 
         //}

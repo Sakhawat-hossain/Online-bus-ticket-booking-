@@ -96,6 +96,7 @@ Route::get('/representative-buses/{id}','RepActivityController@getBusList');// g
 Route::post('/representative-buses-with-filter/{id}','RepActivityController@getFilteredBusList');// get buses of respective operator
 Route::get('/representative-add-buses/{id}','RepActivityController@addNewBus');// add new buses of respective operator
 Route::post('/representative-add-buses-preview/{id}','RepActivityController@addNewBusPreview');// preview add new buses of respective operator
+Route::post('/representative-edit-buses/{id}/{busID}','RepActivityController@editBus');// edit buses of respective operator
 
 
 Route::get('/profile', function () {

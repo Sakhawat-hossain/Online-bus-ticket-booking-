@@ -102,12 +102,12 @@
                     <li>
                         <a href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <!--li>
+                    <li>
                         <a href="customers_view"><i class="fa fa-users"></i>Customers</a>
                     </li>
                     <li>
                         <a href="bookings_view"><i class="fa fa-money"></i>Bookings</a>
-                    </li-->
+                    </li>
                     <li>
                         <a href="representative-buses/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                             <i class="fa fa-truck"></i>Buses</a>
@@ -121,9 +121,6 @@
                     </li>
                     <li>
                         <a href="routes_view"><i class="fa fa-road"></i> Routes</a>
-                    </li>
-                    <li>
-                        <a href="routes_view"><i class="fa fa-road"></i> Trips</a>
                     </li>
                     <li>
                         <a href="hooks/summary-reports"><i class="fa fa-list"></i> Reports</a>
@@ -140,11 +137,62 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Welcome  <small> representative</small>
+                            Welcome  <small> admin</small>
                         </h1>
                     </div>
                 </div>
                 <!--user widgets-->
+                <div class="row">
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary text-center no-boder bg-color-red">
+                            <div class="panel-body">
+                                <i class="fa fa-users fa-5x"></i>
+                                <h3>3</h3>
+                            </div>
+                            <div class="panel-footer back-footer-red">
+                                <a href="customers_view.php" style="text-decoration: none;color: white"><strong>Customers</strong></a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary text-center no-boder bg-color-brown">
+                            <div class="panel-body">
+                                <i class="fa fa-money fa-5x"></i>
+                                <h3>7</h3>
+                            </div>
+                            <div class="panel-footer back-footer-brown">
+                                <a href="bookings_view.php" style="text-decoration: none;color: white"><strong>Bookings</strong></a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary text-center no-boder bg-color-green">
+                            <div class="panel-body">
+                                <i class="fa fa fa-calendar fa-5x"></i>
+                                <h3>Sat/Jun/29/2019</h3>
+                            </div>
+                            <div class="panel-footer back-footer-green">
+                                <strong>Date</strong>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary text-center no-boder bg-color-blue">
+                            <div class="panel-body">
+                                <i class="fa fa-user fa-5x"></i>
+                                <h3>admin</h3>
+                            </div>
+                            <div class="panel-footer back-footer-blue">
+                                <a href="membership_profile.php" style="text-decoration:none;color: white"><strong>Account</strong></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--admin widgets row-->
                 <div class="row">
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-green">
@@ -191,45 +239,6 @@
                             </div>
                             <div class="panel-footer back-footer-brown">
                                 <a href="routes_view.php" style="text-decoration: none;color: white"> <strong>Routes</strong></a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--admin widgets row-->
-                <div class="row">
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="panel panel-primary text-center no-boder bg-color-red">
-                            <div class="panel-body">
-                                <i class="fa fa-road fa-5x"></i>
-                                <h3>2 </h3>
-                            </div>
-                            <div class="panel-footer back-footer-red">
-                                <a href="routes_view.php" style="text-decoration: none;color: white"> <strong>Trips</strong></a>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="panel panel-primary text-center no-boder bg-color-brown">
-                            <div class="panel-body">
-                                <i class="fa fa-user fa-5x"></i>
-                                <h3>representative</h3>
-                            </div>
-                            <div class="panel-footer back-footer-brown">
-                                <a href="membership_profile.php" style="text-decoration:none;color: white"><strong>Account</strong></a>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="panel panel-primary text-center no-boder bg-color-green">
-                            <div class="panel-body">
-                                <i class="fa fa-list fa-5x"></i>
-                                <h3>report</h3>
-                            </div>
-                            <div class="panel-footer back-footer-green">
-                                <a href="membership_profile.php" style="text-decoration:none;color: white"><strong>Report</strong></a>
 
                             </div>
                         </div>

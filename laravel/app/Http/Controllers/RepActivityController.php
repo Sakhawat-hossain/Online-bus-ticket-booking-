@@ -45,27 +45,31 @@ class RepActivityController extends Controller
         */
         if($type=='All' && $status=='All') {
             $buses = DB::table('buses')->where('name', $busname)
-                ->select('buses.name', 'buses.coach_no', 'buses.type', 'buses.total_seat', 'buses.status', 'buses.rID', 'buses.id')
+                ->join('bus_layouts','buses.id','bus_layouts.busID')
+                ->select('buses.name', 'buses.coach_no', 'buses.type', 'buses.total_seat', 'buses.status','bus_layouts.id','bus_layouts.busID')
                 ->get();
         }
         else if($type=='All') {
             $buses = DB::table('buses')->where('name', $busname)
                 ->where('buses.status',$status)
-                ->select('buses.name', 'buses.coach_no', 'buses.type', 'buses.total_seat', 'buses.status', 'buses.rID', 'buses.id')
+                ->join('bus_layouts','buses.id','bus_layouts.busID')
+                ->select('buses.name', 'buses.coach_no', 'buses.type', 'buses.total_seat', 'buses.status','bus_layouts.id','bus_layouts.busID')
                 ->get();
         }
 
         else if($status=='All') {
             $buses = DB::table('buses')->where('name', $busname)
                 ->where('buses.type',$type)
-                ->select('buses.name', 'buses.coach_no', 'buses.type', 'buses.total_seat', 'buses.status', 'buses.rID', 'buses.id')
+                ->join('bus_layouts','buses.id','bus_layouts.busID')
+                ->select('buses.name', 'buses.coach_no', 'buses.type', 'buses.total_seat', 'buses.status','bus_layouts.id','bus_layouts.busID')
                 ->get();
         }
         else{
             $buses = DB::table('buses')->where('name', $busname)
                 ->where('buses.status',$status)
                 ->where('buses.type',$type)
-                ->select('buses.name', 'buses.coach_no', 'buses.type', 'buses.total_seat', 'buses.status', 'buses.rID', 'buses.id')
+                ->join('bus_layouts','buses.id','bus_layouts.busID')
+                ->select('buses.name', 'buses.coach_no', 'buses.type', 'buses.total_seat', 'buses.status','bus_layouts.id','bus_layouts.busID')
                 ->get();
         }
 
@@ -91,7 +95,9 @@ class RepActivityController extends Controller
         $layoutStr = '';
         $label = json_decode($request->get("label"));
 
-        for ($i=0;$i<12;$i++){
+        $rows = $request->get('rows');
+       // if(is_int($rows)) echo "yes";
+        for ($i=0;$i<$rows;$i++){
             for ($j=0;$j<6;$j++){
                 $seatCategory = $layout[$i][$j];
                 if($j==5)
@@ -126,7 +132,7 @@ class RepActivityController extends Controller
         ]);
         $busLayout->save();
 
-        for ($i=0;$i<12;$i++){
+        for ($i=0;$i<$rows;$i++){
             for ($j=0;$j<6;$j++){
                 $seatLabel = $label[$i][$j];
                 $seatCategory = $layout[$i][$j];
@@ -145,4 +151,24 @@ class RepActivityController extends Controller
         return view('representative.representative-add-bus')->with('bus_name',$request->get('bus_name'))->with('addMessage',"Successfully added.");
     }
 
+    public function editBus(Request $request,$id,$busID){
+        $var = DB::table('buses')->where('id',$busID)->value('coach_no');
+
+        $type=$cno=$tseat=$status='';
+        $type = $request->get('type');
+        $cno = $request->get('coach_no');
+        $tseat = $request->get('total_seat');
+        $status = $request->get('status');
+        if($var != $cno) {
+            $this->validate($request, [
+                'coach_no' => 'required|string|max:255|unique:buses',
+            ]);
+        }
+//echo "$type $cno $tseat $status $busID";
+        DB::table('buses')->where('id',$busID)
+            ->update(['coach_no' => $cno, 'type' => $type, 'status' => $status, 'total_seat' => $tseat]);
+
+        return redirect("representative-buses/".$id);
+
+    }
 }

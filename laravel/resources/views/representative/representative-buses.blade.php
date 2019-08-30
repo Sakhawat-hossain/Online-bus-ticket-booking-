@@ -3,6 +3,7 @@
 <head>
     <title>Bus details</title>
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -111,7 +112,24 @@
                     var bus_layout = data;
                     left.innerHTML = "<p><strong>Decker Number : &nbsp; </strong>" + decker_num + "</p>" +
                         "<p><strong>Rows : &nbsp; </strong>" + rows + "</p>" +
-                        "<p><strong>Columns : &nbsp; </strong>" + columns + "</p>" ;
+                        "<p><strong>Columns : &nbsp; </strong>" + columns + "</p>" +
+                        "<div style='margin-top: 50px;'>" +
+                        "<div class='row'>" +
+                        "<div class='col-sm-2 col-sm-offset-2'><span><i class=\"fas fa-couch fa-2x\"" +
+                        "style='color: forestgreen'></i></span></div> " +
+                        "<div class='col-sm-4'><span>Economy</span></div> " +
+                        "</div>" +
+                        "<div class='row'>" +
+                        "<div class='col-sm-2 col-sm-offset-2'><span><i class=\"fas fa-couch fa-2x\"" +
+                        "style='color: #33D1FF'></i></span></div> " +
+                        "<div class='col-sm-4'><span>Business</span></div> " +
+                        "</div>" +
+                        "<div class='row'>" +
+                        "<div class='col-sm-2 col-sm-offset-2'><span><i class=\"fas fa-couch fa-2x\"" +
+                        "style='color: black'></i></span></div> " +
+                        "<div class='col-sm-4'><span>Block</span></div> " +
+                        "</div>" +
+                        "</div>" ;
 
                     var right = document.getElementById("preview-details-seat-view");
                     // if( !isNaN(rows) && !isNaN(columns)){
@@ -130,14 +148,28 @@
                             for(idx1=0; idx1<3; idx1++){
                                 if(bus_layout[idx][idx1].localeCompare("_")){
                                     up = up + "<div class=\"col-sm-2\">" +
-                                        "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                        "  <span><i class=\"fas fa-couch fa-2x\" " ;
+                                    if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                        up = up + "style = 'color: forestgreen;'>";
+                                    else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                        up = up + "style = 'color: #33D1FF;'>";
+                                    else
+                                        up = up + "style = 'color: black;'>";
+                                    up = up + "</i></span></div>";
                                 }
                             }
                             up = up + "<div class=\"col-sm-2\"><span></span></div>";
                             for(idx1=3; idx1<6; idx1++){
                                 if(bus_layout[idx][idx1].localeCompare("_")){
                                     up = up + "<div class=\"col-sm-2\">" +
-                                        "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                        "  <span><i class=\"fas fa-couch fa-2x\" " ;
+                                    if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                        up = up + "style = 'color: forestgreen;'>";
+                                    else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                        up = up + "style = 'color: #33D1FF;'>";
+                                    else
+                                        up = up + "style = 'color: black;'>";
+                                    up = up + "</i></span></div>";
                                 }
                             }
                         }
@@ -145,17 +177,61 @@
                             for(idx1=0; idx1<3; idx1++){
                                 if(bus_layout[idx][idx1].localeCompare("_")){
                                     up = up + "<div class=\"col-sm-3\">" +
-                                        "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                        "  <span><i class=\"fas fa-couch fa-2x\" " ;
+                                         if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                             up = up + "style = 'color: forestgreen;'>";
+                                         else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                             up = up + "style='color: #33D1FF;'>" ;
+                                         else
+                                             up = up + "style = 'color: black;'>";
+                                        up = up + "</i></span></div>";
                                 }
                             }
                             up = up + "<div class=\"col-sm-2\"><span></span></div>";
                             for(idx1=3; idx1<6; idx1++){
                                 if(bus_layout[idx][idx1].localeCompare("_")){
                                     up = up + "<div class=\"col-sm-3\">" +
-                                        "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                        "  <span><i class=\"fas fa-couch fa-2x\" " ;
+                                    if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                        up = up + "style = 'color: forestgreen;'>";
+                                    else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                        up = up + "style = 'color: #33D1FF;'>";
+                                    else
+                                        up = up + "style = 'color: black;'>";
+                                    up = up + "</i></span></div>";
                                 }
                             }
                         }
+                        else if(columns==5){
+                            for(idx1=0; idx1<3; idx1++){
+                                if(bus_layout[idx][idx1].localeCompare("_")){
+                                    up = up + "<div class=\"col-sm-2\">" +
+                                        "  <span><i class=\"fas fa-couch fa-2x\" " ;
+                                    if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                        up = up + "style = 'color: forestgreen;'>";
+                                    else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                        up = up + "style='color: #33D1FF;'>" ;
+                                    else
+                                        up = up + "style = 'color: black;'>";
+                                    up = up + "</i></span></div>";
+                                }
+                            }
+                            up = up + "<div class=\"col-sm-1\"><span></span></div>";
+                            for(idx1=3; idx1<6; idx1++){
+                                if(bus_layout[idx][idx1].localeCompare("_")){
+                                    up = up + "<div class=\"col-sm-2\">" +
+                                        "  <span><i class=\"fas fa-couch fa-2x\" " ;
+                                    if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                        up = up + "style = 'color: forestgreen;'>";
+                                    else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                        up = up + "style = 'color: #33D1FF;'>";
+                                    else
+                                        up = up + "style = 'color: black;'>";
+                                    up = up + "</i></span></div>";
+                                }
+                            }
+                        }
+
                         up = up + "</div>";
                     }
 
@@ -172,106 +248,120 @@
         function cancel_preview() {
             document.getElementById("preview-container").style.display = "none";
         }
-        /*
-        function showLayout(idxx,id) {
-
-            var chk=document.getElementById("layout-"+id);
-
-            if(chk){
+        function editBus(idx,id) {
+            var tr_id = document.getElementById("edit-bus-"+id);
+            var tr_val = document.getElementById("busTable").rows[idx].cells;
+            //alert();
+            if(tr_id){
 
             }
             else{
+
+                var div = document.createElement("div");
+                div.setAttribute("id","edit-bus-container");
+                var username = <?php echo json_encode(Session::get('rep-username')); ?>
+
+                div.innerHTML = "<form method=\"post\" action='../representative-edit-buses/"+username+"/"+id+"'>" +
+                        "<input name=\"_token\" value=\"{{ csrf_token() }}\" type=\"hidden\">" +
+                    "<div class='row'>" +
+                    "<div class='col-md-6 col-md-offset-3'>" +
+                        "\n" +
+                    "            <div class=\"panel panel-default\">\n" +
+                    "                <div class=\"panel-heading\">Edit Bus Info</div>\n" +
+                    "\n" +
+                    "                <div class=\"panel-body\">" +"\n" +
+                    "                        <div class=\"form-group{{ $errors->has('type') ? ' has-error' : '' }}\">\n" +
+                    "                            <label for=\"type\" class=\"col-md-4 control-label\">Bus Type</label>\n" +
+                    "\n" +
+                    "                            <div class=\"col-md-6\">\n" +
+                    "                                <select id=\"type\" class=\"form-control\" name=\"type\">\n" +
+                    "   <option>"+ tr_val[2].innerText+"</option>\n" +
+                    "                                    <option>AC</option>\n" +
+                    "                                    <option>non-AC</option>\n" +
+                    "                                </select>\n" +
+                    "                                @if ($errors->has('type'))\n" +
+                    "                                    <span class=\"help-block\">\n" +
+                    "                                        <strong>{{ $errors->first('type') }}</strong>\n" +
+                    "                                    </span>\n" +
+                    "                                @endif\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "\n" +
+                    "                        <div class=\"form-group{{ $errors->has('coach_no') ? ' has-error' : '' }}\">\n" +
+                    "                            <label for=\"email\" class=\"col-md-4 control-label\" style=\"padding-top: 10px;\">Coach No</label>\n" +
+                    "\n" +
+                    "                            <div class=\"col-md-6\" style=\"padding-top: 10px;\">\n" +
+                    "                                <input id=\"coach_no\" type=\"text\" class=\"form-control\" name=\"coach_no\" " +
+                    "   value='"+ tr_val[1].innerText+"' required>\n" +
+                    "\n" +
+                    "                                @if ($errors->has('coach_no'))\n" +
+                    "                                    <span class=\"help-block\">\n" +
+                    "                                        <strong>{{ $errors->first('coach_no') }}</strong>\n" +
+                    "                                    </span>\n" +
+                    "                                @endif\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "\n" +
+                    "                        <div class=\"form-group{{ $errors->has('total_seat') ? ' has-error' : '' }}\">\n" +
+                    "                            <label for=\"total_seat\" class=\"col-md-4 control-label\" style=\"padding-top: 10px;\">Total Seat</label>\n" +
+                    "\n" +
+                    "                            <div class=\"col-md-6\" style=\"padding-top: 10px;\">\n" +
+                    "                                <input id=\"total_seat\" type=\"number\" class=\"form-control\" name=\"total_seat\" " +
+                    "   value='"+tr_val[3].innerText+"' required>\n" +
+                    "\n" +
+                    "                                @if ($errors->has('total_seat'))\n" +
+                    "                                    <span class=\"help-block\">\n" +
+                    "                                        <strong>{{ $errors->first('total_seat') }}</strong>\n" +
+                    "                                    </span>\n" +
+                    "                                @endif\n" +
+                    "                            </div>\n" +
+                    "                        </div>" +
+                    "\n" +
+                    "                        <div class=\"form-group{{ $errors->has('status') ? ' has-error' : '' }}\">\n" +
+                    "                            <label for=\"status\" class=\"col-md-4 control-label\" style=\"padding-top: 10px;\">Status</label>\n" +
+                    "\n" +
+                    "                            <div class=\"col-md-6\" style=\"padding-top: 10px;\">\n" +
+                                                    "<select id=\"status\" class=\"form-control\" name=\"status\">\n" +
+                    "                                    <option>"+tr_val[4].innerText+"</option>\n" +
+                    "                                    <option>Available</option>\n" +
+                    "                                    <option>Block</option>\n" +
+                    "                                    <option>Abandoned</option>\n" +
+                    "                                </select>\n" +
+                    "\n" +
+                    "                                @if ($errors->has('status'))\n" +
+                    "                                    <span class=\"help-block\">\n" +
+                    "                                        <strong>{{ $errors->first('status') }}</strong>\n" +
+                    "                                    </span>\n" +
+                    "                                @endif\n" +
+                    "                            </div>\n" +
+                    "                        </div>" +
+                    "\n" +
+                    "        <button type=\"button\" class=\"btn btn-warning\" style=\"margin-left: 50px;margin-top:15px;\" " +
+                    "onclick=\"cancel_edit("+id+")\">Cancel</button>" +
+                    "\n" +
+                    "        <button type=\"submit\" class=\"btn btn-success\" style=\"margin-top: 15px;\">Submit</button>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>" +
+                "</div>" +
+                "</div></form>";
+
                 var tr=document.createElement("tr"); // row id -- a-row-i, p-row-i
-                tr.setAttribute("id","layout-"+id);
+                tr.setAttribute("id","edit-bus-"+id);
+                tr.style.textAlign="center";
 
                 var td=document.createElement("td");
                 td.colSpan=7;
-                var p;//=document.createElement("p");
-                var txt;//=document.createTextNode("Seat No : A1, Class : Business, Fare : 500 Tk");
 
-                jQuery.ajax({
-                    type:'GET',
-                    url:'../get-bus-layout/'+id,
-                    data:'',
-                    async: false,
-                    success:function(data)
-                    {
-                        document.getElementById("t").innerHTML = "testing";
-
-                        var div = document.createElement("div");
-                        div.setAttribute("id","bus-layout-tr");
-
-                        var right = document.getElementById("preview-details-seat-view");
-                        var columns = 3;
-                        var rows = 9;
-                        set_width(columns);
-                        var up = "<div id=\"preview-front-side\">\n" +
-                            "                                <div class=\"row\">\n" +
-                            "                                    <div class=\"col-sm-3 col-sm-offset-1\"><strong>Gate</strong></div>\n" +
-                            "                                    <div class=\"col-sm-4 col-sm-offset-4\"><strong>Driver</strong></div>\n" +
-                            "                                </div>\n" +
-                            "                            </div>\n";
-
-                        var idx,idx1;
-                        for(idx=0; idx<rows; idx++){
-                            up = up  + "<div id=\"preview-seat-view-group\">";
-                            if(columns==4){
-                                for(idx1=0; idx1<3; idx1++){
-                                    if(label[idx][idx1].localeCompare("X")){
-                                        up = up + "<div class=\"col-sm-2\">" +
-                                            "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
-                                    }
-                                }
-                                up = up + "<div class=\"col-sm-2\"><span></span></div>";
-                                for(idx1=3; idx1<6; idx1++){
-                                    if(label[idx][idx1].localeCompare("X")){
-                                        up = up + "<div class=\"col-sm-2\">" +
-                                            "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
-                                    }
-                                }
-                            }
-                            else if(columns==3){
-                                for(idx1=0; idx1<3; idx1++){
-                                    if(label[idx][idx1].localeCompare("X")){
-                                        up = up + "<div class=\"col-sm-3\">" +
-                                            "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
-                                    }
-                                }
-                                up = up + "<div class=\"col-sm-2\"><span></span></div>";
-                                for(idx1=3; idx1<6; idx1++){
-                                    if(label[idx][idx1].localeCompare("X")){
-                                        up = up + "<div class=\"col-sm-3\">" +
-                                            "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
-                                    }
-                                }
-                            }
-                            up = up + "</div>";
-                        }
-
-                        right.innerHTML = up;
-                        div.appendChild(right);
-                        td.appendChild(div);
-                    },
-                    error:function (data) {
-                        document.getElementById("t").innerHTML = "error" +data;
-                    }
-                });
-
-                var btn=document.createElement("button");
-                btn.setAttribute("class","btn btn-default");
-                btn.setAttribute("onclick","HideLayout("+id+")");
-                txt=document.createTextNode("Hide");
-                btn.appendChild(txt);
-
-                td.appendChild(btn);
+                td.appendChild(div);
                 tr.appendChild(td);
-                jQuery("table #bus-"+idxx).after(tr);
+                jQuery("table #bus-"+idx).after(tr);
             }
-
         }
-         */
-        function editBus(idx,id) {
 
+        function cancel_edit(id) {
+            var div = document.getElementById("edit-bus-"+id);
+            div.parentNode.removeChild(div);
         }
     </script>
 
@@ -310,7 +400,6 @@
     </div>
 <div id="t"></div>
     <div class="container" style="min-height: 500px;">
-
 
         <div id="search-option-container">
             <div class="row">
@@ -371,7 +460,7 @@
         </div>
 
         <div id="table-container">
-            <table class="table" id="myTable">
+            <table class="table" id="busTable">
                 <thead class="thead-dark">
                 <tr style="height: 60px;">
                     <th style="padding-bottom: 20px;">Enterprise Name</th>
@@ -476,7 +565,7 @@
 <script>
     function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("myTable");
+        table = document.getElementById("busTable");
         switching = true;
         //Set the sorting direction to ascending:
         dir = "asc";

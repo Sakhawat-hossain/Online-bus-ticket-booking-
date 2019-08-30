@@ -1,5 +1,6 @@
 #preview-container{
     min-height: 200px;
+    max-height: 98%;
     width: 50%;
     position: fixed;
     left: 25%;
@@ -7,6 +8,7 @@
     background-color: whitesmoke;
     border: 1px solid grey;
     display: none;
+    overflow-y: scroll;
 }
 #preview-container-top{
     text-align: center;
@@ -82,4 +84,10 @@
 .input-3{
     margin-top: 18px;
 }
+
+#edit-bus-container{
+    width: 100%;
+    min-height: 100%;
+}
+
 

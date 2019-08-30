@@ -220,8 +220,8 @@
                 div.style.marginLeft = "10%";
             }
             else if(columns==3){
-                div.style.width = "60%";
-                div.style.marginLeft = "20%";
+                div.style.width = "66%";
+                div.style.marginLeft = "17%";
             }
             else if(columns==2){
                 div.style.width = "60%";
@@ -244,52 +244,134 @@
             var right = document.getElementById("details-seat-view");
             // if( !isNaN(rows) && !isNaN(columns)){
             set_width(columns);
-            var up = "<div id=\"preview-front-side\">\n" +
+            var up = "<div id=\"front-side\">\n" +
                 "                                <div class=\"row\">\n" +
                 "                                    <div class=\"col-sm-3 col-sm-offset-1\"><strong>Gate</strong></div>\n" +
                 "                                    <div class=\"col-sm-4 col-sm-offset-4\"><strong>Driver</strong></div>\n" +
                 "                                </div>\n" +
                 "                            </div>\n";
 
+            var pos=0;
             var idx,idx1;
-            for(idx=0; idx<rows; idx++){
-                up = up  + "<div id=\"seat-view-group\">";
-                if(columns==4){
-                    for(idx1=0; idx1<3; idx1++){
-                        if(bus_layout[idx][idx1].localeCompare("_")){
-                            up = up + "<div class=\"col-sm-2\">" +
-                                "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+            if(username){
+                for(idx=0; idx<rows; idx++){
+                    up = up  + "<div id=\"seat-view-group\">";
+                    if(columns==4){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-2\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
                         }
                     }
-                    up = up + "<div class=\"col-sm-2\"><span></span></div>";
-                    for(idx1=3; idx1<6; idx1++){
-                        if(bus_layout[idx][idx1].localeCompare("_")){
-                            up = up + "<div class=\"col-sm-2\">" +
-                                "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                    else if(columns==3){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-3\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-2\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-3\">" +
+                                    "  <span  onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
                         }
                     }
+                    else if(columns==5){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-1\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span  onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    up = up + "</div>";
                 }
-                else if(columns==3){
-                    for(idx1=0; idx1<3; idx1++){
-                        if(bus_layout[idx][idx1].localeCompare("_")){
-                            up = up + "<div class=\"col-sm-3\">" +
-                                "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+            }
+            else{
+                for(idx=0; idx<rows; idx++){
+                    up = up  + "<div id=\"seat-view-group\">";
+                    if(columns==4){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-2\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
                         }
                     }
-                    up = up + "<div class=\"col-sm-2\"><span></span></div>";
-                    for(idx1=3; idx1<6; idx1++){
-                        if(bus_layout[idx][idx1].localeCompare("_")){
-                            up = up + "<div class=\"col-sm-3\">" +
-                                "  <span><i class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                    else if(columns==3){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-3\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-2\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-3\">" +
+                                    "  <span  onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
                         }
                     }
+                    else if(columns==5){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-1\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span  onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    up = up + "</div>";
                 }
-                up = up + "</div>";
             }
 
             right.innerHTML = up;
 
-             for(i=0;i<total_seat;i++){
+
+            for(i=0;i<total_seat;i++){
 
                 if(seat_arr[i].status.localeCompare('available')==0){
                     if (seat_arr[i].category.localeCompare('Business')==0) {
@@ -380,7 +462,7 @@
             </div>
         </nav>
     </div>
-
+<div id="t"></div>
     <div class="container" style="min-height: 500px;">
         <div id="main-container">
             <div id="couch-text">
