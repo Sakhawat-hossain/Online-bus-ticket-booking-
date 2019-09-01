@@ -99,8 +99,9 @@ Route::get('/representative-add-buses/{id}','RepActivityController@addNewBus');/
 Route::post('/representative-add-buses-preview/{id}','RepActivityController@addNewBusPreview');// preview add new buses of respective operator
 Route::post('/representative-edit-buses/{id}/{busID}','RepActivityController@editBus');// edit buses of respective operator
 Route::get('/representative-trips/{id}','RepActivityController@search_trips');// get trips of respective operator
-Route::get('/representative-add-trips/{id}','RepActivityController@addNewTrip');// add new buses of respective operator
+Route::get('/representative-add-trips-form/{id}','RepActivityController@addNewTripForm');// add new trips of respective operator
 Route::post('/representative-edit-trips/{id}/{tripID}','RepActivityController@editTrip');// edit buses of respective operator
+Route::post('/representative-add-trips/{id}','RepActivityController@addNewTrip');// edit buses of respective operator
 
 Route::get('/profile', function () {
     return view('user.profile');

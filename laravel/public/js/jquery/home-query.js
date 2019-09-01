@@ -94,6 +94,7 @@ function autocomplete(inp, arr) {
     document.addEventListener("click", function (e) {
         closeAllLists(e.target);
     });
+
 }
 
 /*An array containing all the country names in the world:*/
@@ -101,8 +102,11 @@ function autocomplete(inp, arr) {
 var places=["Rangpur", "Dinajpur", "Nilphamari", "Thakurgoan", "Panchagorh", "Kurigram", "Bogura", "Rajshahi", "Pabna", "Gaibandha", "Naogaon", "Sirajgonj", "Natore", "Joypurhat", "Dhaka", "Cumilla", "Chattogram", "Cox`s Bazar", "Khulla", "Kushtia", "Barisal", "Bagerhat", "Kuakata", "Sylhet"];
 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
 $(document).ready(function(){
-
+    $("#from").onkeyup(function () {
+        alert("hello");
+    });
     autocomplete(document.getElementById("fromInput"), places);
     autocomplete(document.getElementById("toInput"), places);
+
 });
 

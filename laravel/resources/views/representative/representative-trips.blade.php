@@ -237,12 +237,12 @@
                             </div>
                             <div class="col-sm-2">
                                 <div class="form-group">
-                                    <span class="form-label">Type</span>
+                                    <span class="form-label">Status</span>
                                     <select class="form-control" name="status">
                                         <option>All</option>
                                         <option>available</option>
-                                        <option>abandoned</option>
-                                        <option>blocked</option>
+                                        <option>done</option>
+                                        <option>cancelled</option>
                                     </select>
                                     <span class="select-arrow"></span>
                                 </div>
@@ -267,7 +267,7 @@
                                 <h3>@if(isset($send_data)) {{$send_data->bus}} @endif</h3>
                             </div>
                             <div class="form-btn" style="margin-top: 10px;float: right;margin-right:80px;">
-                                <a href="../representative-add-trips/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                                <a href="../representative-add-trips-form/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                                     <button type="button" class="btn btn-success" >New Trip</button></a>
                             </div>
                             <div class="form-btn" style="margin-top: 10px;float: right;margin-right:40px;">

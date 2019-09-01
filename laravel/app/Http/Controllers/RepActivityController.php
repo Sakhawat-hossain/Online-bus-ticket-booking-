@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 
 use App\Bus;
 use App\Bus_layout;
+use App\Seat;
 use App\Seat_info;
+use App\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -213,74 +215,92 @@ class RepActivityController extends Controller
 
     }
 
-    public function addNewTrip(Request $request,$id){
+    public function addNewTripForm($id){
+        $busname=DB::table('representatives')->where('username',$id)->value('enterprise');
 
-        $this->validate($request, [
-            'bus_name' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
-            'coach_no' => 'required|string|max:255|unique:buses',
-        ]);
+        $data = DB::table('routes')->select('to')->distinct()->get();
+        $places = collect();
+        $idx = 0;
+        foreach ($data as $dt){
+            foreach ($dt as $d)
+                $places->put($idx,$d);
+            $idx = $idx+1;
+        }
+
+        $from = json_encode($places);
+
+        return view('representative.representative-add-trip')->with('bus_name',$busname)->with('from',$from);
+    }
+
+    public function addNewTrip(Request $request, $id){
+        $busname=DB::table('representatives')->where('username',$id)->value('enterprise');
+
+        $from = $request->get('from');
+        $to = $request->get('from');
+        $spoint = $request->get('from');
+        $type = $request->get('from');
+        $coach_no = $request->get('from');
+        $efare = $request->get('from');
+        $bfare = $request->get('from');
+        $date = $request->get('from');
+        $deptt = $request->get('from');
+        $arrivet = $request->get('from');
+
+        $routeID=DB::table('routes')->where('from',$from)->where('to',$to)->value('id');
+        if(!$routeID){
+            //return to here route add
+        }
+
+        $busID = DB::table('buses')->where('coach_no',$coach_no)->where('name',$busname)->value('id');
+        if(!$busID){
+            return back();
+        }
 
         $rID=DB::table('representatives')->where('username',$id)->value('id');
-
-        $layout = json_decode($request->get("layout"));
-        $layoutStr = '';
-        $label = json_decode($request->get("label"));
-
-        $rows = $request->get('rows');
-        // if(is_int($rows)) echo "yes";
-        for ($i=0;$i<$rows;$i++){
-            for ($j=0;$j<6;$j++){
-                $seatCategory = $layout[$i][$j];
-                if($j==5)
-                    $layoutStr = $layoutStr.$seatCategory.";";
-                else
-                    $layoutStr = $layoutStr.$seatCategory.",";
-            }
-        }
-        //echo $layoutStr;
-        //$layoutArr = explode(";",$layoutStr);
-        //$layoutAr = explode(",",$layoutArr[0]);
-        //echo "$layoutAr[2]";
-
-        $bus = new Bus([
-            'name' => $request->get('bus_name'),
-            'coach_no' => $request->get('coach_no'),
-            'type' => $request->get('type'),
-            'status' => 'available',
-            'total_seat' => $request->get('total_seat'),
-            'available_seat' => $request->get('total_seat'),
-            'rID' => $rID
-        ]);
-        $bus->save();
-
-        $busID = DB::table('buses')->where('coach_no',$request->get('coach_no'))->value('id');
-        $busLayout = new Bus_layout([
+        if($bfare != $efare)
+            $efare = $efare+'/'+$bfare;
+        else
+            $efare = $efare+'/'+$efare;
+        $trip = new Trip([
+            'routeID' => $routeID,
+            'departure_time' => $deptt,
+            'arrival_time' => $arrivet,
+            'date' => $date,
+            'comment' => 'available',
             'busID' => $busID,
-            'decker_num' => $request->get('decker_num'),
-            'rows' => $request->get('rows'),
-            'columns' => $request->get('columns'),
-            'layout' => $layoutStr
+            'rID' => $rID,
+            'b/e' => $efare
         ]);
-        $busLayout->save();
+        $trip->save();
+        $tripID=DB::table('trips')->where('routeID',$routeID)->where('busID',$busID)->where('date',$date)->value('id');
 
-        for ($i=0;$i<$rows;$i++){
-            for ($j=0;$j<6;$j++){
-                $seatLabel = $label[$i][$j];
-                $seatCategory = $layout[$i][$j];
+        $seats = DB::table('seat_infos')->where('busID',$busID)
+            ->select('id','category','status')->get();
 
-                if($seatLabel != "X"){
-                    $seatInfo = new Seat_info([
-                        'busID' => $busID,
-                        'seatNo' => $seatLabel,
-                        'status' => 'available',
-                        'category' => $seatCategory
-                    ]);
-                    $seatInfo->save();
-                }
+        foreach ($seats as $seat){
+            $idx=0;
+            $seatID=$category=$status=$val='';
+            foreach ($seat as $st){
+                if($idx==0) $seatID=$st;
+                else if($idx==1) $category=$st;
+                else $status=$st;
+                $idx++;
             }
+            if($category=='Business')
+                $val=$bfare;
+            else
+                $val=$efare;
+            $data=new Seat([
+                'tripID' => $tripID,
+                'seatID' => $seatID,
+                'fare' => $val,
+                'status' => $status
+            ]);
+            $data->save();
         }
-        return view('representative.representative-add-bus')->with('bus_name',$request->get('bus_name'))->with('addMessage',"Successfully added.");
+
+
+        return view('representative.representative-add-trip')->with('bus_name',$busname);
     }
 
 }
