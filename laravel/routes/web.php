@@ -87,9 +87,10 @@ Route::get('cancel-refund-policy','TicketPrintController@cancelRefundPolicy'); /
 Route::get('/get-status/{id}','AjaxlController@getSeatStatus'); // get status of seat
 Route::get('/update-status/{id}/{status}/{userID}','AjaxlController@updateStatus'); // update status of seat
 Route::get('/get-userID/{id}','AjaxlController@getUserID'); // get userID
+Route::get('/get-gender/{id}','AjaxlController@getUserGender'); // get user gender to show in seat list
 Route::get('/get-seat-list/{id}','AjaxlController@getSeatList'); // get seat list to show in profile
 
-Route::get('/get-bus-layout/{id}','AjaxlController@getBusLayout'); // get bus layout
+Route::get('/get-bus-layout/{id}','AjaxlController@getBusLayout'); // get bus layout to show in rep. bus list
 
 // for representative activities
 Route::get('/representative-buses/{id}','RepActivityController@getBusList');// get buses of respective operator
@@ -97,7 +98,9 @@ Route::post('/representative-buses-with-filter/{id}','RepActivityController@getF
 Route::get('/representative-add-buses/{id}','RepActivityController@addNewBus');// add new buses of respective operator
 Route::post('/representative-add-buses-preview/{id}','RepActivityController@addNewBusPreview');// preview add new buses of respective operator
 Route::post('/representative-edit-buses/{id}/{busID}','RepActivityController@editBus');// edit buses of respective operator
-
+Route::get('/representative-trips/{id}','RepActivityController@search_trips');// get trips of respective operator
+Route::get('/representative-add-trips/{id}','RepActivityController@addNewTrip');// add new buses of respective operator
+Route::post('/representative-edit-trips/{id}/{tripID}','RepActivityController@editTrip');// edit buses of respective operator
 
 Route::get('/profile', function () {
     return view('user.profile');

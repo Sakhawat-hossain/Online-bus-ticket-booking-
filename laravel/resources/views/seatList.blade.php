@@ -58,6 +58,7 @@
                         if(seat_arr[i].status.localeCompare('blocked')){ // not blocked
                             if(data[idx].localeCompare('available')==0){ // some how available
                                 seat_arr[i].status='available';
+                                seat_arr[i].gender='X';
                                 if (seat_arr[i].category.localeCompare('Business')==0) {
                                     document.getElementById(i).style.color = '#4b88a6';
                                 }
@@ -73,6 +74,23 @@
                             else if(data[idx].localeCompare('booked')==0) { // some how selected by him or another
                                 document.getElementById(i).style.color = '#78341a';
                                 seat_arr[i].status='booked';
+                                if(seat_arr[i].gender.localeCompare('X')==0){
+                                    jQuery.ajax({
+                                        type:'GET',
+                                        url:'../get-gender/'+username,
+                                        async:false,
+                                        success:function(data_inner) {
+                                            seat_arr[i].gender = data['gender'];
+                                            if(data_inner['gender'].localeCompare('female')==0)
+                                                document.getElementById(i).style.color = '#DB7484';
+                                        },
+                                        error:function() {
+                                            $("#pp").text("error");
+                                        }
+                                    });
+                                }
+                                else if(seat_arr[i].gender.localeCompare('female')==0)
+                                    document.getElementById(i).style.color = '#DB7484';
                             }
                         }
                     }
@@ -237,9 +255,6 @@
             var columns = layout['columns'];
 
             var bus_layout = layout;
-            //left.innerHTML = "<p><strong>Decker Number : &nbsp; </strong>" + decker_num + "</p>" +
-              //  "<p><strong>Rows : &nbsp; </strong>" + rows + "</p>" +
-                //"<p><strong>Columns : &nbsp; </strong>" + columns + "</p>" ;
 
             var right = document.getElementById("details-seat-view");
             // if( !isNaN(rows) && !isNaN(columns)){
@@ -307,6 +322,39 @@
                             }
                         }
                     }
+                    else if(columns==6){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span  onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    else if(columns==2){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-4\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-3\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-4\">" +
+                                    "  <span  onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
                     up = up + "</div>";
                 }
             }
@@ -364,6 +412,39 @@
                             }
                         }
                     }
+                    else if(columns==6){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span  onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    else if(columns==2){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-4\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-3\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-4\">" +
+                                    "  <span  onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
                     up = up + "</div>";
                 }
             }
@@ -373,6 +454,7 @@
 
             for(i=0;i<total_seat;i++){
 
+                //seat_arr[i].push
                 if(seat_arr[i].status.localeCompare('available')==0){
                     if (seat_arr[i].category.localeCompare('Business')==0) {
                         document.getElementById(i).style.color = '#4b88a6';
@@ -382,6 +464,22 @@
                 }
                 else if(seat_arr[i].status.localeCompare('booked')==0){
                     document.getElementById(i).style.color = '#78341a';
+                    //should be checked male/female
+                    //ajax call to check that
+                    jQuery.ajax({
+                        type:'GET',
+                        url:'../get-gender/'+username,
+                        data:'',
+                        async:false,
+                        success:function(data) {
+                            seat_arr[i].gender = data['gender'];
+                            if(data['gender'].localeCompare('female')==0)
+                                document.getElementById(i).style.color = '#DB7484';
+                        },
+                        error:function() {
+                            $("#pp").text("error");
+                        }
+                    });
                 }
                 else if(seat_arr[i].status.localeCompare('blocked')==0){
                     document.getElementById(i).style.color = '#3c3c3c';
@@ -453,7 +551,7 @@
                     @if(\Illuminate\Support\Facades\Session::has('username'))
                         @php $username=Session::get('username');@endphp
                         <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
-                        <li><a href="logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        <li><a href="../logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else
                         <li><a href="../user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                         <li><a href="../login-from-seatlist/{{$tripID}}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>

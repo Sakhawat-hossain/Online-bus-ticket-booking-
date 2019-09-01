@@ -323,9 +323,9 @@
                     "                            <div class=\"col-md-6\" style=\"padding-top: 10px;\">\n" +
                                                     "<select id=\"status\" class=\"form-control\" name=\"status\">\n" +
                     "                                    <option>"+tr_val[4].innerText+"</option>\n" +
-                    "                                    <option>Available</option>\n" +
-                    "                                    <option>Block</option>\n" +
-                    "                                    <option>Abandoned</option>\n" +
+                    "                                    <option>available</option>\n" +
+                    "                                    <option>blocked</option>\n" +
+                    "                                    <option>abandoned</option>\n" +
                     "                                </select>\n" +
                     "\n" +
                     "                                @if ($errors->has('status'))\n" +

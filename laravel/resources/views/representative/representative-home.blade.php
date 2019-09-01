@@ -123,7 +123,8 @@
                         <a href="routes_view"><i class="fa fa-road"></i> Routes</a>
                     </li>
                     <li>
-                        <a href="routes_view"><i class="fa fa-road"></i> Trips</a>
+                        <a href="representative-trips/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <i class="fa fa-road"></i> Trips</a>
                     </li>
                     <li>
                         <a href="hooks/summary-reports"><i class="fa fa-list"></i> Reports</a>
@@ -205,7 +206,8 @@
                                 <h3>2 </h3>
                             </div>
                             <div class="panel-footer back-footer-red">
-                                <a href="routes_view.php" style="text-decoration: none;color: white"> <strong>Trips</strong></a>
+                                <a href="representative-trips/{{\Illuminate\Support\Facades\Session::get('rep-username')}}"
+                                   style="text-decoration: none;color: white"> <strong>Trips</strong></a>
 
                             </div>
                         </div>
