@@ -560,7 +560,6 @@
             </div>
         </nav>
     </div>
-<div id="t"></div>
     <div class="container" style="min-height: 500px;">
         <div id="main-container">
             <div id="couch-text">

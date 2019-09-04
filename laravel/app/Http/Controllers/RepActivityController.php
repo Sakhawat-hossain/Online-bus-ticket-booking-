@@ -236,15 +236,15 @@ class RepActivityController extends Controller
         $busname=DB::table('representatives')->where('username',$id)->value('enterprise');
 
         $from = $request->get('from');
-        $to = $request->get('from');
-        $spoint = $request->get('from');
-        $type = $request->get('from');
-        $coach_no = $request->get('from');
-        $efare = $request->get('from');
-        $bfare = $request->get('from');
-        $date = $request->get('from');
-        $deptt = $request->get('from');
-        $arrivet = $request->get('from');
+        $to = $request->get('to');
+        $spoint = $request->get('starting_point');
+        $type = $request->get('type');
+        $coach_no = $request->get('coach_no');
+        $efare = $request->get('efare');
+        $bfare = $request->get('bfare');
+        $date = $request->get('date');
+        $deptt = $request->get('dept_time');
+        $arrivet = $request->get('arr_time');
 
         $routeID=DB::table('routes')->where('from',$from)->where('to',$to)->value('id');
         if(!$routeID){
@@ -252,9 +252,12 @@ class RepActivityController extends Controller
         }
 
         $busID = DB::table('buses')->where('coach_no',$coach_no)->where('name',$busname)->value('id');
+
         if(!$busID){
             return back();
         }
+        $total = DB::table('buses')->where('id',$busID)->value('total_seat');
+        DB::table('buses')->where('id',$busID)->update(['available_seat' => $total]);
 
         $rID=DB::table('representatives')->where('username',$id)->value('id');
         if($bfare != $efare)
@@ -300,7 +303,8 @@ class RepActivityController extends Controller
         }
 
 
-        return view('representative.representative-add-trip')->with('bus_name',$busname);
+        return view('representative.representative-add-trip')->with('bus_name',$busname)
+            ->with('addMessage','Trip has been added successfully');
     }
 
 }

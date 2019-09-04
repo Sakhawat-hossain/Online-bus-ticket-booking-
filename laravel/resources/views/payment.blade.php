@@ -276,6 +276,64 @@
                     </div>
                 </div>
 
+                @elseif($senddata->get('payment-method')=='Rocket')
+                    <div id="payment-confirm">
+                        <div class="row">
+                            <form method="post" action="../../confirm-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$senddata->get('tripID')}}">
+                                {{csrf_field()}}
+                                <p><strong>Seat Fare : </strong>&nbsp; {{$senddata->get('fare')}} Tk</p>
+                                <p><strong>Service Charge : </strong>&nbsp; {{$senddata->get('sc')}} Tk</p>
+                                <p><strong>Total : </strong>&nbsp; {{$senddata->get('total')}} Tk</p>
+                                <input name="boarding" value="{{$senddata->get('boarding')}}" hidden>
+                                <input name="dropping" value="{{$senddata->get('dropping')}}" hidden>
+                                <input name="tripID" value="{{$senddata->get('tripID')}}" hidden>
+                                <input name="total" value="{{$senddata->get('total')}}" hidden>
+                                <input name="sc" value="{{$senddata->get('sc')}}" hidden>
+                                <input name="payment-method" value="{{$senddata->get('payment-method')}}" hidden>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <span><strong>Inter TrxID to confirm payment</strong> &nbsp;</span>
+                                        <input style="text-align: center;height: 35px; " type="text" id="trxID" name="trxID" placeholder="Ex - XXXXXXXXXX" required>
+                                        @if ($senddata->has('trxIDstatus'))
+                                            <span class="help-block">
+                                        <strong>{{ $senddata->get('trxIDstatus') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                    <div class="col-sm-1"><button class="btn btn-success">Confirm</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @elseif($senddata->get('payment-method')=='SureCash')
+                    <div id="payment-confirm">
+                        <div class="row">
+                            <form method="post" action="../../confirm-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$senddata->get('tripID')}}">
+                                {{csrf_field()}}
+                                <p><strong>Seat Fare : </strong>&nbsp; {{$senddata->get('fare')}} Tk</p>
+                                <p><strong>Service Charge : </strong>&nbsp; {{$senddata->get('sc')}} Tk</p>
+                                <p><strong>Total : </strong>&nbsp; {{$senddata->get('total')}} Tk</p>
+                                <input name="boarding" value="{{$senddata->get('boarding')}}" hidden>
+                                <input name="dropping" value="{{$senddata->get('dropping')}}" hidden>
+                                <input name="tripID" value="{{$senddata->get('tripID')}}" hidden>
+                                <input name="total" value="{{$senddata->get('total')}}" hidden>
+                                <input name="sc" value="{{$senddata->get('sc')}}" hidden>
+                                <input name="payment-method" value="{{$senddata->get('payment-method')}}" hidden>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <span><strong>Inter TrxID to confirm payment</strong> &nbsp;</span>
+                                        <input style="text-align: center;height: 35px; " type="text" id="trxID" name="trxID" placeholder="Ex - XXXXXXXXXX" required>
+                                        @if ($senddata->has('trxIDstatus'))
+                                            <span class="help-block">
+                                        <strong>{{ $senddata->get('trxIDstatus') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                    <div class="col-sm-1"><button class="btn btn-success">Confirm</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 @else
                     <h3>Payment method not allowed</h3>
                 @endif

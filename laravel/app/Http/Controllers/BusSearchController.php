@@ -162,6 +162,7 @@ class BusSearchController extends Controller
         $idx=0;
         $status='';
         $seatid=0;
+
         $tid=$busID='';
         foreach ($prices as $prc){
             $j=0;
@@ -246,7 +247,7 @@ class BusSearchController extends Controller
             ->join('boardings','routes.id','boardings.routeID')
             ->join('places','boardings.placeID','places.id')
             ->select('places.name')->get();
-
+//-----
         $layoutRow = DB::table('buses')->where('buses.id',$busID)
             ->join('bus_layouts','buses.id','bus_layouts.busID')
             ->select('decker_num','rows','columns','layout')->get();
@@ -271,7 +272,7 @@ class BusSearchController extends Controller
         $layout['decker'] = $decker;
         $layout['rows'] = $rows;
         $layout['columns'] = $columns;
-
+//---
         $bdtf=collect();
         $bdtf->put('boarding',$boarding);
         $bdtf->put('dropping',$dropping);
@@ -414,6 +415,7 @@ class BusSearchController extends Controller
         $dropping=$request->get('dropping');
         $tripID=$request->get('tripID');
         $trxID=$request->get('trxID');
+        $method=$request->get('payment-method');
 
         $data=DB::table('payments')->where('trxID',$trxID)->value('id');
 
@@ -427,6 +429,7 @@ class BusSearchController extends Controller
       //  echo 'hello';
 
         $payment=new Payment([
+            'payment_gateway' => $method,
             'trxID' => $trxID,
             'amount' => $request->get('total'),
             'status' => 'pending'
@@ -474,100 +477,17 @@ class BusSearchController extends Controller
 
 
 //showing ticket
-  /*      $user = DB::table('users')
-            ->select('first_name','last_name','email','phone no','gender','id','age')
-            ->where('username', $id)->get();
 
-        $first_name=$last_name=$phn=$gender=$email=$create=$update=$userID=$age="";
-        $i=0;
-        foreach ($user as $userdata){
-            foreach ($userdata as $data){
-                if($i==0) $first_name=$data;
-                elseif($i==1) $last_name=$data;
-                elseif($i==2) $email=$data;
-                elseif($i==3) $phn=$data;
-                elseif($i==4) $gender=$data;
-                elseif($i==5) $userID=$data;
-                else $age=$data;
-
-                $i=$i+1;
-            }
-        }
-        $userdata=(object)array(
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'email' => $email,
-            'phn' => $phn,
-            'gender' => $gender,
-            'age' => $age,
-        );
-
-        $ticketactive=DB::table('tickets')
-            ->where('tickets.id',$cdata)
-            ->join('seats','seats.ticketID', '=', 'tickets.id')
-            ->join('trips','seats.tripID', '=', 'trips.id')
-            ->join('buses','trips.busID', '=', 'buses.id')
-            ->join('routes','trips.routeID', '=', 'routes.id')
-            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.id',
-                'trips.departure_time','buses.coach_no','tickets.boarding_point')
-            ->groupBy('tickets.id')->get();
-
-        $from=$to=$date=$bname=$btype=$btime=$tid=$dtime=$bc=$bp='';
-
-        $i=0;
-        foreach ($ticketactive as $tdata){
-            foreach ($tdata as $data){
-                if($i==0) $from=$data;
-                elseif($i==1) $to=$data;
-                elseif($i==2) $date=$data;
-                elseif($i==3) $bname=$data;
-                elseif($i==4) $btype=$data;
-                elseif($i==5) $btime=$data;
-                elseif($i==6) $tid=$data;
-                elseif($i==7) $dtime=$data;
-                elseif($i==8) $bc=$data;
-                else $bp=$data;
-
-                $i=$i+1;
-            }
-        }
-
-        $ticketactive=(object)array(
-            'from' => $from,
-            'to' => $to,
-            'journey_date' => $date,
-            'bus_name' => $bname,
-            'bus_type' => $btype,
-            'booking_time' => $btime,
-            'tid' => $tid,
-            'departure_time' => $dtime,
-            'coach_no' => $bc,
-            'boarding_point' => $bp,
-        );
-
-        $seats=DB::table('seats')
-            ->where('seats.ticketID',$cdata)
-            ->where('seats.status','booked')
-            ->join('seat_infos','seat_infos.id','seats.seatID')
-            ->select('seat_infos.seatNo','seat_infos.category','seats.fare')->get();
-
-        $ticketInfo=collect();
-        $ticketInfo->put('ticket',$ticketactive);
-        $ticketInfo->put('seats',$seats);
-        $ticketInfo->put('userdata',$userdata);
-       // echo $ticketInfo->get('userdata')->phn;
-
-        $total=$request->get('total')-$request->get('sc');
-        $ticketInfo->put('total',$total);
-        $ticketInfo->put('sc',$request->get('total'));
-        $ticketInfo->put('ticketID',$cdata);
-*/
-        //return view('user.profile')->with('userdata',$userdata)->with('ticketInfo',$ticketInfo)->with('ticketNum',$ticketNum);
-
-        return view('user.confirm-mgs');
+        return view('user.confirm-mgs')->with('trxID',$trxID);
 
     }
 
+    public function showPayment($id){
+        $data = DB::table('payment')->where('trxID',$id)
+            ->selcet('payment_time','payment_gateway','trxID','amount','status')->get();
+
+        return view('user.confirm-mgs')->with('data',$data);
+    }
 
 
     public function agent_search_bus_filter(Request $request)
@@ -649,7 +569,7 @@ class BusSearchController extends Controller
         $idx=0;
         $status='';
         $seatid=0;
-        $tid='';
+        $tid=$busID='';
         foreach ($prices as $prc){
             $j=0;
             foreach($prc as $pr){
@@ -668,7 +588,7 @@ class BusSearchController extends Controller
         $seats=DB::table('trips')->where('trips.id',$id)
             ->join('buses','trips.busID','=','buses.id')
             ->join('seat_infos','buses.id','=','seat_infos.busID')
-            ->select('seat_infos.status','seat_infos.seatNo','seat_infos.category','seat_infos.id')->get();
+            ->select('seat_infos.status','seat_infos.seatNo','seat_infos.category','seat_infos.id','trips.busID')->get();
 
         $seat_info=collect();
         $i=0;
@@ -679,8 +599,8 @@ class BusSearchController extends Controller
                 if($j==0)  $status=$st;
                 elseif($j==1) $seatNo=$st;
                 elseif($j==2) $category=$st;
-                else $idx=$st;
-
+                elseif($j==3) $idx=$st;
+                else $busID=$st;
                 $j=$j+1;
             }
             $status_t='available';
@@ -693,9 +613,9 @@ class BusSearchController extends Controller
             }
 
             if($status != 'available'){
-                $collectData=collect(['status'=>$status,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare,'id'=>0,'userID'=>$tid]);
+                $collectData=collect(['status'=>$status,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare,'id'=>0,'userID'=>$tid,'gender'=>'X']);
             }else{
-                $collectData=collect(['status'=>$status_t,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare,'id'=>$seatid,'userID'=>$tid]);
+                $collectData=collect(['status'=>$status_t,'seatNo'=>$seatNo,'category'=>$category,'fare'=>$fare,'id'=>$seatid,'userID'=>$tid,'gender'=>'X']);
             }
 
             $seat_info->put($i,$collectData);
@@ -712,7 +632,6 @@ class BusSearchController extends Controller
             ->join('buses','trips.busID','=','buses.id')
             ->value('total_seat');
 
-        $seat_inf=json_encode($seat_info);
 
         $tripInfo=DB::table('trips')->where('trips.id',$id)
             ->join('routes','trips.routeID','routes.id')
@@ -741,11 +660,41 @@ class BusSearchController extends Controller
             ->join('places','boardings.placeID','places.id')
             ->select('places.name')->get();
 
+//-----
+        $layoutRow = DB::table('buses')->where('buses.id',$busID)
+            ->join('bus_layouts','buses.id','bus_layouts.busID')
+            ->select('decker_num','rows','columns','layout')->get();
+        $idx = 1;
+        $decker=$rows=$columns=$layoutStr='';
+        foreach ($layoutRow as $row){
+            foreach ($row as $data){
+                if($idx==1) $decker=$data;
+                else if($idx==2) $rows=$data;
+                else if($idx==3) $columns=$data;
+                else if($idx==4) $layoutStr=$data;
+
+                $idx=$idx+1;
+            }
+        }
+
+        $layoutArr = explode(";",$layoutStr);
+        $layout='';
+        for($i=0;$i<$rows;$i++)
+            $layout[$i] = explode(",",$layoutArr[$i]);
+
+        $layout['decker'] = $decker;
+        $layout['rows'] = $rows;
+        $layout['columns'] = $columns;
+//---
+
         $bdtf=collect();
         $bdtf->put('boarding',$boarding);
         $bdtf->put('dropping',$dropping);
         $bdtf->put('busname',$busname);
         $bdtf->put('bustype',$bustype);
+
+        $seat_info->put('layout',$layout);
+        $seat_inf=json_encode($seat_info);
 
         return view('agent.agent-seatlist')->with('seat_info',$seat_inf)->with('total',$total)->with('tripID',$id)
             ->with('bdtf',$bdtf);

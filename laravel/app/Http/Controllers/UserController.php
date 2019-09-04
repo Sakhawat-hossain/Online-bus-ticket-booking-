@@ -148,11 +148,12 @@ class UserController extends Controller
         $ticketactive=DB::table('tickets')
             ->where('userID',$userID)
             ->join('seats','seats.ticketID', '=', 'tickets.id')
+            ->join('payments','tickets.paymentID','payments.id')
             ->join('trips','seats.tripID', '=', 'trips.id')
             ->join('buses','trips.busID', '=', 'buses.id')
             ->join('routes','trips.routeID', '=', 'routes.id')
             ->where('tickets.status','active')
-            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.id')
+            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.id','payments.payment_gateway')
             ->groupBy('tickets.id')->get();
 
         $ticketprev=DB::table('tickets')

@@ -62,6 +62,9 @@ Route::get('/seat-list-details/{id}', 'BusSearchController@seat_list'); //seat l
 Route::post('booking-details/{id}/{tripID}', 'BusSearchController@booking'); //booking details
 Route::post('payment-details/{id}/{tripID}', 'BusSearchController@payment'); //payment details
 
+Route::get('/payment-info/{id}', 'BusSearchController@showPayment'); //seat list details
+
+
 Route::post('confirm-ticket/{id}/{tripID}','BusSearchController@confirmTicket'); // confirm ticket
 
 // for agent

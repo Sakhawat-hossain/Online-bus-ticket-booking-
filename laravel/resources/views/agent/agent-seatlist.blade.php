@@ -22,6 +22,7 @@
         var tripID = <?php echo json_encode($tripID); ?>;
 
         var seat_arr=<?php echo $seat_info; ?>;
+        var layout = seat_arr.layout;
         var username=<?php echo json_encode(Session::get('agent-username')); ?>
 
         var userID=<?php echo json_encode(Session::get('agentID')); ?>;
@@ -30,7 +31,7 @@
 
         var total_selected=0;
         var charge=0;
-        var unit_charge=0;
+        var unit_charge=50;
         var total_price=0;
 
 
@@ -57,6 +58,7 @@
                         if(seat_arr[i].status.localeCompare('blocked')){ // not blocked
                             if(data[idx].localeCompare('available')==0){ // some how available
                                 seat_arr[i].status='available';
+                                seat_arr[i].gender='X';
                                 if (seat_arr[i].category.localeCompare('Business')==0) {
                                     document.getElementById(i).style.color = '#4b88a6';
                                 }
@@ -72,6 +74,23 @@
                             else if(data[idx].localeCompare('booked')==0) { // some how selected by him or another
                                 document.getElementById(i).style.color = '#78341a';
                                 seat_arr[i].status='booked';
+                                if(seat_arr[i].gender.localeCompare('X')==0){
+                                    jQuery.ajax({
+                                        type:'GET',
+                                        url:'../get-gender/'+username,
+                                        async:false,
+                                        success:function(data_inner) {
+                                            seat_arr[i].gender = data['gender'];
+                                            if(data_inner['gender'].localeCompare('female')==0)
+                                                document.getElementById(i).style.color = '#DB7484';
+                                        },
+                                        error:function() {
+                                            $("#pp").text("error");
+                                        }
+                                    });
+                                }
+                                else if(seat_arr[i].gender.localeCompare('female')==0)
+                                    document.getElementById(i).style.color = '#DB7484';
                             }
                         }
                     }
@@ -204,12 +223,244 @@
             alert("Sign in First");
         }
 
+        function set_width(columns) {
+            var div = document.getElementById("details-seat-view");
+            if(columns==6){
+                div.style.width = "96%";
+                div.style.marginLeft = "2%";
+            }
+            else if(columns==5){
+                div.style.width = "90%";
+                div.style.marginLeft = "5%";
+            }
+            else if(columns==4){
+                div.style.width = "80%";
+                div.style.marginLeft = "10%";
+            }
+            else if(columns==3){
+                div.style.width = "66%";
+                div.style.marginLeft = "17%";
+            }
+            else if(columns==2){
+                div.style.width = "60%";
+                div.style.marginLeft = "20%";
+            }
+        }
+
         function initialization() {
 
+            document.getElementById("t").innerText = 'hello-2';
+            layout = seat_arr.layout;
+            if(layout)
+                document.getElementById("t").innerText = 'hello-3';
             //document.getElementById("pp").innerHTML=username+tripID;
+            var decker_num = layout['decker'];
+            var rows = layout['rows'];
+            var columns = layout['columns'];
+
+            var bus_layout = layout;
+
+            var right = document.getElementById("details-seat-view");
+            // if( !isNaN(rows) && !isNaN(columns)){
+            set_width(columns);
+            var up = "<div id=\"front-side\">\n" +
+                "                                <div class=\"row\">\n" +
+                "                                    <div class=\"col-sm-3 col-sm-offset-1\"><strong>Gate</strong></div>\n" +
+                "                                    <div class=\"col-sm-4 col-sm-offset-4\"><strong>Driver</strong></div>\n" +
+                "                                </div>\n" +
+                "                            </div>\n";
+
+            var pos=0;
+            var idx,idx1;
+            if(username){
+                document.getElementById("t").innerText = 'hello';
+                for(idx=0; idx<rows; idx++){
+                    up = up  + "<div id=\"seat-view-group\">";
+                    if(columns==4){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-2\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    else if(columns==3){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-3\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-2\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-3\">" +
+                                    "  <span  onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    else if(columns==5){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-1\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span  onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    else if(columns==6){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span  onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    else if(columns==2){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-4\">" +
+                                    "  <span onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-3\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-4\">" +
+                                    "  <span  onclick='select_seat("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    up = up + "</div>";
+                }
+            }
+            else{
+                document.getElementById("t").innerText = 'hello-1';
+                for(idx=0; idx<rows; idx++){
+                    up = up  + "<div id=\"seat-view-group\">";
+                    if(columns==4){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-2\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    else if(columns==3){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-3\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-2\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-3\">" +
+                                    "  <span  onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    else if(columns==5){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-1\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span  onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    else if(columns==6){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-2\">" +
+                                    "  <span  onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    else if(columns==2){
+                        for(idx1=0; idx1<3; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-4\">" +
+                                    "  <span onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                        up = up + "<div class=\"col-sm-3\"><span></span></div>";
+                        for(idx1=3; idx1<6; idx1++){
+                            if(bus_layout[idx][idx1].localeCompare("_")){
+                                up = up + "<div class=\"col-sm-4\">" +
+                                    "  <span  onclick='login_alert("+pos+")'><i id="+pos+" class=\"fas fa-couch fa-2x\" style=\"color: #CCCCCB;\"></i></span></div>";
+                                pos = pos+1;
+                            }
+                        }
+                    }
+                    up = up + "</div>";
+                }
+            }
+
+            right.innerHTML = up;
+
 
             for(i=0;i<total_seat;i++){
 
+                //seat_arr[i].push
                 if(seat_arr[i].status.localeCompare('available')==0){
                     if (seat_arr[i].category.localeCompare('Business')==0) {
                         document.getElementById(i).style.color = '#4b88a6';
@@ -219,6 +470,22 @@
                 }
                 else if(seat_arr[i].status.localeCompare('booked')==0){
                     document.getElementById(i).style.color = '#78341a';
+                    //should be checked male/female
+                    //ajax call to check that
+                    jQuery.ajax({
+                        type:'GET',
+                        url:'../get-gender/'+username,
+                        data:'',
+                        async:false,
+                        success:function(data) {
+                            seat_arr[i].gender = data['gender'];
+                            if(data['gender'].localeCompare('female')==0)
+                                document.getElementById(i).style.color = '#DB7484';
+                        },
+                        error:function() {
+                            $("#pp").text("error");
+                        }
+                    });
                 }
                 else if(seat_arr[i].status.localeCompare('blocked')==0){
                     document.getElementById(i).style.color = '#3c3c3c';
@@ -262,7 +529,9 @@
             if(total_selected<6) {
                 jQuery("#alert-2").hide();
             }
+
         }
+
 
     </script>
 
@@ -299,6 +568,7 @@
         </nav>
     </div>
 
+    <div id="t"></div>
     <div class="container" style="min-height: 500px;">
         @if(\Illuminate\Support\Facades\Session::has('agent-username'))
 
@@ -331,99 +601,9 @@
                 <div class="row">
                     <!--left side -->
                     <div class="col-sm-4">
-                        @if($total>30)
-                            <div id="details-seat-view">
-                                <div id="front-side"><div class="row">
-                                        <div class="col-sm-4"><strong>Gate</strong></div>
-                                        <div class="col-sm-6 col-sm-offset-2"><strong>Driver</strong></div> </div> </div>
-                                @php $idx=0; @endphp
-                                @for($i=0;$i<10;$i++)
-                                    <div id="seat-view-group">
-                                        <div class="row">
-                                            @for($j=0;$j<5;$j++)
-                                                @if(\Illuminate\Support\Facades\Session::get('agent-username')==null)
-                                                    @if($j==0)
-                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @elseif($j==1)
-                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @elseif($j==2)
-                                                        <div class="col-sm-2"><span></span></div>
-                                                    @elseif($j==3)
-                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @elseif($j==4)
-                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @endif
-                                                @else
-                                                    @if($j==0)
-                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @elseif($j==1)
-                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @elseif($j==2)
-                                                        <div class="col-sm-2"><span></span></div>
-                                                    @elseif($j==3)
-                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @elseif($j==4)
-                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @endif
-                                                @endif
-                                            @endfor
-                                        </div>
-                                    </div>
-                                @endfor
+                        <div id="details-seat-view">
 
-                            </div>
-                        @else
-                            <div id="details-seat-view" style="margin-left: 10%;width: 80%;">
-                                <div id="front-side"><div class="row">
-                                        <div class="col-sm-4"><strong>Gate</strong></div>
-                                        <div class="col-sm-6 col-sm-offset-1"><strong>Driver</strong></div> </div> </div>
-                                @php $idx=0; @endphp
-                                @for($i=0;$i<10;$i++)
-                                    <div id="seat-view-group">
-                                        <div class="row">
-                                            @for($j=0;$j<5;$j++)
-                                                @if(\Illuminate\Support\Facades\Session::get('agent-username')==null)
-                                                    @if($j==0)
-                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @elseif($j==1)
-                                                        <div class="col-sm-2"><span></span></div>
-                                                    @elseif($j==3)
-                                                        <div class="col-sm-2 col-sm-offset-1"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @elseif($j==4)
-                                                        <div class="col-sm-2"><span onclick="login_alert()"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @endif
-                                                @else
-                                                    @if($j==0)
-                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @elseif($j==1)
-                                                        <div class="col-sm-2"><span></span></div>
-                                                    @elseif($j==3)
-                                                        <div class="col-sm-2 col-sm-offset-1"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @elseif($j==4)
-                                                        <div class="col-sm-2"><span onclick="select_seat({{$idx}})"><i class="fas fa-couch fa-2x" id="{{$idx}}" style="color: #CCCCCB;"></i></span></div>
-                                                        @php $idx = $idx+1; @endphp
-                                                    @endif
-                                                @endif
-                                            @endfor
-                                        </div>
-                                    </div>
-                                @endfor
-
-                            </div>
-                        @endif
+                        </div>
                     </div>
                     <!--right side -->
                     <div class="col-sm-8">

@@ -58,6 +58,20 @@
                 </a></div>
         </div>
 
+        <div id="payment">
+            <a href="../../payment-info/{{$trxID}}">
+                <button class="btn-success">Payment Info</button>
+                @if(isset($data))
+                    @foreach($data as $dt)
+                        @foreach($dt as $d)
+                            <p>{{$d}}</p>
+                        @endforeach
+                    @endforeach
+                @endif
+            </a>
+
+        </div>
+
     </div>
 
     <div id="footer">

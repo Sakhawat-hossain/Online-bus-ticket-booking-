@@ -265,7 +265,7 @@
                                     <th>Type</th>
                                     <th>Booking Date </th>
                                     <th>Seats</th>
-                                    <th></th>
+                                    <th>Gateway</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -285,6 +285,7 @@
                                                 <td><a href="../show-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$td}}">
                                                  <button class="btn btn-primary">Print</button>
                                              </a></td>
+
                                     </tr>
                                     <!--div id="test" style="border: 1px solid black">
                                         <tr style="text-align: center;"><td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>

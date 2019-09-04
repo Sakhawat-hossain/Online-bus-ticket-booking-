@@ -128,8 +128,7 @@
         }
     </style>
     <script>
-        var fromm = <?php echo $from; ?>;
-        var from = ['Dhaka','Rangpur','Sylhet'];
+        //var from = ['Dhaka','Rangpur','Sylhet'];
 
         $(document).ready(function () {
             $("#fromm").onclick(function () {
