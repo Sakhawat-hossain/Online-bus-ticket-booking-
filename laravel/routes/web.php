@@ -116,6 +116,9 @@ Route::get('/get-seat-list/{id}','AjaxlController@getSeatList'); // get seat lis
 
 Route::get('/get-bus-layout/{id}','AjaxlController@getBusLayout'); // get bus layout to show in rep. bus list
 
+//update-ticket-status/active/'+id+"/"+empID
+Route::get('/update-ticket-status/{active}/{id}/{empID}','AjaxlController@updateTicketStatus'); // update ticket status - active
+
 // for representative activities
 Route::get('/representative-buses/{id}','RepActivityController@getBusList');// get buses of respective operator
 Route::post('/representative-buses-with-filter/{id}','RepActivityController@getFilteredBusList');// get buses of respective operator
@@ -126,6 +129,11 @@ Route::get('/representative-trips/{id}','RepActivityController@search_trips');//
 Route::get('/representative-add-trips-form/{id}','RepActivityController@addNewTripForm');// add new trips of respective operator
 Route::post('/representative-edit-trips/{id}/{tripID}','RepActivityController@editTrip');// edit buses of respective operator
 Route::post('/representative-add-trips/{id}','RepActivityController@addNewTrip');// edit buses of respective operator
+
+
+// employee activities
+Route::get('/employee-ticket-list','EmployeeActivityController@getTicketList');// get tickets
+
 
 Route::get('/profile', function () {
     return view('user.profile');

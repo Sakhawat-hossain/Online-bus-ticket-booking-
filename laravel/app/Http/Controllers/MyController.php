@@ -314,7 +314,7 @@ echo 'hello';
 
             return view('admin.ticket-list')->with('buses',$places)->with('tickets',$tickets);//redirect()->route('sign-in');
 */
-            return view('admin.super-admin-home');
+            return redirect('super-admin-home');
         }
 
         //}
@@ -448,12 +448,13 @@ echo 'hello';
             Session::put('employee-username',$username);
             Session::put('employeeID',$id);
 
-            return view('employee.employee-home');//redirect()->route('sign-in');
+            //return view('employee.employee-home');//redirect()->route('sign-in');
+            return redirect('employee-home');
         }
 
         //}
         //Session::put('username',$username);
-        return view('agent.agent-login')->with('agentwrong','username or password wrong');//redirect()->route('sign-in');
+        return view('employee.employee-login')->with('agentwrong','username or password wrong');//redirect()->route('sign-in');
 
     }
     public function employeeLogout(){

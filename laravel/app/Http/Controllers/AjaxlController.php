@@ -79,4 +79,9 @@ class AjaxlController extends Controller
 
         return response()->json($layout,200);
     }
+
+    public function updateTicketStatus($status,$id,$empID){
+        DB::table('tickets')->where('id',$id)->update(['status'=>$status,'adminID'=>$empID]);
+        return response()->json(array('ok'=>'ok'),200);
+    }
 }

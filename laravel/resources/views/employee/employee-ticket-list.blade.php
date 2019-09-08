@@ -57,6 +57,48 @@
                 $("#filter-list").toggle();
             });
         });
+        function confirm_ticket(idx,id,empID) {
+            alert('Confirm ticket');
+            jQuery.ajax({
+                type:'GET',
+                url:'update-ticket-status/active/'+id+"/"+empID,
+                data:'',
+                async:false,
+                success:function(data) {
+                    //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
+                    //seat_status=data.seat_status;
+                },
+                error:function() {
+                    $("#pp").text("error-1");
+                }
+            });
+            var tr_val = document.getElementById("myTable").rows[idx].cells;
+            tr_val[6].innerHTML = 'active';
+
+            tr_val[7].innerHTML = '<button class="btn btn-primary" ' +
+                'onclick="cancel_confirm('+idx+','+id+','+empID+')">Cancel</button>';
+        }
+        function cancel_confirm(idx,id,empID) {
+            alert('Cancel ticket');
+            jQuery.ajax({
+                type:'GET',
+                url:'update-ticket-status/pending/'+id+"/"+empID,
+                data:'',
+                async:false,
+                success:function(data) {
+                    //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
+                    //seat_status=data.seat_status;
+                },
+                error:function() {
+                    $("#pp").text("error-1");
+                }
+            });
+            var tr_val = document.getElementById("myTable").rows[idx].cells;
+            tr_val[6].innerHTML = 'pending';
+
+            tr_val[7].innerHTML = '<button class="btn btn-success" ' +
+                'onclick="confirm_ticket('+idx+','+id+','+empID+')">Confirm</button>';
+        }
     </script>
 
 
@@ -68,23 +110,31 @@
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="home" style="color: white;"><span>
-                        <i class="glyphicon glyphicon-home"></i></span>Online ticket booking</a>
+                    <a class="navbar-brand" href="#" style="color: white;"><span>
+                        <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="home">Home</a></li>
-                    <li><a href="#footer">Contact</a></li>
+                    <li class="active"><a href="#">Home</a></li>
                     <li><a href="#footer">About</a></li>
-                    <li><a href="#operator-container">Operators</a></li>
-                    <li><a href="#operator-container">Routes</a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if(\Illuminate\Support\Facades\Session::has('employee-username'))
+                        @php $username=Session::get('employee-username');@endphp
+                        <li><a href="{{url('employee/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
+                                    {{\Illuminate\Support\Facades\Session::get('employee-username')}}</span></a> </li>
+                        <li><a href="employee-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
 
+                    @else
+                        <li><a href="employee-sign-in"><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
+                    @endif
+                </ul>
             </div>
         </nav>
     </div>
 
     <div class="container" style="min-height: 500px;">
 
+    @if(\Illuminate\Support\Facades\Session::has('employee-username'))
         <form method="post" action="search-ticket-with-filter">
             <div id="search-option-container">
                 <div class="row">
@@ -166,7 +216,7 @@
             </div>
         </form>
 
-        <table class="table table-hover table-dark">
+        <table class="table table-hover table-dark" id="myTable">
             <thead>
             <tr>
                 <th scope="col">Username</th>
@@ -183,26 +233,27 @@
 
             <tbody>
 
+            @php $idx = 1; $id=\Illuminate\Support\Facades\Session::get("employeeID");@endphp
             @foreach ($tickets as $ticket)
                 @php $j=0; $status=''; @endphp
-                <tr>
+                <tr id="{{$idx}}">
                     @foreach($ticket as $t)
                         @if($j==7)
                             <td>
-                            <a href="confirm-ticket/{{$t}}">
-                                <button class="btn btn-success">Confirm</button>
-                            </a></td>
+                                <button class="btn btn-success" onclick="confirm_ticket({{$idx}},{{$t}},{{$id}})">Confirm</button>
+                            </td>
                         @else
                         <td>{{$t}}</td>
                         @endif
                             @php $j= $j+1;@endphp
                      @endforeach
                 </tr>
+                @php $idx = $idx+1; @endphp
             @endforeach
 
             </tbody>
         </table>
-
+    @endif
 
     </div>
     <div id="footer">
@@ -293,5 +344,3 @@
 
 </body>
 </html>
-paymentList.blade.php
-Displaying paymentList.blade.php.

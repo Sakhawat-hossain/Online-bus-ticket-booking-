@@ -72,26 +72,25 @@
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="#footer">Contact</a></li>
                 <li><a href="#footer">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                @if(\Illuminate\Support\Facades\Session::has('rep-username'))
+                @if(\Illuminate\Support\Facades\Session::has('employee-username'))
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#" style="color: white;">Representative</a>
+                        <a class="navbar-brand" href="#" style="color: white;">Employee</a>
                     </div>
-                    <li><a href="rep-profile"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
-                                    {{\Illuminate\Support\Facades\Session::get('rep-username')}}</span></a> </li>
-                    <li><a href="representative-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                    <li><a href="employee-profile"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
+                                    {{\Illuminate\Support\Facades\Session::get('employee-username')}}</span></a> </li>
+                    <li><a href="employee-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                 @else
-                    <li><a href="representative-sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                    <li><a href="employee-sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
                 @endif
             </ul>
         </div>
     </nav>
 </div>
 
-@if(\Illuminate\Support\Facades\Session::has('rep-username'))
+@if(\Illuminate\Support\Facades\Session::has('employee-username'))
 
     <div id="wrapper" >
 
@@ -102,34 +101,11 @@
                     <li>
                         <a href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <!--li>
-                        <a href="customers_view"><i class="fa fa-users"></i>Customers</a>
-                    </li>
                     <li>
-                        <a href="bookings_view"><i class="fa fa-money"></i>Bookings</a>
-                    </li-->
-                    <li>
-                        <a href="representative-buses/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
-                            <i class="fa fa-truck"></i>Buses</a>
+                        <a href="employee-tickets/{{\Illuminate\Support\Facades\Session::get('employee-username')}}">
+                            <i class="fa fa-sitemap"></i>Tickets</a>
                     </li>
 
-                    <li>
-                        <a href="seats_view"><i class="fa fa-sitemap"></i>Seats</a>
-                    </li>
-                    <li>
-                        <a href="availability_view"><i class="fa fa-check-circle"></i> Availability</a>
-                    </li>
-                    <li>
-                        <a href="routes_view"><i class="fa fa-road"></i> Routes</a>
-                    </li>
-                    <li>
-                        <a href="representative-trips/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
-                            <i class="fa fa-road"></i> Trips</a>
-                    </li>
-                    <li>
-                        <a href="hooks/summary-reports"><i class="fa fa-list"></i> Reports</a>
-                    </li>                        </ul>
-                </li>
                 </ul>
 
             </div>
@@ -141,25 +117,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Welcome  <small> representative</small>
+                            Welcome  <small> Employee</small>
                         </h1>
                     </div>
                 </div>
                 <!--user widgets-->
                 <div class="row">
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="panel panel-primary text-center no-boder bg-color-green">
-                            <div class="panel-body">
-                                <i class="fa fa-truck fa-5x"></i>
-                                <h3>12</h3>
-                            </div>
-                            <div class="panel-footer back-footer-green">
-                                <a href="representative-buses/{{\Illuminate\Support\Facades\Session::get('rep-username')}}"
-                                   style="text-decoration: none;color: white"><strong>Buses</strong></a>
-
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-blue">
                             <div class="panel-body">
@@ -167,38 +130,14 @@
                                 <h3>10 </h3>
                             </div>
                             <div class="panel-footer back-footer-blue">
-                                <a href="seats_view.php" style="text-decoration: none;color: white"><strong>Seats</strong></a>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="panel panel-primary text-center no-boder bg-color-red">
-                            <div class="panel-body">
-                                <i class="fa fa fa-check-circle fa-5x"></i>
-                                <h3>3 </h3>
-                            </div>
-                            <div class="panel-footer back-footer-red">
-                                <a href="availability_view.php" style="text-decoration: none;color: white"><strong>Availability</strong></a>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="panel panel-primary text-center no-boder bg-color-brown">
-                            <div class="panel-body">
-                                <i class="fa fa-road fa-5x"></i>
-                                <h3>2 </h3>
-                            </div>
-                            <div class="panel-footer back-footer-brown">
-                                <a href="routes_view.php" style="text-decoration: none;color: white"> <strong>Routes</strong></a>
+                                <a href="employee-ticket-list" style="text-decoration: none;color: white"><strong>Tickets</strong></a>
 
                             </div>
                         </div>
                     </div>
                 </div>
                 <!--admin widgets row-->
-                <div class="row">
+                <!--div-- class="row">
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-red">
                             <div class="panel-body">
@@ -236,7 +175,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div-->
                 <!--row ends here-->
             </div>
             <!-- /. PAGE INNER  -->                                <!-- /. ROW  -->
