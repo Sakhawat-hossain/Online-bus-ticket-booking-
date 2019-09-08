@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Bus Ticket Booking</title>
+    <title>Bus Ticket Booking - Employee</title>
 
     <!-- Google font -->
     <link rel="stylesheet" href="css/google.font.">
@@ -63,17 +63,17 @@
                     <li><a href="#footer">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    @if(\Illuminate\Support\Facades\Session::has('admin-username'))
-                        @php $username=Session::get('admin-username');@endphp
-                        <li><a href="{{url('admin/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
-                                    {{\Illuminate\Support\Facades\Session::get('admin-username')}}</span></a> </li>
-                        <li><a href="admin-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                    @if(\Illuminate\Support\Facades\Session::has('employee-username'))
+                        @php $username=Session::get('employee-username');@endphp
+                        <li><a href="{{url('employee/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
+                                    {{\Illuminate\Support\Facades\Session::get('employee-username')}}</span></a> </li>
+                        <li><a href="employee-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
 
                     @else
                         <li><a href="super-admin-sign-in">Super-Admin</a></li>
-                        <li><a href="employee-sign-in">Employee</a></li>
+                        <li><a href="admin-sign-in">Admin</a></li>
                         <li><a href="representative-sign-in">Representative</a></li>
-                        <li><a href="admin/admin-create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                        <li><a href="employee/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                     @endif
                 </ul>
             </div>
@@ -83,11 +83,14 @@
     <div class="container" style="min-height: 500px;">
         <div class="row" style="margin-top: 70px;">
             <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    @if(isset($registerInfo)) {{$registerInfo}} @endif
+                </h3>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Login as Admin</div>
+                    <div class="panel-heading">Login as Employee</div>
 
                     <div class="panel-body">
-                        <form class="form-horizontal" method="POST" action="super-admin-sign-in">
+                        <form class="form-horizontal" method="POST" action="employee-sign-in">
                             {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
@@ -121,9 +124,9 @@
 
                             <div class="form-group has-error">
                                 <div class="col-md-6 col-md-offset-4">
-                                @if (isset($agentwrong))
+                                @if (isset($employeewrong))
                                     <span class="help-block">
-                                        <strong>{{ $agentwrong }}</strong>
+                                        <strong>{{ $employeewrong }}</strong>
                                     </span>
                                 @endif
                                 </div>

@@ -3,26 +3,20 @@
 <html lang="en">
 
 <head>
-
-    <!--meta http-equiv="cache-control" content="private, max-age=0, no-cache">
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="expires" content="0"-->
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Bus Ticket Booking</title>
+    <title>Register</title>
 
     <!-- Google font -->
-    <link rel="stylesheet" href="css/google.font.">
+    <link rel="stylesheet" href="../css/google.font.">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet"  href="css/header-design.css"/>
+    <link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet"  href="../css/header-design.css"/>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!-- Latest compiled and minified CSS -->
@@ -31,8 +25,9 @@
 
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="css/footer-design.css" />
-    <link type="text/css" rel="stylesheet" href="css/login-style.css"/>
+    <link type="text/css" rel="stylesheet" href="../css/footer-design.css" />
+
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"-->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,53 +36,66 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script>
+
         history.pushState(null, null, document.URL);
         window.addEventListener('popstate', function () {
             history.pushState(null, null, document.URL);
         });
+
+        var check = function() {
+            if (document.getElementById('password').value ==
+                document.getElementById('re-password').value) {
+                document.getElementById('pass-message').style.color = 'green';
+                document.getElementById('pass-message').innerHTML = 'matching';
+            } else {
+                document.getElementById('pass-message').style.color = 'red';
+                document.getElementById('pass-message').innerHTML = 'not matching';
+            }
+        }
+
     </script>
 
 </head>
 
 <body>
-<div id="loginpage-background">
-    <div id="header">
-        <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#" style="color: white;"><span>
-                        <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#footer">About</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    @if(\Illuminate\Support\Facades\Session::has('admin-username'))
-                        @php $username=Session::get('admin-username');@endphp
-                        <li><a href="{{url('admin/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
-                                    {{\Illuminate\Support\Facades\Session::get('admin-username')}}</span></a> </li>
-                        <li><a href="admin-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
 
-                    @else
-                        <li><a href="super-admin-sign-in">Super-Admin</a></li>
-                        <li><a href="employee-sign-in">Employee</a></li>
-                        <li><a href="representative-sign-in">Representative</a></li>
-                        <li><a href="admin/admin-create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                    @endif
-                </ul>
+<div id="header">
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" style="color: white;"><span>
+                        <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
             </div>
-        </nav>
-    </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#footer">About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if(\Illuminate\Support\Facades\Session::has('admin-username'))
+                    @php $username=Session::get('admin-username');@endphp
+                    <li><a href="{{url('admin/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
+                                    {{\Illuminate\Support\Facades\Session::get('admin-username')}}</span></a> </li>
+                    <li><a href="../admin-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+
+                @else
+                    <li><a href="../super-admin-sign-in">Super-Admin</a></li>
+                    <li><a href="../employee-sign-in">Employee</a></li>
+                    <li><a href="../representative-sign-in">Representative</a></li>
+                    <li><a href="../admin-sign-in"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+                @endif
+            </ul>
+        </div>
+    </nav>
+</div>
 
     <div class="container" style="min-height: 500px;">
-        <div class="row" style="margin-top: 70px;">
+        <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Login as Admin</div>
+                    <div class="panel-heading">Register as Admin</div>
 
                     <div class="panel-body">
-                        <form class="form-horizontal" method="POST" action="super-admin-sign-in">
+                        <form class="form-horizontal" method="POST" action="../admin/admin-store">
                             {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
@@ -118,36 +126,37 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
-                            <div class="form-group has-error">
-                                <div class="col-md-6 col-md-offset-4">
-                                @if (isset($agentwrong))
-                                    <span class="help-block">
-                                        <strong>{{ $agentwrong }}</strong>
+                                <div class="col-md-6">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('enterprise') ? ' has-error' : '' }}">
+                                <label for="email" class="col-md-4 control-label">Bus Operator</label>
+
+                                <div class="col-md-6">
+                                    <select class="form-control" id="enterprise" name="enterprise">
+                                        <option>Hanif Paribahan</option>
+                                        <option>Nabil Paribahan</option>
+                                        <option>Shohag Paribahan</option>
+                                    </select>
+
+                                    @if ($errors->has('enterprise'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('enterprise') }}</strong>
                                     </span>
-                                @endif
+                                    @endif
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
-                                        Login
+                                        Register
                                     </button>
-
-                                    <a class="btn btn-link" href="#">
-                                        Forgot Your Password?
-                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -181,7 +190,6 @@
             </div>
         </div>
     </div>
-</div>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
 </html>

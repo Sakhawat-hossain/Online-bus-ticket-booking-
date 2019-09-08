@@ -59,30 +59,33 @@
 
 <body>
 
-    <div id="header">
-        <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A;">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#" style="color: white;"><span>
+<div id="header">
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" style="color: white;"><span>
                         <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#footer">Contact</a></li>
-                    <li><a href="#footer">About</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    @if(\Illuminate\Support\Facades\Session::has('rep-username'))
-                        <li><a href="rep-profile"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
-                                    {{\Illuminate\Support\Facades\Session::get('rep-username')}}</span></a> </li>
-                        <li><a href="../representative-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
-                    @else
-                        <li><a href="../representative-sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
-                    @endif
-                </ul>
             </div>
-        </nav>
-    </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#footer">About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if(\Illuminate\Support\Facades\Session::has('rep-username'))
+                    @php $username=Session::get('rep-username');@endphp
+                    <li><a href="{{url('../representative/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
+                                    {{\Illuminate\Support\Facades\Session::get('rep-username')}}</span></a> </li>
+                    <li><a href="../representative-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+
+                @else<li><a href="../super-admin-sign-in">Super-Admin</a></li>
+                <li><a href="../employee-sign-in">Employee</a></li>
+                <li><a href="../admin-sign-in">Admin</a></li>
+                <li><a href="../representative-sign-in"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+                @endif
+            </ul>
+        </div>
+    </nav>
+</div>
 
     <div class="container" style="min-height: 500px;">
         <div class="row">

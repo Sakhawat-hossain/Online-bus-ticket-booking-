@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -44,7 +45,6 @@ class MyController extends Controller
 
         //return redirect()->route('/home');
     }
-
     public function doLogin(Request $request)
     {
 
@@ -73,12 +73,10 @@ class MyController extends Controller
         return view('user.login')->with('userwrong','username or password wrong');//redirect()->route('sign-in');
 
     }
-
     public function loginFrom($id)
     {
         return view('user.loginFromSeatlist')->with('tripID',$id);
     }
-
     public function loginFromSeat(Request $request,$idx)
     {
         //echo 'hello';
@@ -108,7 +106,6 @@ class MyController extends Controller
         return view('user.loginFromSeatlist')->with('tripID',$idx)->with('userwrong','username or password wrong');//redirect()->route('sign-in');
 
     }
-
     public function logout(){
         Session::forget('username');
         Session::forget('userID');
@@ -116,7 +113,6 @@ class MyController extends Controller
         //Auth::logout();
         return view('user.login');
     }
-
     public function checkuser(Request $request)
     {
         $form=$request->get('form');
@@ -142,7 +138,6 @@ class MyController extends Controller
         //else
         return view('agent.agent-login');
     }
-
     public function agentDoLogin(Request $request)
     {
 
@@ -178,7 +173,6 @@ class MyController extends Controller
         return view('agent.agent-login')->with('agentwrong','username or password wrong');//redirect()->route('sign-in');
 
     }
-
     public function agentLogout(){
         Session::forget('username');
         Session::forget('userID');
@@ -186,7 +180,6 @@ class MyController extends Controller
         //Auth::logout();
         return view('user.login');
     }
-
     public function agentRegister()
     {
         //if (Session::has('username')) echo  'ok-ckeck';
@@ -195,7 +188,103 @@ class MyController extends Controller
         return view('agent.after-register');
     }
 
+    public function adminShowLogin()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
+
+        //else
+        return view('admin.admin-login');
+    }
     public function adminDoLogin(Request $request)
+    {
+
+        //echo 'hello';
+        $this->validate($request, [
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $username=$request->get('username');
+        $password=$request->get('password');
+
+        //if ($form='signin'){
+        $pass = DB::table('admins')->where('username',$username)->value('password');
+        //Hash::check($password,$pass)
+        if($password==$pass){
+
+            $id=DB::table('admins')->where('username',$username)->value('id');
+            Session::put('admin-username',$username);
+            Session::put('adminID',$id);
+/*
+            $places=DB::table('buses')->distinct()->select('name')->get();
+            $tickets=DB::table('tickets')->where('tickets.status','pending')
+                ->join('payments','tickets.paymentID','payments.id')
+                ->join('users','tickets.userID','users.id')
+                ->select('users.username','users.phone no','tickets.boarding_point','tickets.booking_time',
+                    'payments.trxID','payments.amount','tickets.status','tickets.id')->get();
+            return view('admin.ticket-list')->with('buses',$places)->with('tickets',$tickets);//redirect()->route('sign-in');
+*/
+            return view('admin.admin-home');
+        }
+
+        //}
+        //Session::put('username',$username);
+        return view('admin.admin-login')->with('agentwrong','username or password wrong');//redirect()->route('sign-in');
+
+    }
+    public function adminLogout(){
+        Session::forget('admin-username');
+        Session::forget('adminID');
+        //return redirect()->route('/');
+        //Auth::logout();
+        return view('admin.admin-login');
+    }
+    public function adminHome()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
+
+        //else
+        //$admin=DB::table('representatives')->where('username',$id)->value('adminID');
+
+        return view('admin.admin-home');
+    }
+    public function adminCreate()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
+
+        //else
+        //$admin=DB::table('representatives')->where('username',$id)->value('adminID');
+
+        return view('admin.admin-register');
+    }
+    public function adminStore(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|max:255|unique:admins',
+            'password' => 'required|string|min:6|confirmed',
+            'enterprise' => 'required|string|max:255',
+        ]);
+
+        $password=Hash::make($request->get('password'));
+
+        $representative=new Admin([
+            'username' => $request->get('username'),
+            'password' => $password,
+            'enterprise' => $request->get('enterprise')
+        ]);
+        //$representative->save();
+echo 'hello';
+       // return redirect('admin-sign-in');
+    }
+
+    public function superAdminShowLogin()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
+
+        //else
+        return view('admin.super-admin-login');
+    }
+    public function superAdminDoLogin(Request $request)
     {
 
         //echo 'hello';
@@ -213,9 +302,9 @@ class MyController extends Controller
         if($password==$pass){
 
             $id=DB::table('super_admins')->where('username',$username)->value('id');
-            Session::put('admin-username',$username);
-            Session::put('adminID',$id);
-
+            Session::put('super-admin-username',$username);
+            Session::put('super-adminID',$id);
+/*
             $places=DB::table('buses')->distinct()->select('name')->get();
             $tickets=DB::table('tickets')->where('tickets.status','pending')
                 ->join('payments','tickets.paymentID','payments.id')
@@ -224,15 +313,32 @@ class MyController extends Controller
                     'payments.trxID','payments.amount','tickets.status','tickets.id')->get();
 
             return view('admin.ticket-list')->with('buses',$places)->with('tickets',$tickets);//redirect()->route('sign-in');
+*/
+            return view('admin.super-admin-home');
         }
 
         //}
         //Session::put('username',$username);
-        return view('admin.admin-login')->with('agentwrong','username or password wrong');//redirect()->route('sign-in');
+        return view('admin.super-admin-login')->with('agentwrong','username or password wrong');//redirect()->route('sign-in');
 
     }
+    public function superAdminLogout(){
+        Session::forget('super-admin-username');
+        Session::forget('super-adminID');
+        //return redirect()->route('/');
+        //Auth::logout();
+        return view('admin.super-admin-login');
+    }
+    public function superAdminHome()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
 
-    public function adminConfirmTicket($id){
+        //else
+        //$admin=DB::table('representatives')->where('username',$id)->value('adminID');
+
+        return view('admin.super-admin-home');
+    }
+    public function superAdminConfirmTicket($id){
         DB::table('tickets')->where('id',$id)
             ->update(['status' => 'active']);
 
@@ -251,7 +357,6 @@ class MyController extends Controller
 
     }
 
-
     public function reptShowLogin()
     {
         //if (Session::has('username')) echo  'ok-ckeck';
@@ -259,7 +364,6 @@ class MyController extends Controller
         //else
         return view('representative.representative-login');
     }
-
     public function reptDoLogin(Request $request)
     {
 
@@ -295,7 +399,6 @@ class MyController extends Controller
         return view('representative.representative-login')->with('rep_wrong','username or password wrong');//redirect()->route('sign-in');
 
     }
-
     public function reptLogout(){
         Session::forget('rep-username');
         Session::forget('repID');
@@ -303,7 +406,6 @@ class MyController extends Controller
         //Auth::logout();
         return view('representative.representative-login');
     }
-
     public function reptHome()
     {
         //if (Session::has('username')) echo  'ok-ckeck';
@@ -312,6 +414,63 @@ class MyController extends Controller
         //$admin=DB::table('representatives')->where('username',$id)->value('adminID');
 
             return view('representative.representative-home');
+    }
+
+    public function employeeShowLogin()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
+
+        //else
+        return view('employee.employee-login');
+    }
+    public function employeeDoLogin(Request $request)
+    {
+
+        //echo 'hello';
+        $this->validate($request, [
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $username=$request->get('username');
+        $password=$request->get('password');
+
+        //if ($form='signin'){
+        $pass = DB::table('super_admins')->where('username',$username)->value('password');
+
+        if(Hash::check($password,$pass)){
+            $admin=DB::table('super_admins')->where('username',$username)->value('adminID');
+
+            if($admin==Null){
+                return view('employee.employee-login')->with('employeewrong','Your account is not confirmed yet.');//redirect()->route('sign-in');
+            }
+            $id=DB::table('super_admins')->where('username',$username)->value('id');
+            Session::put('employee-username',$username);
+            Session::put('employeeID',$id);
+
+            return view('employee.employee-home');//redirect()->route('sign-in');
+        }
+
+        //}
+        //Session::put('username',$username);
+        return view('agent.agent-login')->with('agentwrong','username or password wrong');//redirect()->route('sign-in');
+
+    }
+    public function employeeLogout(){
+        Session::forget('employee-username');
+        Session::forget('userID');
+        //return redirect()->route('/');
+        //Auth::logout();
+        return view('employee.employee-login');
+    }
+    public function employeeHome()
+    {
+        //if (Session::has('username')) echo  'ok-ckeck';
+
+        //else
+        //$admin=DB::table('representatives')->where('username',$id)->value('adminID');
+
+        return view('employee.employee-home');
     }
 
 }

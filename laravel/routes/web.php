@@ -12,11 +12,14 @@
 */
 
 
+//for admin panel home page + employee login
+Route::get('/admin','homeController@adminHomepage');
+
 
 Route::get('/', 'homeController@homepage');
 Route::get('/home', 'homeController@homepage');
 
-//customer
+//customer login, logout
 Route::get('logout', 'MyController@logout'); // logout
 Route::get('sign-in', 'MyController@showLogin'); // login
 Route::post('sign-in', 'MyController@doLogin'); // login
@@ -26,6 +29,12 @@ Route::get('agent-logout', 'MyController@agentLogout'); // logout
 Route::get('agent-sign-in', 'MyController@agentShowLogin'); // login
 Route::post('agent-sign-in', 'MyController@agentDoLogin'); // login
 Route::get('after-agent-register', 'MyController@agentRegister'); // login
+
+//agents login, logout
+Route::get('employee-logout', 'MyController@employeeLogout'); // logout
+Route::get('employee-sign-in', 'MyController@employeeShowLogin'); // login
+Route::post('employee-sign-in', 'MyController@employeeDoLogin'); // login
+Route::get('employee-home', 'MyController@employeeHome'); // employee-home
 
 //representatives login, logout
 Route::get('representative-logout', 'MyController@reptLogout'); // logout
@@ -37,10 +46,19 @@ Route::get('representative-home', 'MyController@reptHome'); // representative-ho
 Route::get('admin-logout', 'MyController@adminLogout'); // logout
 Route::get('admin-sign-in', 'MyController@adminShowLogin'); // login
 Route::post('admin-sign-in', 'MyController@adminDoLogin'); // login
-Route::get('after-admin-register', 'MyController@adminRegister'); // login
+Route::get('admin-home', 'MyController@adminHome'); // admin-home
+Route::get('admin/admin-create', 'MyController@adminCreate'); // admin-create / register
+Route::post('admin/admin-store', 'MyController@adminStore'); // admin store
+
+//super admins login, logout
+Route::get('super-admin-logout', 'MyController@superAdminLogout'); // logout
+Route::get('super-admin-sign-in', 'MyController@superAdminShowLogin'); // login
+Route::post('super-admin-sign-in', 'MyController@superAdminDoLogin'); // login
+Route::get('super-admin-home', 'MyController@superAdminHome'); // super-admin-home
+
 Route::get('confirm-ticket/{id}', 'MyController@adminConfirmTicket'); // login
 
-
+// customer login from seat list
 Route::get('login-from-seatlist/{id}', 'MyController@loginFrom'); // login from buslist / seatlist
 Route::post('login-from-seatlist/{id}', 'MyController@loginFromSeat'); // login from buslist / seatlist
 
@@ -54,6 +72,10 @@ Route::resource('agent','AgentController'); // sign up, show profile, edit profi
 Route::resource('representative','RepresentativeController'); // sign up, show profile, edit profile by representatives
 
 Route::resource('bus','BusController');
+
+Route::resource('employee','EmployeeController'); // sign up, show profile, edit profile by employees
+
+
 
 // for user/customer
 Route::post('search-buses','BusSearchController@search_bus'); // bus list without filter
@@ -75,8 +97,7 @@ Route::post('agent-booking-details/{id}/{tripID}', 'BusSearchController@agent_bo
 Route::post('agent-confirm-ticket/{id}/{tripID}/{userID}','BusSearchController@agent_confirmTicket'); // confirm ticket
 Route::get('agent-confirm-ticket/{id}/{tripID}/{userID}','BusSearchController@send_from'); // confirm ticket
 
-//for admin
-Route::get('/admin','homeController@adminHomepage');
+// may be search ticket by admin
 Route::get('search-ticket','BusSearchController@search_ticket'); // bus ticket with filter
 Route::post('search-ticket-with-filter','BusSearchController@search_ticket_filter'); // bus ticket with filter
 

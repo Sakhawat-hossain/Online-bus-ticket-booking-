@@ -18,7 +18,7 @@ class homeController extends Controller
         //$times=DB::table('trips')->distinct()->select('departure_time')->where('comment','available')->get();
         //comment -> available, done, cancelled
 
-        return view('admin.admin-login');
+        return view('employee.employee-login');
     }
 
 }

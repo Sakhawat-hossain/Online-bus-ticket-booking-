@@ -63,17 +63,16 @@
                     <li><a href="#footer">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    @if(\Illuminate\Support\Facades\Session::has('admin-username'))
-                        @php $username=Session::get('admin-username');@endphp
-                        <li><a href="{{url('admin/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
-                                    {{\Illuminate\Support\Facades\Session::get('admin-username')}}</span></a> </li>
-                        <li><a href="admin-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                    @if(\Illuminate\Support\Facades\Session::has('super-admin-username'))
+                        @php $username=Session::get('super-admin-username');@endphp
+                        <li><a href="{{url('superAdmin/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
+                                    {{\Illuminate\Support\Facades\Session::get('super-admin-username')}}</span></a> </li>
+                        <li><a href="super-admin-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
 
                     @else
-                        <li><a href="super-admin-sign-in">Super-Admin</a></li>
                         <li><a href="employee-sign-in">Employee</a></li>
+                        <li><a href="admin-sign-in">Admin</a></li>
                         <li><a href="representative-sign-in">Representative</a></li>
-                        <li><a href="admin/admin-create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                     @endif
                 </ul>
             </div>
@@ -84,7 +83,7 @@
         <div class="row" style="margin-top: 70px;">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Login as Admin</div>
+                    <div class="panel-heading">Login as Super Admin</div>
 
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="super-admin-sign-in">

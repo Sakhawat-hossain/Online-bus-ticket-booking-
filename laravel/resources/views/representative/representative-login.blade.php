@@ -60,7 +60,6 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#footer">Contact</a></li>
                     <li><a href="#footer">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -70,8 +69,10 @@
                                     {{\Illuminate\Support\Facades\Session::get('rep-username')}}</span></a> </li>
                         <li><a href="representative-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
 
-                    @else
-                        <li><a href="representative/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                    @else<li><a href="super-admin-sign-in">Super-Admin</a></li>
+                    <li><a href="employee-sign-in">Employee</a></li>
+                    <li><a href="admin-sign-in">Admin</a></li>
+                    <li><a href="representative/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                     @endif
                 </ul>
             </div>
