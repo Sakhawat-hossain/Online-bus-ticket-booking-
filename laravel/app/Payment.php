@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     //
-    protected $fillable = ['trxID','amount','status'];
+    protected $fillable = ['trxID','amount','status','payment_gateway'];
 }

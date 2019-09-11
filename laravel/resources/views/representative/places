@@ -1,0 +1,98 @@
+Route::get('places_view', 'MyController@reptPlaces');
+Route::get('representative-place-details/{p_id}', 'MyController@reptPlaceDetails');
+Route::get('representative-place-edit/{p_id}', 'MyController@reptPlaceEdit'); // representative-home
+Route::post('representative-place-update/{p_id}','MyController@reptUpdatePlace');
+Route::get('rept-add-place','MyController@reptAddPlace');
+Route::post('rept-add-place','MyController@reptStorePlace');
+
+
+--------------------------------------------------------------MyController -------------------------------------------
+
+    public function reptPlaces(){
+
+        $p  = DB::table('places')->get();
+        //echo $r;
+     return view('.//representative.rept-places')->with('p',$p);
+
+      
+    }
+
+    public function reptPlaceDetails(Request $request ,$p_id){
+    
+        
+        
+        $r =  DB::table('places')
+        ->where('id',$p_id)
+        ->get();
+
+       return view('representative.rept-place-details')->with('p',$r);
+
+    }
+    public function reptPlaceEdit(Request $request ,$p_id){
+    
+        
+        
+        $r =  DB::table('places')
+        ->where('id',$p_id)
+        ->get();
+            
+                           
+      
+       return view('representative.rept-place-edit')->with('p',$r)->with('p_id',$p_id);
+    }
+
+    public function reptUpdatePlace(Request $r,$p_id){
+
+    
+       $name = $r->get('name');
+       $address= $r->get('address');
+       
+    
+      //update place
+        $affected = DB::table('places')
+        ->where('id',$p_id)
+        ->update(['name'=>$name,'address'=>$address]);
+
+        $r->session()->flash("message","Place has been updates successflly.");
+        $p  = DB::table('places')->get();
+        //echo $r;
+        return redirect('places_view');
+      
+          
+
+    }
+
+    
+    public function reptAddPlace(){
+        
+       
+    
+        return view('representative.rept-add-place');
+    
+    }
+
+    public function reptStorePlace(Request $r){
+        
+
+        $r->validate([
+            'name' => 'required|max:255|min:4',
+            'address' => 'required|max:255|min:4',
+        
+        ]);
+    
+        $name = $r->get('name');
+        $address = $r->get('address');
+        
+        $route = new Place;
+        $route->name = $name;
+        $route->address = $address;
+        
+
+        $route->save();
+        $r->session()->flash("message","Place has been added successflly.");
+
+        return redirect('places_view');
+    }
+
+
+----------------------------------------------------------------------------------------------------------------------

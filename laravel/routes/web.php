@@ -75,8 +75,6 @@ Route::resource('bus','BusController');
 
 Route::resource('employee','EmployeeController'); // sign up, show profile, edit profile by employees
 
-
-
 // for user/customer
 Route::post('search-buses','BusSearchController@search_bus'); // bus list without filter
 Route::post('search-buses-with-filter','BusSearchController@search_bus_filter'); // bus list with filter
@@ -85,7 +83,6 @@ Route::post('booking-details/{id}/{tripID}', 'BusSearchController@booking'); //b
 Route::post('payment-details/{id}/{tripID}', 'BusSearchController@payment'); //payment details
 
 Route::get('/payment-info/{id}', 'BusSearchController@showPayment'); //seat list details
-
 
 Route::post('confirm-ticket/{id}/{tripID}','BusSearchController@confirmTicket'); // confirm ticket
 
@@ -130,16 +127,26 @@ Route::get('/representative-add-trips-form/{id}','RepActivityController@addNewTr
 Route::post('/representative-edit-trips/{id}/{tripID}','RepActivityController@editTrip');// edit buses of respective operator
 Route::post('/representative-add-trips/{id}','RepActivityController@addNewTrip');// edit buses of respective operator
 
+// --------------------------- mosaddek ---------------------------//
 
-// employee activities
+Route::get('representative-places', 'RepActivityController@reptPlaces');
+Route::get('representative-place-details/{p_id}', 'RepActivityController@reptPlaceDetails');
+Route::get('representative-place-edit/{p_id}', 'RepActivityController@reptPlaceEdit'); // representative-home
+Route::post('representative-place-update/{p_id}','RepActivityController@reptUpdatePlace');
+Route::get('representative-add-place','RepActivityController@reptAddPlace');
+Route::post('representative-add-place','RepActivityController@reptStorePlace');
+
+
+// employee activities employee-search-ticket-with-filter
 Route::get('/employee-ticket-list','EmployeeActivityController@getTicketList');// get tickets
+Route::post('/employee-search-ticket-with-filter','EmployeeActivityController@getFilteredTicketList');// get tickets
 
 
 Route::get('/profile', function () {
     return view('user.profile');
 });
 
-Route::get('/admin-home', function () {
+Route::get('/admin-home-nnnnnnn', function () {
     return view('admin.New folder.index');
 });
 

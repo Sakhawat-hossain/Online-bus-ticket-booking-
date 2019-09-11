@@ -114,20 +114,28 @@
                     </li>
 
                     <li>
-                        <a href="seats_view"><i class="fa fa-sitemap"></i>Seats</a>
+                        <a href="representative-seats/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <i class="fa fa-sitemap"></i>Seats</a>
                     </li>
                     <li>
-                        <a href="availability_view"><i class="fa fa-check-circle"></i> Availability</a>
+                        <a href="representative-availability/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <i class="fa fa-check-circle"></i> Availability</a>
                     </li>
                     <li>
-                        <a href="routes_view"><i class="fa fa-road"></i> Routes</a>
+                        <a href="representative-routes/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <i class="fa fa-road"></i> Routes</a>
                     </li>
                     <li>
                         <a href="representative-trips/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                             <i class="fa fa-road"></i> Trips</a>
                     </li>
                     <li>
-                        <a href="hooks/summary-reports"><i class="fa fa-list"></i> Reports</a>
+                        <a href="representative-places">
+                            <i class="fa fa-map-marker"></i>Places</a>
+                    </li>
+                    <li>
+                        <a href="representative-reports/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <i class="fa fa-list"></i> Reports</a>
                     </li>                        </ul>
                 </li>
                 </ul>
@@ -219,13 +227,26 @@
                                 <h3>representative</h3>
                             </div>
                             <div class="panel-footer back-footer-brown">
-                                <a href="membership_profile.php" style="text-decoration:none;color: white"><strong>Account</strong></a>
+                                <a href="membership_profile.php" style="text-decoration:none;color: white">
+                                    <strong>Account</strong></a>
 
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="panel panel-primary text-center no-boder bg-color-green">
+                            <div class="panel-body">
+                                <i class="fa fa-map-marker fa-5x"></i>
+                                <h3>Places</h3>
+                            </div>
+                            <div class="panel-footer back-footer-green">
+                                <a href="representative-places"
+                                   style="text-decoration:none;color: white"><strong>Places</strong></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary text-center no-boder bg-color-blue">
                             <div class="panel-body">
                                 <i class="fa fa-list fa-5x"></i>
                                 <h3>report</h3>

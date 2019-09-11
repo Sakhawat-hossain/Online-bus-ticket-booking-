@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../../css/ticket-style.css">
-    <link rel="stylesheet" href="../../css/header-design.css">
-    <link rel="stylesheet" href="../../css/footer-design.css">
+    <link rel="stylesheet" href="../css/ticket-style.css">
+    <link rel="stylesheet" href="../css/header-design.css">
+    <link rel="stylesheet" href="../css/footer-design.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -25,11 +25,11 @@
         <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="../../home" style="color: white;"><span>
+                    <a class="navbar-brand" href="../home" style="color: white;"><span>
                         <i class="glyphicon glyphicon-home"></i></span>Online ticket booking</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="../../home">Home</a></li>
+                    <li class="active"><a href="../home">Home</a></li>
                     <li><a href="#footer">Contact</a></li>
                     <li><a href="#footer">About</a></li>
                     <li><a href="#operator-container">Operators</a></li>
@@ -39,10 +39,10 @@
                     @if(\Illuminate\Support\Facades\Session::has('username'))
                         @php $username=Session::get('username');@endphp
                         <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
-                        <li><a href="../../logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        <li><a href="../logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else
                         <li><a href="user/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                        <li><a href="../../sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                        <li><a href="../sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
                     @endif
                 </ul>
             </div>
@@ -53,22 +53,20 @@
         <h3 style="text-align: center;">Ticket is booked successfully</h3>
         <h5>Wait for confirmation. After that you can download ticket </h5>
         <div id="download-section">
-            <div class="row"><a href="../../home">
+            <div class="row"><a href="../home">
                     <button style="float: right;" class="btn btn-primary">Back to Home</button>
                 </a></div>
         </div>
 
         <div id="payment">
-            <a href="../../payment-info/{{$trxID}}">
-                <button class="btn-success">Payment Info</button>
+                <button class="btn-default">Payment Info</button>
                 @if(isset($data))
-                    @foreach($data as $dt)
-                        @foreach($dt as $d)
-                            <p>{{$d}}</p>
-                        @endforeach
-                    @endforeach
+                    <p><strong>Payment Gateway : </strong>{{$data->get('payment_gateway')}}</p>
+                    <p><strong>Payment Time &nbsp;&nbsp;&nbsp;: </strong>{{$data->get('payment_time')}}</p>
+                    <p><strong>Transaction ID &nbsp;: </strong>{{$data->get('trxID')}}</p>
+                    <p><strong>Total Amount &nbsp;&nbsp;&nbsp;: </strong>{{$data->get('amount')}}</p>
+                    <p><strong>Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </strong>{{$data->get('status')}}</p>
                 @endif
-            </a>
 
         </div>
 

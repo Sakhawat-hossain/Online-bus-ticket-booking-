@@ -418,21 +418,21 @@ class BusSearchController extends Controller
         $method=$request->get('payment-method');
 
         $data=DB::table('payments')->where('trxID',$trxID)->value('id');
-
+/*
         if($data != ''){
             //return redirect()->back();
             //$trxError='Already accepted, try with your new trxID';
             $request->input('trxIDstatus','Already accepted, try with your new trxID');
             return $this->payment($request,$id,$tripID);
-            //return back();
+            //return back()->withInput(Input::all());
         }
-      //  echo 'hello';
+       // echo $method;
 
         $payment=new Payment([
             'payment_gateway' => $method,
             'trxID' => $trxID,
             'amount' => $request->get('total'),
-            'status' => 'pending'
+            'status' => 'paid'
         ]);
         $payment->save();
 
@@ -457,6 +457,8 @@ class BusSearchController extends Controller
                                 ->update(['status' => 'booked', 'ticketID' => $cdata]);
 
              // update total available seat
+        $tl = DB::table('seats')->where('ticketID',$cdata)->get();
+        $tc = count($tl);
 
         $aseat=DB::table('trips')->where('trips.id',$tripID)->join('buses','trips.busID','buses.id')
             ->select('available_seat','trips.busID')->get();
@@ -469,24 +471,37 @@ class BusSearchController extends Controller
                 $j++;
             }
         }
-        $tseat = $tseat - 1;
+        $tseat = $tseat - $tc;
         // echo $tseat;
         DB::table('buses')->where('id',$busID)->update(['available_seat' => $tseat]);
 
         //return $this->send_from($id,$tripID,$userID);
 
-
+*/
 //showing ticket
 
-        return view('user.confirm-mgs')->with('trxID',$trxID);
+        return redirect('payment-info/'.$data);
+        //return view('user.confirm-mgs')->with('trxID',$trxID);
 
     }
 
     public function showPayment($id){
-        $data = DB::table('payment')->where('trxID',$id)
-            ->selcet('payment_time','payment_gateway','trxID','amount','status')->get();
+        $data = DB::table('payments')->where('id',$id)
+            ->select('payment_time','payment_gateway','trxID','amount','status')->get();
+        $sdata=collect();
+        foreach ($data as $dd){
+            $i=0;
+            foreach ($dd as $d){
+                if($i==0) $sdata->put('payment_time',$d);
+                else if($i==1) $sdata->put('payment_gateway',$d);
+                else if($i==2) $sdata->put('trxID',$d);
+                else if($i==3) $sdata->put('amount',$d);
+                else if($i==4) $sdata->put('status',$d);
+                $i++;
+            }
+        }
 
-        return view('user.confirm-mgs')->with('data',$data);
+        return view('user.confirm-mgs')->with('data',$sdata);
     }
 
 

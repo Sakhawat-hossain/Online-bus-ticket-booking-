@@ -58,7 +58,7 @@
             });
         });
         function confirm_ticket(idx,id,empID) {
-            alert('Confirm ticket');
+            //alert('Confirm ticket');
             jQuery.ajax({
                 type:'GET',
                 url:'update-ticket-status/active/'+id+"/"+empID,
@@ -73,13 +73,14 @@
                 }
             });
             var tr_val = document.getElementById("myTable").rows[idx].cells;
-            tr_val[6].innerHTML = 'active';
+            tr_val[5].innerHTML = 'active';
+            tr_val[5].style.color = 'forestgreen';
 
             tr_val[7].innerHTML = '<button class="btn btn-primary" ' +
                 'onclick="cancel_confirm('+idx+','+id+','+empID+')">Cancel</button>';
         }
         function cancel_confirm(idx,id,empID) {
-            alert('Cancel ticket');
+            //alert('Cancel confirm');
             jQuery.ajax({
                 type:'GET',
                 url:'update-ticket-status/pending/'+id+"/"+empID,
@@ -94,10 +95,55 @@
                 }
             });
             var tr_val = document.getElementById("myTable").rows[idx].cells;
-            tr_val[6].innerHTML = 'pending';
+            tr_val[5].innerHTML = 'pending';
+            tr_val[5].style.color = 'brown';
 
             tr_val[7].innerHTML = '<button class="btn btn-success" ' +
                 'onclick="confirm_ticket('+idx+','+id+','+empID+')">Confirm</button>';
+        }
+        function confirm_cancel(idx,id,empID) {
+            //alert('Confirm ticket cancellation');
+            jQuery.ajax({
+                type:'GET',
+                url:'update-ticket-status/cancelled/'+id+"/"+empID,
+                data:'',
+                async:false,
+                success:function(data) {
+                    //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
+                    //seat_status=data.seat_status;
+                },
+                error:function() {
+                    $("#pp").text("error-1");
+                }
+            });
+            var tr_val = document.getElementById("myTable").rows[idx].cells;
+            tr_val[5].innerHTML = 'cancelled';
+            tr_val[5].style.color = 'forestgreen';
+
+            tr_val[7].innerHTML = '<button class="btn btn-primary" ' +
+                'onclick="cancel_confirm_cancel('+idx+','+id+','+empID+')">Cancel</button>';
+        }
+        function cancel_confirm_cancel(idx,id,empID) {
+            //alert('Cancel confirm');
+            jQuery.ajax({
+                type:'GET',
+                url:'update-ticket-status/cancelling/'+id+"/"+empID,
+                data:'',
+                async:false,
+                success:function(data) {
+                    //jQuery("#pp").html("<p>"+data.seat_status+"</p>");
+                    //seat_status=data.seat_status;
+                },
+                error:function() {
+                    $("#pp").text("error-1");
+                }
+            });
+            var tr_val = document.getElementById("myTable").rows[idx].cells;
+            tr_val[5].innerHTML = 'cancelling';
+            tr_val[5].style.color = 'brown';
+
+            tr_val[7].innerHTML = '<button class="btn btn-success" ' +
+                'onclick="confirm_cancel('+idx+','+id+','+empID+')">Confirm</button>';
         }
     </script>
 
@@ -114,7 +160,7 @@
                         <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
+                    <li class="active"><a href="employee-home">Home</a></li>
                     <li><a href="#footer">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -131,11 +177,12 @@
             </div>
         </nav>
     </div>
-
+<div id="t"></div>
     <div class="container" style="min-height: 500px;">
 
     @if(\Illuminate\Support\Facades\Session::has('employee-username'))
-        <form method="post" action="search-ticket-with-filter">
+        <form method="post" action="employee-search-ticket-with-filter">
+            {{csrf_field()}}
             <div id="search-option-container">
                 <div class="row">
                     <!--div class="col-sm-2">
@@ -159,13 +206,18 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <span class="form-label">Transaction Id</span>
-                            <input class="form-control" name="type">
-
-
+                            <input id="trxID" class="form-control" name="trxID" onkeyup="filterByTrxID()">
                             <span class="select-arrow"></span>
                         </div>
                     </div>
                     <div class="col-sm-2">
+                        <div class="form-group">
+                            <span class="form-label">Booking Date</span>
+                            <input id="booking_time" class="form-control" type="date" name="booking_time"
+                                   oninput="filterByBooking()">
+                        </div>
+                    </div>
+                    <div class="col-sm-2" hidden>
                         <div class="form-group">
                             <span class="form-label">Enterprise</span>
                             <select class="form-control" name="bus_name">
@@ -181,15 +233,16 @@
                             <span class="select-arrow"></span>
                         </div>
                     </div>
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <span class="form-label">Payment Date</span>
-                            <input class="form-control" type="date" name="departure" >
-                        </div>
-                    </div>
+
+                    @if($ticket_status == 'cancelling')
                     <div class="form-btn" style="margin-top: 20px;float: right;margin-right:80px;">
-                        <button type="submit" class="btn btn-success" name="sendval" value="normal">Search</button>
+                        <button type="submit" class="btn btn-success" name="ticket_status" value="pending">Pending</button>
                     </div>
+                    @else
+                    <div class="form-btn" style="margin-top: 20px;float: right;margin-right:80px;">
+                        <button type="submit" class="btn btn-success" name="ticket_status" value="cancelling">Cancelling</button>
+                    </div>
+                    @endif
                 </div>
 
             </div>
@@ -223,9 +276,9 @@
                 <th scope="col">Mobile No</th>
                 <th scope="col">Boarding point</th>
                 <th scope="col">Booking Time</th>
-                <th scope="col">Trx ID</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Status</th>
+                <th scope="col">Trx ID</th>
                 <th scope="col">Action</th>
 
             </tr>
@@ -240,10 +293,16 @@
                     @foreach($ticket as $t)
                         @if($j==7)
                             <td>
+                                @if($ticket_status == 'pending')
                                 <button class="btn btn-success" onclick="confirm_ticket({{$idx}},{{$t}},{{$id}})">Confirm</button>
+                                @else
+                                    <button class="btn btn-success" onclick="confirm_cancel({{$idx}},{{$t}},{{$id}})">Confirm</button>
+                                @endif
                             </td>
+                        @elseif($j==5)
+                        <td style="color: brown">{{$t}}</td>
                         @else
-                        <td>{{$t}}</td>
+                            <td>{{$t}}</td>
                         @endif
                             @php $j= $j+1;@endphp
                      @endforeach
@@ -335,6 +394,47 @@
                 if (switchcount == 0 && dir == "asc") {
                     dir = "desc";
                     switching = true;
+                }
+            }
+        }
+    }
+    function filterByTrxID() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("trxID");
+        filter = input.value;//.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[4];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.indexOf(filter) == 0) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function filterByBooking() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("booking_time");
+        filter = input.value;//.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[3];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.indexOf(filter) == 0) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
                 }
             }
         }

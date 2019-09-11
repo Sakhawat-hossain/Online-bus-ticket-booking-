@@ -264,9 +264,9 @@
                                 <div class="col-sm-5">
                                     <span><strong>Inter TrxID to confirm payment</strong> &nbsp;</span>
                                     <input style="text-align: center;height: 35px; " type="text" id="trxID" name="trxID" placeholder="Ex - XXXXXXXXXX" required>
-                                    @if ($senddata->has('trxIDstatus'))
+                                    @if (isset($trxIDstatus)))
                                         <span class="help-block">
-                                        <strong>{{ $senddata->get('trxIDstatus') }}</strong>
+                                        <strong>{{ $trxIDstatus }}</strong>
                                     </span>
                                     @endif
                                 </div>

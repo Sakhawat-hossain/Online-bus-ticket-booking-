@@ -11,6 +11,7 @@ use App\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use mysql_xdevapi\Session;
 use function Sodium\compare;
 
 class RepActivityController extends Controller
@@ -306,5 +307,66 @@ class RepActivityController extends Controller
         return view('representative.representative-add-trip')->with('bus_name',$busname)
             ->with('addMessage','Trip has been added successfully');
     }
+
+    public function reptPlaces(){
+
+        $p  = DB::table('places')->get();
+        //echo $r;
+        return view('.//representative.rept-places')->with('p',$p);
+    }
+
+    public function reptPlaceDetails(Request $request ,$p_id){
+        $r =  DB::table('places')
+            ->where('id',$p_id)
+            ->get();
+        return view('representative.rept-place-details')->with('p',$r);
+    }
+    public function reptPlaceEdit(Request $request ,$p_id){
+
+        $r =  DB::table('places')
+            ->where('id',$p_id)
+            ->get();
+        return view('representative.rept-place-edit')->with('p',$r)->with('p_id',$p_id);
+    }
+
+    public function reptUpdatePlace(Request $r,$p_id){
+
+        $name = $r->get('name');
+        $address= $r->get('address');
+        //update place
+        $affected = DB::table('places')
+            ->where('id',$p_id)
+            ->update(['name'=>$name,'address'=>$address]);
+
+        $r->session()->flash("message","Place has been updates successflly.");
+        $p  = DB::table('places')->get();
+        //echo $r;
+        //$rep = Session::get('rep-username');
+        //echo $rep;
+        return redirect('representative-places');
+    }
+    public function reptAddPlace(){
+        return view('representative.rept-add-place');
+    }
+    public function reptStorePlace(Request $r){
+        $r->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+        ]);
+
+        $name = $r->get('name');
+        $address = $r->get('address');
+
+        $route = new Place;
+        $route->name = $name;
+        $route->address = $address;
+
+
+        $route->save();
+        $r->session()->flash("message","Place has been added successflly.");
+
+        return redirect('places_view');
+    }
+
 
 }
