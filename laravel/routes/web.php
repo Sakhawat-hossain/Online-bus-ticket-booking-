@@ -112,6 +112,7 @@ Route::get('/get-gender/{id}','AjaxlController@getUserGender'); // get user gend
 Route::get('/get-seat-list/{id}','AjaxlController@getSeatList'); // get seat list to show in profile
 
 Route::get('/get-bus-layout/{id}','AjaxlController@getBusLayout'); // get bus layout to show in rep. bus list
+Route::get('/get-username','AjaxlController@getUsername'); // get session value
 
 //update-ticket-status/active/'+id+"/"+empID
 Route::get('/update-ticket-status/{active}/{id}/{empID}','AjaxlController@updateTicketStatus'); // update ticket status - active
@@ -126,6 +127,10 @@ Route::get('/representative-trips/{id}','RepActivityController@search_trips');//
 Route::get('/representative-add-trips-form/{id}','RepActivityController@addNewTripForm');// add new trips of respective operator
 Route::post('/representative-edit-trips/{id}/{tripID}','RepActivityController@editTrip');// edit buses of respective operator
 Route::post('/representative-add-trips/{id}','RepActivityController@addNewTrip');// edit buses of respective operator
+Route::get('/representative-availability/{id}','RepActivityController@availability');// show available bus, trip,
+Route::get('/representative-seats/{id}','RepActivityController@showSeat');// show seats
+Route::post('/representative-seats/{id}','RepActivityController@showBusSeat');// show seats
+Route::post('/representative-seats-edit/{id}','RepActivityController@editBusSeat');// edit seats
 
 // --------------------------- mosaddek ---------------------------//
 

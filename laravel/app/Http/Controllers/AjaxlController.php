@@ -84,4 +84,11 @@ class AjaxlController extends Controller
         DB::table('tickets')->where('id',$id)->update(['status'=>$status,'adminID'=>$empID]);
         return response()->json(array('ok'=>'ok'),200);
     }
+
+    public function getUsername(){
+
+        $data=\Illuminate\Support\Facades\Session::get('rep-username');
+
+        return response()->json($data,200);
+    }
 }

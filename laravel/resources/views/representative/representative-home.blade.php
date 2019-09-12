@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Register</title>
+    <title>Representative home</title>
 
     <!-- Google font -->
     <link rel="stylesheet" href="css/google.font.">
@@ -95,12 +95,13 @@
 
     <div id="wrapper" >
 
-        <nav class="navbar-default navbar-side" role="navigation">
+        <nav class="navbar-default navbar-side" role="navigation" style="height: content-box">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
 
                     <li>
-                        <a href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
+                        <a href="#" style="background-color: forestgreen;margin-right: -10px;">
+                            <i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <!--li>
                         <a href="customers_view"><i class="fa fa-users"></i>Customers</a>
@@ -136,8 +137,7 @@
                     <li>
                         <a href="representative-reports/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                             <i class="fa fa-list"></i> Reports</a>
-                    </li>                        </ul>
-                </li>
+                    </li>
                 </ul>
 
             </div>
@@ -149,7 +149,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Welcome  <small> representative</small>
+                            Welcome  <small> {{\Illuminate\Support\Facades\Session::get('rep-username')}}</small>
                         </h1>
                     </div>
                 </div>
@@ -175,7 +175,8 @@
                                 <h3>10 </h3>
                             </div>
                             <div class="panel-footer back-footer-blue">
-                                <a href="seats_view.php" style="text-decoration: none;color: white"><strong>Seats</strong></a>
+                                <a href="representative-seats/{{\Illuminate\Support\Facades\Session::get('rep-username')}}"
+                                   style="text-decoration: none;color: white"><strong>Seats</strong></a>
 
                             </div>
                         </div>
@@ -187,7 +188,8 @@
                                 <h3>3 </h3>
                             </div>
                             <div class="panel-footer back-footer-red">
-                                <a href="availability_view.php" style="text-decoration: none;color: white"><strong>Availability</strong></a>
+                                <a href="representative-availability/{{\Illuminate\Support\Facades\Session::get('rep-username')}}"
+                                   style="text-decoration: none;color: white"><strong>Availability</strong></a>
 
                             </div>
                         </div>

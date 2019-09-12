@@ -97,12 +97,12 @@
     <div id="wrapper" >
 
        <!---include nav bar----->
-       <nav class="navbar-default navbar-side" role="navigation">
+        <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
-    
+
                     <li>
-                        <a href="representative-home"><i class="fa fa-dashboard"></i> Dashboard</a>
+                        <a href="../representative-home"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <!--li>
                         <a href="customers_view"><i class="fa fa-users"></i>Customers</a>
@@ -111,30 +111,38 @@
                         <a href="bookings_view"><i class="fa fa-money"></i>Bookings</a>
                     </li-->
                     <li>
-                        <a href="representative-buses/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                        <a href="../representative-buses/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                             <i class="fa fa-truck"></i>Buses</a>
                     </li>
-    
+
                     <li>
-                        <a href="seats_view"><i class="fa fa-sitemap"></i>Seats</a>
+                        <a href="../representative-seats/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <i class="fa fa-sitemap"></i>Seats</a>
                     </li>
                     <li>
-                        <a href="availability_view"><i class="fa fa-check-circle"></i> Availability</a>
+                        <a href="../representative-availability/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <i class="fa fa-check-circle"></i> Availability</a>
                     </li>
                     <li>
-                        <a href="routes_view"><i class="fa fa-road"></i> Routes</a>
+                        <a href="../representative-routes/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <i class="fa fa-road"></i> Routes</a>
                     </li>
                     <li>
-                        <a href="routes_view"><i class="fa fa-road"></i> Trips</a>
+                        <a href="../representative-trips/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <i class="fa fa-road"></i> Trips</a>
                     </li>
                     <li>
-                        <a href="hooks/summary-reports"><i class="fa fa-list"></i> Reports</a>
+                        <a href="../representative-places">
+                            <i class="fa fa-map-marker"></i>Places</a>
+                    </li>
+                    <li>
+                        <a href="../representative-reports/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <i class="fa fa-list"></i> Reports</a>
                     </li>                        </ul>
                 </li>
                 </ul>
-    
+
             </div>
-    
         </nav>
 
         <div id="page-wrapper" >

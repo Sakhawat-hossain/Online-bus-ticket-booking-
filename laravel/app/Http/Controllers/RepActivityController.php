@@ -30,7 +30,6 @@ class RepActivityController extends Controller
             ->select('buses.name','buses.coach_no','buses.type','buses.total_seat','buses.status','buses.rID','buses.id')
             ->get();
 */
-
         return view('representative.representative-buses')->with('buses',$buses);
     }
 
@@ -258,13 +257,14 @@ class RepActivityController extends Controller
             return back();
         }
         $total = DB::table('buses')->where('id',$busID)->value('total_seat');
-        DB::table('buses')->where('id',$busID)->update(['available_seat' => $total]);
+        DB::table('buses')->where('id',$busID)->update(['status'=>'blocked','available_seat' => $total]);
 
         $rID=DB::table('representatives')->where('username',$id)->value('id');
         if($bfare != $efare)
-            $efare = $efare+'/'+$bfare;
+            $efare = $efare.'/'.$bfare;
         else
-            $efare = $efare+'/'+$efare;
+            $efare = $efare.'/'.$efare;
+
         $trip = new Trip([
             'routeID' => $routeID,
             'departure_time' => $deptt,
@@ -308,13 +308,185 @@ class RepActivityController extends Controller
             ->with('addMessage','Trip has been added successfully');
     }
 
+    public function showSeat($id){
+        return \view('representative.representative-seats');
+    }
+    public function showBusSeat(Request $request,$id){
+        $this->validate($request,[
+            'coach_no' => 'string|required',
+        ]);
+
+        $busname = DB::table('representatives')->where('username',$id)->value('enterprise');
+        $cno=$request->get('coach_no');
+        $layoutRow = DB::table('buses')->where('buses.coach_no',$cno)
+            ->where('buses.name',$busname)
+            ->join('bus_layouts','buses.id','bus_layouts.busID')
+            ->select('decker_num','rows','columns','layout','buses.id')->get();
+        $idx = 1;
+        $decker=$rows=$columns=$layoutStr=$busID='';
+        foreach ($layoutRow as $row){
+            foreach ($row as $data){
+                if($idx==1) $decker=$data;
+                else if($idx==2) $rows=$data;
+                else if($idx==3) $columns=$data;
+                else if($idx==4) $layoutStr=$data;
+                else $busID = $data;
+
+                $idx=$idx+1;
+            }
+        }
+
+        $layoutArr = explode(";",$layoutStr);
+        $layout='';
+        for($i=0;$i<$rows;$i++)
+            $layout[$i] = explode(",",$layoutArr[$i]);
+
+        $layout['decker'] = $decker;
+        $layout['rows'] = $rows;
+        $layout['columns'] = $columns;
+        $layout['busID'] = $busID;
+
+       // $var = json_encode($layout);
+//dd($layout);
+        return \view('representative.representative-seats')->with('layout',$layout);
+    }
+    public function editBusSeat(Request $request,$id){
+
+        $rID=DB::table('representatives')->where('username',$id)->value('id');
+
+        $layout =  json_decode($request->get("layout"),true);
+        $layoutStr = '';
+
+        $rows = $layout['rows'];
+        //if(is_int($rows)) echo $layout[1][0];
+
+        for ($i=0;$i<$rows;$i++){
+            for ($j=0;$j<6;$j++){
+                $seatCategory = $layout[$i][$j];
+                if($j==5)
+                    $layoutStr = $layoutStr.$seatCategory.";";
+                else
+                    $layoutStr = $layoutStr.$seatCategory.",";
+            }
+        }
+        $busID = $layout['busID'];
+
+        $seatInfo = DB::table('seat_infos')->where('busID',$busID)
+            ->select('id','status')->get();
+
+        $idx=$idx1=$idd=$status=0;
+        $temp='';
+        foreach ($seatInfo as $seatInf){
+            $j=0;
+            foreach ($seatInf as $sf ){
+                if($j==0) $idd=$sf;
+                else $status = $sf;
+                $j++;
+            }
+            $temp[$idx][0] = $idd;
+            $temp[$idx][1] = $status;
+            $idx++;
+        }
+
+        $idx=0;
+        for ($i=0;$i<$rows;$i++){
+            for ($j=0;$j<6;$j++){
+                if($layout[$i][$j] != '_'){
+                    if($layout[$i][$j]=='Blocked'){
+                        DB::table('seat_infos')->where('id',$temp[$idx][0])
+                            ->update(['status'=>'blocked']);
+                    }
+                    else{
+                        DB::table('seat_infos')->where('id',$temp[$idx][0])
+                            ->update(['status'=>'available']);
+                    }
+                    $idx++;
+                }
+            }
+        }
+        DB::table('bus_layouts')->where('busID',$busID)
+            ->update(['layout'=>$layoutStr]);
+
+        return redirect('representative-seats/'.$id);
+    }
+
+    public function availability($id){
+        $busname=DB::table('representatives')->where('username',$id)->value('enterprise');
+
+        $buses=DB::table('buses')->where('name',$busname)
+            ->join('bus_layouts','buses.id','bus_layouts.busID')
+            ->select('buses.name','buses.coach_no','buses.type','buses.total_seat','buses.status','bus_layouts.id','bus_layouts.busID')
+            ->get();
+
+        $trips=DB::table('trips')
+            ->join('buses','trips.busID', '=', 'buses.id')->where('buses.name',$busname)
+            ->join('routes','trips.routeID', '=', 'routes.id')
+            ->select('routes.from','routes.to','routes.starting_point','buses.coach_no','buses.type','trips.date',
+                'trips.departure_time','trips.b/e','trips.comment','trips.id')
+            ->get();
+
+        $routes=DB::table('routes')->select('from','to','starting_point')->get();
+
+        $total_b = count($buses);
+        $total_t = count($trips);
+        $total_r = count($routes);
+
+        $av=0;
+        $bl=0;
+        $ab=0;
+        foreach ($buses as $bus){
+            $j=0;
+            foreach ($bus as $b){
+                if($j==4){
+                    if($b=='available') $av++;
+                    else if($b=='blocked') $bl++;
+                    else if($b=='abandoned') $ab++;
+                }
+                $j++;
+            }
+        }
+
+        $ac=0;
+        $prev=0;
+        $abt=0;
+        foreach ($trips as $bus){
+            $j=0;
+            foreach ($bus as $b){
+                if($j==8){
+                    if($b=='available') $ac++;
+                    else if($b=='done') $prev++;
+                    else if($b=='cancelled') $abt++;
+                }
+                $j++;
+            }
+        }
+
+        $available_data = collect();
+        $available_data->put('buses',$buses);
+        $available_data->put('trips',$trips);
+        $available_data->put('routes',$routes);
+
+        $available_data->put('total_buses',$total_b);
+        $available_data->put('total_avail',$av);
+        $available_data->put('total_block',$bl);
+        $available_data->put('total_abandoned',$ab);
+
+        $available_data->put('total_trips',$total_t);
+        $available_data->put('total_active',$ac);
+        $available_data->put('total_prev',$prev);
+        $available_data->put('total_cancel',$abt);
+
+        $available_data->put('total_routes',$total_r);
+
+        return View::make('representative.representative-availability')->with('available_data',$available_data);
+    }
+
     public function reptPlaces(){
 
         $p  = DB::table('places')->get();
         //echo $r;
         return view('.//representative.rept-places')->with('p',$p);
     }
-
     public function reptPlaceDetails(Request $request ,$p_id){
         $r =  DB::table('places')
             ->where('id',$p_id)

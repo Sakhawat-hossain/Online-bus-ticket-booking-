@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="../css/footer-design.css">
     <link rel="stylesheet" href="../css/admin/add-bus-style.css">
 
-    <!-- Google font -->
-    <link rel="stylesheet" href="../css/google.font.">
+    <!-- Google font >
+    <link rel="stylesheet" href="../css/google.font.css"-->
 
     <!-- Bootstrap -->
     <link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
@@ -67,7 +67,6 @@
                 $("#filter-list").toggle();
             });
         });
-
         function set_width(columns) {
             var div = document.getElementById("preview-details-seat-view");
             if(columns==6){
@@ -91,10 +90,9 @@
                 div.style.marginLeft = "20%";
             }
         }
-
         function showLayout(idxx,id) {
+            //alert(id);
             var left = document.getElementById("preview-container-left");
-
             //rows  = parseInt(rows);
             //columns  = parseInt(columns);
             //total_seat  = parseInt(total_seat);
@@ -108,7 +106,6 @@
                     var decker_num = data['decker'];
                     var rows = data['rows'];
                     var columns = data['columns'];
-
                     var bus_layout = data;
                     left.innerHTML = "<p><strong>Decker Number : &nbsp; </strong>" + decker_num + "</p>" +
                         "<p><strong>Rows : &nbsp; </strong>" + rows + "</p>" +
@@ -130,7 +127,6 @@
                         "<div class='col-sm-4'><span>Block</span></div> " +
                         "</div>" +
                         "</div>" ;
-
                     var right = document.getElementById("preview-details-seat-view");
                     // if( !isNaN(rows) && !isNaN(columns)){
                     set_width(columns);
@@ -140,7 +136,6 @@
                         "                                    <div class=\"col-sm-4 col-sm-offset-4\"><strong>Driver</strong></div>\n" +
                         "                                </div>\n" +
                         "                            </div>\n";
-
                     var idx,idx1;
                     for(idx=0; idx<rows; idx++){
                         up = up  + "<div id=\"preview-seat-view-group\">";
@@ -178,13 +173,13 @@
                                 if(bus_layout[idx][idx1].localeCompare("_")){
                                     up = up + "<div class=\"col-sm-3\">" +
                                         "  <span><i class=\"fas fa-couch fa-2x\" " ;
-                                         if(bus_layout[idx][idx1].localeCompare("Economy")==0)
-                                             up = up + "style = 'color: forestgreen;'>";
-                                         else if(bus_layout[idx][idx1].localeCompare("Business")==0)
-                                             up = up + "style='color: #33D1FF;'>" ;
-                                         else
-                                             up = up + "style = 'color: black;'>";
-                                        up = up + "</i></span></div>";
+                                    if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                        up = up + "style = 'color: forestgreen;'>";
+                                    else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                        up = up + "style='color: #33D1FF;'>" ;
+                                    else
+                                        up = up + "style = 'color: black;'>";
+                                    up = up + "</i></span></div>";
                                 }
                             }
                             up = up + "<div class=\"col-sm-2\"><span></span></div>";
@@ -231,12 +226,66 @@
                                 }
                             }
                         }
-
+                        else if(columns==6){
+                            for(idx1=0; idx1<3; idx1++){
+                                if(bus_layout[idx][idx1].localeCompare("_")){
+                                    up = up + "<div class=\"col-sm-2\">" +
+                                        "  <span><i class=\"fas fa-couch fa-2x\" " ;
+                                    if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                        up = up + "style = 'color: forestgreen;'>";
+                                    else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                        up = up + "style='color: #33D1FF;'>" ;
+                                    else
+                                        up = up + "style = 'color: black;'>";
+                                    up = up + "</i></span></div>";
+                                }
+                            }
+                            for(idx1=3; idx1<6; idx1++){
+                                if(bus_layout[idx][idx1].localeCompare("_")){
+                                    up = up + "<div class=\"col-sm-2\">" +
+                                        "  <span><i class=\"fas fa-couch fa-2x\" " ;
+                                    if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                        up = up + "style = 'color: forestgreen;'>";
+                                    else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                        up = up + "style = 'color: #33D1FF;'>";
+                                    else
+                                        up = up + "style = 'color: black;'>";
+                                    up = up + "</i></span></div>";
+                                }
+                            }
+                        }
+                        else if(columns==2){
+                            for(idx1=0; idx1<3; idx1++){
+                                if(bus_layout[idx][idx1].localeCompare("_")){
+                                    up = up + "<div class=\"col-sm-4\">" +
+                                        "  <span><i class=\"fas fa-couch fa-2x\" " ;
+                                    if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                        up = up + "style = 'color: forestgreen;'>";
+                                    else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                        up = up + "style='color: #33D1FF;'>" ;
+                                    else
+                                        up = up + "style = 'color: black;'>";
+                                    up = up + "</i></span></div>";
+                                }
+                            }
+                            up = up + "<div class=\"col-sm-2\"><span></span></div>";
+                            for(idx1=3; idx1<6; idx1++){
+                                if(bus_layout[idx][idx1].localeCompare("_")){
+                                    up = up + "<div class=\"col-sm-4\">" +
+                                        "  <span><i class=\"fas fa-couch fa-2x\" " ;
+                                    if(bus_layout[idx][idx1].localeCompare("Economy")==0)
+                                        up = up + "style = 'color: forestgreen;'>";
+                                    else if(bus_layout[idx][idx1].localeCompare("Business")==0)
+                                        up = up + "style = 'color: #33D1FF;'>";
+                                    else
+                                        up = up + "style = 'color: black;'>";
+                                    up = up + "</i></span></div>";
+                                }
+                            }
+                        }
                         up = up + "</div>";
                     }
-
                     right.innerHTML = up;
-
                     document.getElementById("preview-container").style.display = "block";
                 },
                 error:function(){
@@ -244,28 +293,34 @@
                 }
             });
         }
-
         function cancel_preview() {
             document.getElementById("preview-container").style.display = "none";
         }
         function editBus(idx,id) {
             var tr_id = document.getElementById("edit-bus-"+id);
-            var tr_val = document.getElementById("busTable").rows[idx].cells;
-            //alert();
+            var tr_val = document.getElementById("bus-"+idx).cells;
+            //alert(tr_val[0].innerHTML);
+            //var tr_val = document.getElementById("busTable").rows[idx].cells;
             if(tr_id){
-
             }
             else{
-
                 var div = document.createElement("div");
                 div.setAttribute("id","edit-bus-container");
-                var username = <?php echo json_encode(Session::get('rep-username')); ?>
-
-                div.innerHTML = "<form method=\"post\" action='../representative-edit-buses/"+username+"/"+id+"'>" +
-                        "<input name=\"_token\" value=\"{{ csrf_token() }}\" type=\"hidden\">" +
+                var username = '';
+                jQuery.ajax({
+                    type:'GET',
+                    url:'../get-username',
+                    data:'',
+                    async:false,
+                    success:function (data) {
+                        username=data;
+                    }
+                });
+                    div.innerHTML = "<form method=\"post\" action='../representative-edit-buses/"+username+"/"+id+"'>" +
+                    "<input name=\"_token\" value=\"{{ csrf_token() }}\" type=\"hidden\">" +
                     "<div class='row'>" +
                     "<div class='col-md-6 col-md-offset-3'>" +
-                        "\n" +
+                    "\n" +
                     "            <div class=\"panel panel-default\">\n" +
                     "                <div class=\"panel-heading\">Edit Bus Info</div>\n" +
                     "\n" +
@@ -275,7 +330,7 @@
                     "\n" +
                     "                            <div class=\"col-md-6\">\n" +
                     "                                <select id=\"type\" class=\"form-control\" name=\"type\">\n" +
-                    "   <option>"+ tr_val[2].innerText+"</option>\n" +
+                    "   <option>"+ tr_val[2].innerHTML+"</option>\n" +
                     "                                    <option>AC</option>\n" +
                     "                                    <option>non-AC</option>\n" +
                     "                                </select>\n" +
@@ -321,8 +376,8 @@
                     "                            <label for=\"status\" class=\"col-md-4 control-label\" style=\"padding-top: 10px;\">Status</label>\n" +
                     "\n" +
                     "                            <div class=\"col-md-6\" style=\"padding-top: 10px;\">\n" +
-                                                    "<select id=\"status\" class=\"form-control\" name=\"status\">\n" +
-                    "                                    <option>"+tr_val[4].innerText+"</option>\n" +
+                    "<select id=\"status\" class=\"form-control\" name=\"status\">\n" +
+                    "                                    <option>"+tr_val[4].innerHTML+"</option>\n" +
                     "                                    <option>available</option>\n" +
                     "                                    <option>blocked</option>\n" +
                     "                                    <option>abandoned</option>\n" +
@@ -343,22 +398,18 @@
                     "</div>" +
                     "</div>" +
                     "</div>" +
-                "</div>" +
-                "</div></form>";
-
+                    "</div>" +
+                    "</div></form>";
                 var tr=document.createElement("tr"); // row id -- a-row-i, p-row-i
                 tr.setAttribute("id","edit-bus-"+id);
                 tr.style.textAlign="center";
-
                 var td=document.createElement("td");
                 td.colSpan=7;
-
                 td.appendChild(div);
                 tr.appendChild(td);
                 jQuery("table #bus-"+idx).after(tr);
             }
         }
-
         function cancel_edit(id) {
             var div = document.getElementById("edit-bus-"+id);
             div.parentNode.removeChild(div);
@@ -398,14 +449,14 @@
             </div>
         </nav>
     </div>
-<div id="t"></div>
+    <div id="t"></div>
     <div class="container" style="min-height: 500px;">
 
         <div id="search-option-container">
             <div class="row">
                 <form method="post" action="../representative-buses-with-filter/{{
                     \Illuminate\Support\Facades\Session::get('rep-username')}}">
-                        {{csrf_field()}}
+                    {{csrf_field()}}
                     <div class="col-sm-2">
                         <div class="form-group">
                             <span class="form-label">Type</span>
@@ -487,19 +538,19 @@
                     @php $idx=1 @endphp
                     @foreach($buses as $datarow)
                         <tr id="bus-{{$idx}}">
-                        @php $i=1 @endphp
-                        @foreach($datarow as $data)
-                            @if($i==6)
-                                <td><button type="button" class="btn btn-default" onclick="showLayout({{$idx}},{{$data}})">
-                                        View </button></td>
-                            @elseif($i==7)
-                                <td><button type="button" class="btn btn-default" onclick="editBus({{$idx}},{{$data}})">
-                                        Edit </button></td>
-                            @else
-                                <td>{{$data}}</td>
-                            @endif
-                            @php $i=1+$i @endphp
-                        @endforeach
+                            @php $i=1 @endphp
+                            @foreach($datarow as $data)
+                                @if($i==6)
+                                    <td><button type="button" class="btn btn-default" onclick="showLayout({{$idx}},{{$data}})">
+                                            View </button></td>
+                                @elseif($i==7)
+                                    <td><button type="button" class="btn btn-default" onclick="editBus({{$idx}},{{$data}})">
+                                            Edit </button></td>
+                                @else
+                                    <td>{{$data}}</td>
+                                @endif
+                                @php $i=1+$i @endphp
+                            @endforeach
                         </tr>
                         @php $idx=1+$idx @endphp
                     @endforeach

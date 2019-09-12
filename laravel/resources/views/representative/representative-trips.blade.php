@@ -65,7 +65,7 @@
 
             function editTrip(idx,id) {
                 var tr_id = document.getElementById("edit-trip-"+id);
-                var tr_val = document.getElementById("myTable").rows[idx].cells;
+                var tr_val = document.getElementById("trip-"+id).cells;
                 //alert();
                 if(tr_id){
 
