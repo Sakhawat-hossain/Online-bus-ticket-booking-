@@ -418,7 +418,7 @@ class BusSearchController extends Controller
         $method=$request->get('payment-method');
 
         $data=DB::table('payments')->where('trxID',$trxID)->value('id');
-/*
+
         if($data != ''){
             //return redirect()->back();
             //$trxError='Already accepted, try with your new trxID';
@@ -452,7 +452,7 @@ class BusSearchController extends Controller
             $ticket->save();
 
             $cdata=DB::table('tickets')->where('paymentID',$data)->value('id');
-             DB::table('seats')->where('ticketID',$userID)
+             DB::table('seats')->where('ticketID',$userID)->where('tripID',$tripID)
                                 ->where('status','selected')
                                 ->update(['status' => 'booked', 'ticketID' => $cdata]);
 
@@ -477,7 +477,7 @@ class BusSearchController extends Controller
 
         //return $this->send_from($id,$tripID,$userID);
 
-*/
+
 //showing ticket
 
         return redirect('payment-info/'.$data);
