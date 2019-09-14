@@ -68,7 +68,7 @@
                         @php $username=Session::get('agent-username');@endphp
                         <li><a href="{{url('agent/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
                                     {{\Illuminate\Support\Facades\Session::get('agent-username')}}</span></a> </li>
-                        <li><a href="agentLogout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        <li><a href="agent-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
 
                     @else
                         <li><a href="agent-sign-in"><span class="glyphicon glyphicon-user"></span> Sign in</a></li>

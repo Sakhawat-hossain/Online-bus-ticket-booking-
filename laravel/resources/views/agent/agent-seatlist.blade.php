@@ -31,7 +31,7 @@
 
         var total_selected=0;
         var charge=0;
-        var unit_charge=50;
+        var unit_charge=0;
         var total_price=0;
 
 
@@ -249,10 +249,10 @@
 
         function initialization() {
 
-            document.getElementById("t").innerText = 'hello-2';
+            //document.getElementById("t").innerText = 'hello-2';
             layout = seat_arr.layout;
             if(layout)
-                document.getElementById("t").innerText = 'hello-3';
+               // document.getElementById("t").innerText = 'hello-3';
             //document.getElementById("pp").innerHTML=username+tripID;
             var decker_num = layout['decker'];
             var rows = layout['rows'];
@@ -273,7 +273,7 @@
             var pos=0;
             var idx,idx1;
             if(username){
-                document.getElementById("t").innerText = 'hello';
+                //document.getElementById("t").innerText = 'hello';
                 for(idx=0; idx<rows; idx++){
                     up = up  + "<div id=\"seat-view-group\">";
                     if(columns==4){
@@ -531,6 +531,28 @@
             }
 
         }
+        
+        function getNameGender() {
+            var val = document.getElementById("phone_no").value;
+           // alert(val);
+            jQuery.ajax({
+                type:'GET',
+                url:'../get-name-gender/'+val,
+                data:'',
+                success:function (data) {
+                    document.getElementById("fullname").value = data['name'];
+                    var gender = document.getElementById("gender");
+                    if(data['gender']=='female'){
+                        gender.innerHTML = "<option>male</option>\n" +
+                            "<option selected>female</option>";
+                    }
+                    else{
+                        gender.innerHTML = "<option  selected>male</option>\n" +
+                            "<option>female</option>";
+                    }
+                }
+            });
+        }
 
 
     </script>
@@ -644,7 +666,7 @@
                                                 <div class="col-sm-10 col-sm-offset-1">
                                                     <div class="form-group">
                                                         <span class="form-label">Mobile No</span>
-                                                        <input class="form-control" name="phone_no" value="" required>
+                                                        <input class="form-control" name="phone_no" id="phone_no" oninput="getNameGender()" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -652,7 +674,7 @@
                                                 <div class="col-sm-10 col-sm-offset-1">
                                                     <div class="form-group">
                                                         <span class="form-label">Name</span>
-                                                        <input class="form-control" name="fullname" value="" required>
+                                                        <input class="form-control" name="fullname" id="fullname" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -660,7 +682,7 @@
                                                 <div class="col-sm-10 col-sm-offset-1">
                                                     <div class="form-group">
                                                         <span class="form-label">Gender</span>
-                                                        <select class="form-control" name="gender">
+                                                        <select class="form-control" name="gender" id="gender">
                                                             <option>male</option>
                                                             <option>female</option>
                                                         </select>

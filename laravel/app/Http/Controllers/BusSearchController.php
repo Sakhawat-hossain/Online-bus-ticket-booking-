@@ -718,8 +718,6 @@ class BusSearchController extends Controller
 
     public function agent_booking(Request $request,$id,$tripID){
 
-
-
         $first_name=$last_name=$phn=$gender=$email=$userID=$age="";
 
         $userdata=(object)array(
@@ -738,9 +736,7 @@ class BusSearchController extends Controller
                 'gender' => $request->get('gender'),
             ]);
             $user->save();
-        }
-        else{
-            $userID=DB::table('users')->where('phone no',$request->get('phone_no'))->value('id');
+            $userID = $user->id;
         }
 
         $seats=DB::table('seats')->where('seats.ticketID',$agentID)->where('seats.status','selected')
@@ -811,6 +807,7 @@ class BusSearchController extends Controller
             ]);
 
             $ticket->save();
+            $ticketID = $ticket->id;
 
             $aseat=DB::table('trips')->where('trips.id',$tripID)->join('buses','trips.busID','buses.id')
                 ->select('available_seat','trips.busID')->get();
@@ -823,20 +820,23 @@ class BusSearchController extends Controller
                     $j++;
                 }
             }
-            $tseat = $tseat - 1;
+
+            $tl = DB::table('seats')->where('ticketID',$agentID)->where('tripID',$tripID)->get();
+            $tc = count($tl);
+            $tseat = $tseat - $tc;
            // echo $tseat;
             DB::table('buses')->where('id',$busID)->update(['available_seat' => $tseat]);
-            return $this->send_from($id,$tripID,$userID);
+            return $this->send_from($id,$tripID,$userID,$ticketID);
 
             //return redirect('agent-confirm-ticket',['id'=>$id,'tripID'=>$tripID,'userID'=>$userID]);
     }
 
-    public function send_from($id,$tripID,$userID){
+    public function send_from($id,$tripID,$userID,$ticketID){
 
         $agentID=DB::table('agents')->where('username',$id)->value('id');
 
-        $cdata=DB::table('tickets')->where('userID',$userID)->where('agentID',$agentID)->value('id');
-        DB::table('seats')->where('ticketID',$agentID)
+        $cdata=$ticketID;//DB::table('tickets')->where('userID',$userID)->where('agentID',$agentID)->value('id');
+        DB::table('seats')->where('ticketID',$agentID)->where('tripID',$tripID)
             ->where('status','selected')
             ->update(['status' => 'booked', 'ticketID' => $cdata]);
         //}

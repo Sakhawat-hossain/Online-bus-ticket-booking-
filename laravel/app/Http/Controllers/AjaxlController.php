@@ -91,4 +91,24 @@ class AjaxlController extends Controller
 
         return response()->json($data,200);
     }
+
+    public function getNameGender($id){
+        $data = DB::table('users')->where('phone no',$id)->select('first_name','last_name','gender')->get();
+
+        $name=$gender='';
+        foreach ($data as $dd){
+            $j=0;
+            foreach ($dd as $d){
+                if($j==0) $name = $d;
+                elseif ($j==1) $name = $name.' '.$d;
+                else $gender = $d;
+                $j++;
+            }
+        }
+        $ng = collect();
+        $ng['name'] = $name;
+        $ng['gender'] = $gender;
+
+        return response()->json($ng,200);
+    }
 }

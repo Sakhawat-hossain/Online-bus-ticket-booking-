@@ -114,6 +114,7 @@ Route::get('/get-seat-list/{id}','AjaxlController@getSeatList'); // get seat lis
 Route::get('/get-bus-layout/{id}','AjaxlController@getBusLayout'); // get bus layout to show in rep. bus list
 Route::get('/get-username','AjaxlController@getUsername'); // get session value
 
+Route::get('/get-name-gender/{id}','AjaxlController@getNameGender'); // get name gender of user
 //update-ticket-status/active/'+id+"/"+empID
 Route::get('/update-ticket-status/{active}/{id}/{empID}','AjaxlController@updateTicketStatus'); // update ticket status - active
 

@@ -40,10 +40,10 @@
                         @php $username=Session::get('agent-username');@endphp
                         <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
                                     {{\Illuminate\Support\Facades\Session::get('agent-username')}}</span></a> </li>
-                        <li><a href="../../../logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        <li><a href="../../../agent-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else
                         <li><a href="agent/create"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                        <li><a href="../../agent-sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                        <li><a href="../../../agent-sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
                     @endif
                 </ul>
             </div>
@@ -104,7 +104,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">Seat Fare : {{$ticketInfo->get('total')}}</div>
-                            <div class="col-sm-6">Total : {{$ticketInfo->get('sc')}}</div>
+                            <div class="col-sm-6">Total : {{$ticketInfo->get('total')}}</div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">Boarding point :  {{$ticketInfo->get('ticket')->boarding_point}}  </div>
@@ -158,7 +158,7 @@
                             <div class="col-sm-12">Seat Fare : {{$ticketInfo->get('total')}}</div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">Total : {{$ticketInfo->get('sc')}}</div>
+                            <div class="col-sm-12">Total : {{$ticketInfo->get('total')}}</div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -209,7 +209,7 @@
                             <div class="col-sm-12">Seat Fare : {{$ticketInfo->get('total')}}</div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">Total : {{$ticketInfo->get('sc')}}</div>
+                            <div class="col-sm-12">Total : {{$ticketInfo->get('total')}}</div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
