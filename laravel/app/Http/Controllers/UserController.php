@@ -153,7 +153,8 @@ class UserController extends Controller
             ->join('buses','trips.busID', '=', 'buses.id')
             ->join('routes','trips.routeID', '=', 'routes.id')
             ->where('tickets.status','active')
-            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.id','payments.payment_gateway')
+            ->orWhere('tickets.status','cancelling')
+            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.status','tickets.id')
             ->groupBy('tickets.id')->get();
 
         $ticketprev=DB::table('tickets')
@@ -166,12 +167,34 @@ class UserController extends Controller
             ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.id')
             ->groupBy('tickets.id')->get();
 
+        $ticketpending=DB::table('tickets')
+            ->where('userID',$userID)
+            ->join('seats','seats.ticketID', '=', 'tickets.id')
+            ->join('trips','seats.tripID', '=', 'trips.id')
+            ->join('buses','trips.busID', '=', 'buses.id')
+            ->join('routes','trips.routeID', '=', 'routes.id')
+            ->where('tickets.status','pending')
+            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.id')
+            ->groupBy('tickets.id')->get();
+
+        $ticketcancelled=DB::table('tickets')
+            ->where('userID',$userID)
+            ->join('seats','seats.ticketID', '=', 'tickets.id')
+            ->join('trips','seats.tripID', '=', 'trips.id')
+            ->join('buses','trips.busID', '=', 'buses.id')
+            ->join('routes','trips.routeID', '=', 'routes.id')
+            ->where('tickets.status','cancelled')
+            ->select('routes.from', 'routes.to','trips.date','buses.name','buses.type','tickets.booking_time','tickets.id')
+            ->groupBy('tickets.id')->get();
+
         $ticketNum=DB::table('tickets')
             ->where('userID',$userID)->count();
 
         $ticketInfo=collect();
         $ticketInfo->put('active',$ticketactive);
         $ticketInfo->put('previous',$ticketprev);
+        $ticketInfo->put('pending',$ticketpending);
+        $ticketInfo->put('cancelled',$ticketcancelled);
 
 
         return view('user.profile')->with('userdata',$userdata)->with('ticketInfo',$ticketInfo)->with('ticketNum',$ticketNum);

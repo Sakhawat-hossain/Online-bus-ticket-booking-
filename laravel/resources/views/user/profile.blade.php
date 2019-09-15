@@ -35,10 +35,6 @@
             }
         }
 
-        function removeActive(id) {
-            var element=document.getElementById("seats-"+id);
-            element.remove();
-        }
         function showSeat(id,i) {
 
             var chk=document.getElementById("seats-"+id);
@@ -64,7 +60,7 @@
                     success:function(data)
                     {
                         var len=data.length;
-                        document.getElementById("pp").innerHTML=len;
+                       // document.getElementById("pp").innerHTML=len;
                         for(var j=0;j<len;j++){
                             p=document.createElement("p");
                             txt=document.createTextNode("Seat No : "+data[j].seatNo+", Category : "
@@ -84,26 +80,20 @@
 
                 td.appendChild(btn);
                 tr.appendChild(td);
-                jQuery("table #a-row-"+i).after(tr);
+                jQuery("table #active-row-"+i).after(tr);
             }
 
         }
-
-        function removePrev(id) {
-
-            var element=document.getElementById("pseats-"+id);
-            element.remove();
-        }
         function showSeatPrev(id,i) {
 
-            var chk=document.getElementById("pseats-"+id);
+            var chk=document.getElementById("prev-seats-"+id);
 
             if(chk){
 
             }
             else{
                 var tr=document.createElement("tr"); // row id -- a-row-i, p-row-i
-                tr.setAttribute("id","pseats-"+id);
+                tr.setAttribute("id","prev-seats-"+id);
                 tr.style.textAlign="center";
 
                 var td=document.createElement("td");
@@ -139,9 +129,150 @@
 
                 td.appendChild(btn);
                 tr.appendChild(td);
-                jQuery("table #p-row-"+i).after(tr);
+                jQuery("table #previous-row-"+i).after(tr);
             }
 
+        }
+        function showSeatPending(id,i) {
+
+            var chk=document.getElementById("pending-seats-"+id);
+
+            if(chk){
+
+            }
+            else{
+                var tr=document.createElement("tr"); // row id -- a-row-i, p-row-i
+                tr.setAttribute("id","pending-seats-"+id);
+                tr.style.textAlign="center";
+
+                var td=document.createElement("td");
+                td.colSpan=8;
+                var p;//=document.createElement("p");
+                var txt;//=document.createTextNode("Seat No : A1, Class : Business, Fare : 500 Tk");
+
+                jQuery.ajax({
+                    type:'GET',
+                    url:'../get-seat-list/'+id,
+                    data:'',
+                    async: false,
+                    success:function(data)
+                    {
+                        var len=data.length;
+                        //document.getElementById("pp").innerHTML=len;
+                        for(var j=0;j<len;j++){
+                            p=document.createElement("p");
+                            txt=document.createTextNode("Seat No : "+data[j].seatNo+", Category : "
+                                +data[j].category+", Fare : " +data[j].fare+" Tk");
+                            p.appendChild(txt);
+                            td.appendChild(p);
+                        }
+
+                    }
+                });
+
+                var btn=document.createElement("button");
+                btn.setAttribute("class","btn btn-default");
+                btn.setAttribute("onclick","removePending("+id+")");
+                txt=document.createTextNode("Hide");
+                btn.appendChild(txt);
+
+                td.appendChild(btn);
+                tr.appendChild(td);
+                jQuery("table #pending-row-"+i).after(tr);
+            }
+
+        }
+        function showSeatCancelled(id,i) {
+
+            var chk=document.getElementById("cancelled-seats-"+id);
+
+            if(chk){
+
+            }
+            else{
+                var tr=document.createElement("tr"); // row id -- a-row-i, p-row-i
+                tr.setAttribute("id","cancelled-seats-"+id);
+                tr.style.textAlign="center";
+
+                var td=document.createElement("td");
+                td.colSpan=8;
+                var p;//=document.createElement("p");
+                var txt;//=document.createTextNode("Seat No : A1, Class : Business, Fare : 500 Tk");
+
+                jQuery.ajax({
+                    type:'GET',
+                    url:'../get-seat-list/'+id,
+                    data:'',
+                    async: false,
+                    success:function(data)
+                    {
+                        var len=data.length;
+                        //document.getElementById("pp").innerHTML=len;
+                        for(var j=0;j<len;j++){
+                            p=document.createElement("p");
+                            txt=document.createTextNode("Seat No : "+data[j].seatNo+", Category : "
+                                +data[j].category+", Fare : " +data[j].fare+" Tk");
+                            p.appendChild(txt);
+                            td.appendChild(p);
+                        }
+
+                    }
+                });
+
+                var btn=document.createElement("button");
+                btn.setAttribute("class","btn btn-default");
+                btn.setAttribute("onclick","removePending("+id+")");
+                txt=document.createTextNode("Hide");
+                btn.appendChild(txt);
+
+                td.appendChild(btn);
+                tr.appendChild(td);
+                jQuery("table #cancelled-row-"+i).after(tr);
+            }
+
+        }
+
+        function removeActive(id) {
+            var element=document.getElementById("seats-"+id);
+            element.remove();
+        }
+        function removePrev(id) {
+
+            var element=document.getElementById("prev-seats-"+id);
+            element.remove();
+        }
+        function removePending(id) {
+
+            var element=document.getElementById("pending-seats-"+id);
+            element.remove();
+        }
+
+        function ticketList(type) {
+            if(type.localeCompare('active')==0){
+                jQuery("#active-tickets").show();
+                jQuery("#previous-tickets").hide();
+                jQuery("#pending-tickets").hide();
+                jQuery("#cancelled-tickets").hide();
+            }
+            else if(type.localeCompare('previous')==0){
+                jQuery("#active-tickets").hide();
+                jQuery("#previous-tickets").show();
+                jQuery("#pending-tickets").hide();
+                jQuery("#cancelled-tickets").hide();
+            }
+            else if(type.localeCompare('pending')==0){
+                jQuery("#active-tickets").hide();
+                jQuery("#previous-tickets").hide();
+                jQuery("#pending-tickets").show();
+                jQuery("#cancelled-tickets").hide();
+            }
+            else if(type.localeCompare('cancelled')==0){
+                jQuery("#active-tickets").hide();
+                jQuery("#previous-tickets").hide()
+                jQuery("#pending-tickets").hide();
+                jQuery("#cancelled-tickets").show();
+
+            }
         }
 
         function activeTickets() {
@@ -251,60 +382,81 @@
                 </div>
 
                 <div class="tab-pane" id="tickets">
+
+                    <ul class="nav nav-tabs" id="myTab-ticket" style="margin-top: 20px;">
+                        <li class="active" onclick="ticketList('active')"><a href="#" data-toggle="tab">Active</a></li>
+                        <li onclick="ticketList('previous')"><a href="#" data-toggle="tab">Previous</a></li>
+                        <li onclick="ticketList('pending')"><a href="#" data-toggle="tab">Pending</a></li>
+                        <li onclick="ticketList('cancelled')"><a href="#" data-toggle="tab">Cancelled</a></li>
+                    </ul>
+
+                    <!--div class="tab-content">
+                        <div class="tab-pane" id="active-t"-->
                     <div class="table-responsive"   id="active-tickets">
                         <h3 style="text-align: center;margin-top: 10px;">Active Tickets</h3>
                         <hr>
                         <table class="table table-hover">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>From</th>
-                                    <th>To</th>
-                                    <th>Departure Date</th>
-                                    <th>Bus</th>
-                                    <th>Type</th>
-                                    <th>Booking Date </th>
-                                    <th>Seats</th>
-                                    <th>Gateway</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Departure Date</th>
+                                <th>Bus</th>
+                                <th>Type</th>
+                                <th>Booking Date </th>
+                                <th>Seats</th>
+                                <th></th>
+                            </tr>
                             </thead>
 
                             <tbody>
-                            @php $i=1; @endphp
+                            @php $i=1; $flag=0;@endphp
                             @if(isset($ticketInfo))
                                 @foreach($ticketInfo->get('active') as $tdata)
                                     @php $j=1; $temp=0;@endphp
-                                    <tr id="a-row-{{$i}}"><td>{{$i}}</td>
-                                    @foreach($tdata as $td)
-                                        @if($j==7)
-                                            <td><button class="btn btn-success" onclick="showSeat({{$td}},{{$i}})" >Show</button></td>
-                                            <td><a href="../cancel-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$td}}">
-                                                <button class="btn btn-warning">Cancel</button>
-                                                </a></td>
+                                    <tr id="active-row-{{$i}}"><td>{{$i}}</td>
+                                        @foreach($tdata as $td)
+                                            @if($j==7)
+                                                @if($td=='cancelling')
+                                                    @php $flag=1; @endphp
+                                                @else
+                                                    @php $flag=0; @endphp
+                                                @endif
+                                            @elseif($j==8)
+                                                @if($flag==0)
+                                                <td><button class="btn btn-success" onclick="showSeat({{$td}},{{$i}})" >Show</button></td>
+                                                <td><a href="../cancel-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$td}}">
+                                                        <button class="btn btn-warning">Cancel</button>
+                                                    </a></td>
                                                 <td><a href="../show-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$td}}">
-                                                 <button class="btn btn-primary">Print</button>
-                                             </a></td>
-
-                                    </tr>
-                                    <!--div id="test" style="border: 1px solid black">
-                                        <tr style="text-align: center;"><td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
-                                          <tr style="text-align: center;">  <td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
-                                    </div-->
-                                        @else
-                                            <td>{{$td}}</td>
-                                        @endif
+                                                        <button class="btn btn-primary">Print</button>
+                                                    </a></td>
+                                                @else
+                                                    <td><button class="btn btn-success" onclick="showSeat({{$td}},{{$i}})" >Show</button></td>
+                                                    <td>
+                                                        <button class="btn btn-warning"
+                                                                style="background-color: grey;padding-left: 3px;padding-right: 3px;">
+                                                                Cancelling</button></td>
+                                                    <td>
+                                                            <button class="btn btn-primary" style="background-color: grey;">Print</button>
+                                                        </td> <!-- #847EE1; #F3B98C -->
+                                                @endif
+                                            @else
+                                                <td>{{$td}}</td>
+                                            @endif
                                             @php $j=$j+1; @endphp
-                                    @endforeach
-                                    @php $i=1+$i; @endphp
+                                        @endforeach
+                                    </tr>
+                                @php $i=1+$i; @endphp
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
                         <hr>
-                        <button class="btn btn-default" onclick="previousTickets()">Previous tickets</button>
                     </div>
-
+                        <!--/div>
+                        <div class="tab-pane" id="previous"-->
                     <div class="table-responsive"   id="previous-tickets" hidden>
                         <h3 style="text-align: center;margin-top: 10px;">Previous Tickets</h3>
                         <hr>
@@ -327,7 +479,7 @@
                             @if(isset($ticketInfo))
                                 @foreach($ticketInfo->get('previous') as $tdata)
                                     @php $j=1; $temp=0;@endphp
-                                    <tr id="p-row-{{$i}}"><td>{{$i}}</td>
+                                    <tr id="previous-row-{{$i}}"><td>{{$i}}</td>
                                         @foreach($tdata as $td)
                                             @if($j==7)
                                                 <td><button class="btn btn-success" onclick="showSeatPrev({{$td}},{{$i}})" >Show</button></td>
@@ -347,8 +499,98 @@
                             </tbody>
                         </table>
                         <hr>
-                        <button class="btn btn-default" onclick="activeTickets()">Active tickets</button>
                     </div>
+                        <!--/div>
+                    </div-->
+
+                    <div class="table-responsive"   id="pending-tickets" hidden>
+                        <h3 style="text-align: center;margin-top: 10px;">Pending Tickets</h3>
+                        <hr>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Departure Date</th>
+                                <th>Bus</th>
+                                <th>Type</th>
+                                <th>Booking Date </th>
+                                <th>Seats</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            @php $i=1; @endphp
+                            @if(isset($ticketInfo))
+                                @foreach($ticketInfo->get('pending') as $tdata)
+                                    @php $j=1; $temp=0;@endphp
+                                    <tr id="pending-row-{{$i}}"><td>{{$i}}</td>
+                                        @foreach($tdata as $td)
+                                            @if($j==7)
+                                                <td><button class="btn btn-success" onclick="showSeatPending({{$td}},{{$i}})" >Show</button></td>
+                                    </tr>
+                                    <!--div id="test" style="border: 1px solid black">
+                                        <tr style="text-align: center;"><td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
+                                          <tr style="text-align: center;">  <td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
+                                    </div-->
+                                    @else
+                                        <td>{{$td}}</td>
+                                    @endif
+                                    @php $j=$j+1; @endphp
+                                @endforeach
+                                @php $i=1+$i; @endphp
+                                @endforeach
+                            @endif
+                            </tbody>
+                        </table>
+                        <hr>
+                    </div>
+
+                    <div class="table-responsive"   id="cancelled-tickets" hidden>
+                        <h3 style="text-align: center;margin-top: 10px;">Cancelled Tickets</h3>
+                        <hr>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Departure Date</th>
+                                <th>Bus</th>
+                                <th>Type</th>
+                                <th>Booking Date </th>
+                                <th>Seats</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            @php $i=1; @endphp
+                            @if(isset($ticketInfo))
+                                @foreach($ticketInfo->get('cancelled') as $tdata)
+                                    @php $j=1; $temp=0;@endphp
+                                    <tr id="cancelled-row-{{$i}}"><td>{{$i}}</td>
+                                        @foreach($tdata as $td)
+                                            @if($j==7)
+                                                <td><button class="btn btn-success" onclick="showSeatCancelled({{$td}},{{$i}})" >Show</button></td>
+                                    </tr>
+                                    <!--div id="test" style="border: 1px solid black">
+                                        <tr style="text-align: center;"><td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
+                                          <tr style="text-align: center;">  <td colspan="8"><p>Seat no : A1 Category : Business class</p></td></tr>
+                                    </div-->
+                                    @else
+                                        <td>{{$td}}</td>
+                                    @endif
+                                    @php $j=$j+1; @endphp
+                                @endforeach
+                                @php $i=1+$i; @endphp
+                                @endforeach
+                            @endif
+                            </tbody>
+                        </table>
+                        <hr>
+                    </div>
+
                     <!--/table-resp-->
 
                 </div>
