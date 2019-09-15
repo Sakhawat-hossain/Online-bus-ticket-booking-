@@ -30,7 +30,9 @@ class AgentController extends Controller
     public function create()
     {
         //
-        return view('agent.agent-register');
+        $buses = DB::table('buses')->distinct()->select('name')->get();
+
+        return view('agent.agent-register')->with('buses',$buses);
     }
 
     /**
@@ -52,6 +54,7 @@ class AgentController extends Controller
             'location' => 'required|string|max:255',
             'thana' => 'required|string|max:255',
             'district' => 'required|string|max:255',
+            'enterprise' => 'required|string|min:2',
         ]);
 
         $adminInfos=new Admin_infos([
@@ -62,16 +65,14 @@ class AgentController extends Controller
         ]);
         $adminInfos->save();
 
-        $addressId=DB::table('addresses')->count();
-        $addressId = $addressId+1;
         $address=new Address([
-            'id' => $addressId,
             'name' => $request->get('location'),
             'thana' => $request->get('thana'),
             'district' => $request->get('district'),
             'house_road' => $request->get('h-r'),
         ]);
         $address->save();
+        $addressId = $address->id;
 
         $agentId=DB::table('admin_infos')->where('email',$request->get('email'))
             ->where('phone_no',$request->get('phone_no'))->value('id');
@@ -80,6 +81,7 @@ class AgentController extends Controller
         $agent=new Agent([
             'username' => $request->get('username'),
             'password' => $password,
+            'enterprise' => $request->get('enterprise'),
             'addressID' => $addressId,
             'admin_infoID' => $agentId,
         ]);

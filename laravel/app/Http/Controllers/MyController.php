@@ -174,11 +174,11 @@ class MyController extends Controller
 
     }
     public function agentLogout(){
-        Session::forget('username');
-        Session::forget('userID');
+        Session::forget('agent-username');
+        Session::forget('agentID');
         //return redirect()->route('/');
         //Auth::logout();
-        return view('user.login');
+        return view('agent.agent-login');
     }
     public function agentRegister()
     {

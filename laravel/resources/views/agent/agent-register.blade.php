@@ -73,8 +73,8 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if(\Illuminate\Support\Facades\Session::has('username'))
-                        <li><a href="profile"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
-                        <li><a href="../logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+                        <li><a href="agent-profile"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>{{\Illuminate\Support\Facades\Session::get('username')}}</span></a> </li>
+                        <li><a href="../agent-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else
                         <li><a href="../agent-sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
                     @endif
@@ -143,6 +143,27 @@
                                     @if ($errors->has('phone_no'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('phone_no') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('enterprise') ? ' has-error' : '' }}">
+                                <label for="enterprise" class="col-md-4 control-label">Enterprise Name</label>
+
+                                <div class="col-md-6">
+                                    <select id="enterprise" name="enterprise" class="form-control">
+                                        @if(isset($buses))
+                                            @foreach($buses as $bus)
+                                                @foreach($bus as $b)
+                                                    <option>{{$b}}</option>
+                                                @endforeach
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('enterprise'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('enterprise') }}</strong>
                                     </span>
                                     @endif
                                 </div>

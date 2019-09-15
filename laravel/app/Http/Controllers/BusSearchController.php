@@ -516,9 +516,8 @@ class BusSearchController extends Controller
 
         $username=$request->get('username');
         $bus_name=DB::table('agents')
-                    ->where('agents.username',$username)
-                    ->join('admins','agents.adminID','admins.id')
-                    ->value('admins.enterprise');
+                    ->where('username',$username)
+                    ->value('enterprise');
 
        // echo $bus_name;
 
