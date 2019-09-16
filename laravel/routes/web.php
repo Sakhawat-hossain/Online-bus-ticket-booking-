@@ -158,10 +158,10 @@ Route::get('/admin-home-nnnnnnn', function () {
     return view('admin.New folder.index');
 });
 
-Route::get('/customers_view', function () {
+Route::get('/customers_view-mm', function () {
     return view('admin.customers_view');
 });
 
-Route::get('/bookings_view', function (Request $request,$id,$tripID) {
+Route::get('/bookings_view-mm', function (Request $request,$id,$tripID) {
     return view('admin.bookings_view');
 });

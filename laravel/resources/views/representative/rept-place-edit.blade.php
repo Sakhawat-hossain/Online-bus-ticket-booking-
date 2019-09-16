@@ -124,14 +124,14 @@
                             <i class="fa fa-check-circle"></i> Availability</a>
                     </li>
                     <li>
-                        <a href="../representative-routes/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                        <a href="../routes_view">
                             <i class="fa fa-road"></i> Routes</a>
                     </li>
                     <li>
                         <a href="../representative-trips/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                             <i class="fa fa-road"></i> Trips</a>
                     </li>
-                    <li>
+                    <li style="background-color: forestgreen; margin-right: -10px;">
                         <a href="../representative-places">
                             <i class="fa fa-map-marker"></i>Places</a>
                     </li>
