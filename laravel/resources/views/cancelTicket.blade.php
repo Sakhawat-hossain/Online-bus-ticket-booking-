@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../../css/ticket-style.css">
-    <link rel="stylesheet" href="../../css/header-design.css">
-    <link rel="stylesheet" href="../../css/footer-design.css">
+    <link rel="stylesheet" href="../css/ticket-style.css">
+    <link rel="stylesheet" href="../css/header-design.css">
+    <link rel="stylesheet" href="../css/footer-design.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -30,8 +30,16 @@
             background-color: whitesmoke;
             padding-top: 15px;
             padding-left: 50px;
+            border-radius: 15px;
         }
         #cancel-form input{
+            width: 300px;
+            height: 35px;
+            margin-top: 15px;
+            margin-left: 10px;
+            padding-left: 15px;
+        }
+        #cancel-form select{
             width: 300px;
             height: 35px;
             margin-top: 15px;
@@ -81,18 +89,36 @@
         <h2 style="text-align: center;">Ticket Cancellation</h2>
         <div id="cancel-mgs">
             <lu>
-                <li><a href="../../cancel-refund-policy">Read cancel and refund policy carefully before cancel ticket</a> </li>
+                <li><a href="../cancel-refund-policy">Read cancel and refund policy carefully before cancel ticket</a> </li>
                 <li>Insert correct information before sending cancellation request</li>
             </lu>
         </div>
 
         <div id="cancel-form">
-            <span>Ticket No : </span> <input name="ticketNo" type="text" style="margin-left: 55px;" required><br>
-            <span>Date of Payment : </span> <input name="paymentDate" type="date" required><br>
-            <span>Payment Method : </span> <input name="paymentMethod" type="text" required><br>
-            <span>TrxID : </span> <input name="trxID" type="text" style="margin-left: 80px;" required> <br>
-            <span>Mobile No : </span><input name="mobileNo" type="text" style="margin-left: 50px;" required><span class="text-muted"> (where should be refund)</span>
-            <br><button class="btn btn-warning">Submit</button>
+            @if(isset($ticketID))
+            <form method="post" action="../cancel-ticket/{{$ticketID}}">
+                {{csrf_field()}}
+                <h3 style="margin-top: 10px;margin-bottom: 15px;text-align: center;padding-left: 0px;">
+                    @if(isset($cancelInfo)) {{$cancelInfo}} @endif</h3>
+                <span>Ticket No : </span> <input name="ticketNo" type="text" style="margin-left: 55px;" required><br>
+                <span>Date of Payment : </span> <input name="paymentDate" type="date" required><br>
+                <span>Payment Method : </span> <select name="paymentMethod">
+                    <option>Bkash</option>
+                    <option>Rocket</option>
+                    <option>SureCash</option>
+                </select><br>
+                <span>TrxID : </span> <input name="trxID" type="text" style="margin-left: 80px;" required> <br>
+                <span>Mobile No : </span><input name="phone_no" type="text" style="margin-left: 50px;" required>
+                <span class="text-muted"> (Used to register)</span><br>
+                <span>Mobile No : </span><input name="mobileNo" type="text" style="margin-left: 50px;" required>
+                <span class="text-muted"> (where should be refund)</span>
+                <p style="padding-left: 140px;margin-top: 10px;margin-bottom: 10px;color: brown;">
+                    @if(isset($cancelError)) {{$cancelError}}@endif</p>
+                <br><button class="btn btn-warning">Submit</button>
+            </form>
+            @else
+                <h2 style="margin-top: 80px;text-align: center;padding-bottom: 100px;">No ticket to cancel.</h2>
+            @endif
         </div>
 
 

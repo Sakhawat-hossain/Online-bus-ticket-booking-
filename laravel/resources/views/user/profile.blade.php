@@ -426,7 +426,7 @@
                                             @elseif($j==8)
                                                 @if($flag==0)
                                                 <td><button class="btn btn-success" onclick="showSeat({{$td}},{{$i}})" >Show</button></td>
-                                                <td><a href="../cancel-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$td}}">
+                                                <td><a href="../cancel-ticket/{{$td}}">
                                                         <button class="btn btn-warning">Cancel</button>
                                                     </a></td>
                                                 <td><a href="../show-ticket/{{\Illuminate\Support\Facades\Session::get('username')}}/{{$td}}">

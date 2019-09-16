@@ -98,11 +98,13 @@ Route::get('agent-confirm-ticket/{id}/{tripID}/{userID}','BusSearchController@se
 Route::get('search-ticket','BusSearchController@search_ticket'); // bus ticket with filter
 Route::post('search-ticket-with-filter','BusSearchController@search_ticket_filter'); // bus ticket with filter
 
-// for printing tickets
+// for printing tickets, cancellation
 Route::get('show-ticket/{id}/{ticketID}','TicketPrintController@showTicket'); // show ticket
 Route::get('download-ticket/{id}/{ticketID}','TicketPrintController@downloadTicket'); // download ticket
-Route::get('cancel-ticket/{id}/{ticketID}','TicketPrintController@cancelTicket'); // cancel ticket
+Route::get('cancel-ticket/{ticketID}','TicketPrintController@cancelTicket'); // cancel ticket
+Route::post('cancel-ticket/{ticketID}','TicketPrintController@cancelTicketConfirm'); // cancel ticket
 Route::get('cancel-refund-policy','TicketPrintController@cancelRefundPolicy'); // cancel-refund-policy ticket
+
 
 // for ajax call
 Route::get('/get-status/{id}','AjaxlController@getSeatStatus'); // get status of seat

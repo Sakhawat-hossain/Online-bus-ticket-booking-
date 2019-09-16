@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5dae38a0-9f06-43d2-b8cc-810c96e8ff20" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/user/createAccount.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/user/createAccount.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/TicketPrintController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/TicketPrintController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/cancelTicket.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/cancelTicket.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/resources/views/user/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/user/profile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,119 +25,44 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/laravel/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1819">
-              <caret line="116" column="52" selection-start-line="116" selection-start-column="52" selection-end-line="116" selection-end-column="65" />
+            <state relative-caret-position="311">
+              <caret line="103" column="25" lean-forward="true" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/BusSearchController.php">
+        <entry file="file://$PROJECT_DIR$/laravel/resources/views/user/profile.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="507" column="61" selection-start-line="507" selection-start-column="61" selection-end-line="507" selection-end-column="61" />
-              <folding>
-                <element signature="e#40#56#0#PHP" expanded="true" />
-                <element signature="e#473#574#0#PHP" />
-                <element signature="e#580#2626#0#PHP" />
-                <element signature="e#2632#6080#0#PHP" />
-                <element signature="e#6086#10881#0#PHP" />
-                <element signature="e#6404#6867#0#PHP" />
-                <element signature="e#7252#8327#0#PHP" />
-                <element signature="e#8842#9120#0#PHP" />
-                <element signature="e#9893#10202#0#PHP" />
-                <element signature="e#10887#14222#0#PHP" />
-                <element signature="e#11363#11786#0#PHP" />
-                <element signature="e#11813#12027#0#PHP" />
-                <element signature="e#12663#12914#0#PHP" />
-                <element signature="e#13011#13199#0#PHP" />
-                <element signature="e#13207#13696#0#PHP" />
-                <element signature="e#14228#15178#0#PHP" />
-                <element signature="e#15184#17926#0#PHP" />
-                <element signature="e#17932#18627#0#PHP" />
-                <element signature="e#18634#21085#0#PHP" />
-                <element signature="e#21091#21304#0#PHP" />
-                <element signature="e#21310#26256#0#PHP" />
-                <element signature="e#26262#28473#0#PHP" />
-                <element signature="e#28479#30409#0#PHP" />
-                <element signature="e#30415#34532#0#PHP" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/MyController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2">
-              <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-              <folding>
-                <element signature="e#40#54#0#PHP" expanded="true" />
-                <element signature="e#482#630#0#PHP" />
-                <element signature="e#635#1081#0#PHP" />
-                <element signature="e#1086#2145#0#PHP" />
-                <element signature="e#2150#2259#0#PHP" />
-                <element signature="e#2264#3501#0#PHP" />
-                <element signature="e#3506#3711#0#PHP" />
-                <element signature="e#3716#4263#0#PHP" />
-                <element signature="e#4269#4429#0#PHP" />
-                <element signature="e#4434#5735#0#PHP" />
-                <element signature="e#5740#5963#0#PHP" />
-              </folding>
+            <state relative-caret-position="257">
+              <caret line="428" column="77" selection-start-line="428" selection-start-column="77" selection-end-line="428" selection-end-column="77" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/laravel/resources/views/user/profile.blade.php">
+        <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/TicketPrintController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="441" column="117" selection-start-line="441" selection-start-column="117" selection-end-line="441" selection-end-column="117" />
+            <state relative-caret-position="430">
+              <caret line="268" column="40" selection-start-line="268" selection-start-column="40" selection-end-line="268" selection-end-column="40" />
               <folding>
-                <element signature="e#881#1372#0#HTML" />
-                <element signature="e#1544#3316#0#HTML" />
-                <element signature="e#3353#5125#0#HTML" />
-                <element signature="e#5165#6937#0#HTML" />
-                <element signature="e#6886#8683#0#HTML" />
-                <element signature="e#6835#6938#0#HTML" />
-                <element signature="e#3350#3455#0#HTML" />
-                <element signature="e#5306#5411#0#HTML" />
-                <element signature="e#7298#7322#0#HTML" />
-                <element signature="e#5299#5404#0#HTML" />
-                <element signature="e#5440#5545#0#HTML" />
-                <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#style#0;n#ul#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#style#0;n#button#0;n#td#5;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#2;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#thead#0;n#table#0;n#div#2;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#3;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#table#0;n#div#3;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#thead#0;n#table#0;n#div#3;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#2;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#3;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="e#0#22350#0#Blade" />
+                <element signature="e#232#4032#0#PHP" />
+                <element signature="e#4038#7961#0#PHP" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php">
+        <entry file="file://$PROJECT_DIR$/laravel/resources/views/cancelTicket.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="156" column="126" selection-start-line="156" selection-start-column="126" selection-end-line="156" selection-end-column="126" />
+            <state relative-caret-position="221">
+              <caret line="101" column="57" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
               <folding>
-                <element signature="e#400#541#0#PHP" />
-                <element signature="e#661#751#0#PHP" />
-                <element signature="e#921#2793#0#PHP" />
-                <element signature="e#3642#4155#0#PHP" />
-                <element signature="e#4282#4562#0#PHP" />
+                <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#style#0;n#p#0;n#form#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#1;n#form#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h2#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -166,8 +93,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/laravel/app/Seat.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/representative/representative-add-trip.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/ticket.blade.php" />
         <option value="$PROJECT_DIR$/laravel/app/SuperAdmin.php" />
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/homeController.php" />
@@ -205,18 +130,20 @@
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/RepActivityController.php" />
         <option value="$PROJECT_DIR$/laravel/.env" />
         <option value="$PROJECT_DIR$/laravel/resources/views/agent/after-register.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/routes/web.php" />
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/AjaxlController.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/agent/agent-seatlist.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/agent/agent-ticket.blade.php" />
         <option value="$PROJECT_DIR$/laravel/app/Agent.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/agent/agent-register.blade.php" />
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/AgentController.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/BusSearchController.php" />
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/MyController.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/user/createAccount.blade.php" />
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php" />
+        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/BusSearchController.php" />
+        <option value="$PROJECT_DIR$/laravel/routes/web.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/user/profile.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/resources/views/cancelTicket.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/TicketPrintController.php" />
       </list>
     </option>
   </component>
@@ -473,18 +400,19 @@
       <workItem from="1568264810529" duration="19846000" />
       <workItem from="1568296039913" duration="20470000" />
       <workItem from="1568480016013" duration="7330000" />
-      <workItem from="1568558930072" duration="10192000" />
+      <workItem from="1568558930072" duration="15410000" />
+      <workItem from="1568620355073" duration="3784000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="779014000" />
+    <option name="totallyTimeSpent" value="788016000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21331316" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21633889" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -583,11 +511,6 @@
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/laravel/app/Http/Controllers/TicketPrintController.php</url>
-          <line>323</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/laravel/resources/views/agent/agent-register.blade.php</url>
           <line>136</line>
           <option name="timeStamp" value="17" />
@@ -674,7 +597,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/laravel/resources/views/cancelTicket.blade.php</url>
-          <line>79</line>
+          <line>87</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -741,40 +664,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/admin/admin-login.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="80" column="10" lean-forward="true" selection-start-line="53" selection-start-column="4" selection-end-line="80" selection-end-column="10" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/admin/admin-register.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="97" column="96" selection-start-line="97" selection-start-column="96" selection-end-line="97" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/employee/employee-home.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="131" column="57" lean-forward="true" selection-start-line="131" selection-start-column="57" selection-end-line="131" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/employee/employee-login.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="53" column="4" selection-start-line="53" selection-start-column="4" selection-end-line="80" selection-end-column="10" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/representative-add-trip.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2210">
@@ -795,30 +684,6 @@
           <caret line="33" column="18" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
           <folding>
             <element signature="e#42#70#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/user/confirm-mgs.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="68" column="22" selection-start-line="68" selection-start-column="22" selection-end-line="68" selection-end-column="22" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="e#3429#3435#0#HTML" expanded="true" />
-            <element signature="e#3435#3441#0#HTML" expanded="true" />
-            <element signature="e#3441#3447#0#HTML" expanded="true" />
-            <element signature="e#3539#3545#0#HTML" expanded="true" />
-            <element signature="e#3628#3634#0#HTML" expanded="true" />
-            <element signature="e#3634#3640#0#HTML" expanded="true" />
-            <element signature="e#3640#3646#0#HTML" expanded="true" />
-            <element signature="e#3724#3730#0#HTML" expanded="true" />
-            <element signature="e#3730#3736#0#HTML" expanded="true" />
-            <element signature="e#3736#3742#0#HTML" expanded="true" />
-            <element signature="e#3736#3742#0#HTML" expanded="true" />
-            <element signature="e#3742#3748#0#HTML" expanded="true" />
-            <element signature="e#3748#3754#0#HTML" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
           </folding>
         </state>
       </provider>
@@ -1075,13 +940,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1819">
-          <caret line="116" column="52" selection-start-line="116" selection-start-column="52" selection-end-line="116" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/laravel/resources/views/agent/agent-seatlist.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9248">
@@ -1161,10 +1019,65 @@
         <state relative-caret-position="-544" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/user/createAccount.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="156" column="126" selection-start-line="156" selection-start-column="126" selection-end-line="156" selection-end-column="126" />
+          <folding>
+            <element signature="e#400#541#0#PHP" />
+            <element signature="e#661#751#0#PHP" />
+            <element signature="e#921#2793#0#PHP" />
+            <element signature="e#3642#4155#0#PHP" />
+            <element signature="e#4282#4562#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/MyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2">
+          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+          <folding>
+            <element signature="e#40#54#0#PHP" expanded="true" />
+            <element signature="e#482#630#0#PHP" />
+            <element signature="e#635#1081#0#PHP" />
+            <element signature="e#1086#2145#0#PHP" />
+            <element signature="e#2150#2259#0#PHP" />
+            <element signature="e#2264#3501#0#PHP" />
+            <element signature="e#3506#3711#0#PHP" />
+            <element signature="e#3716#4263#0#PHP" />
+            <element signature="e#4269#4429#0#PHP" />
+            <element signature="e#4434#5735#0#PHP" />
+            <element signature="e#5740#5963#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/user/confirm-mgs.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="477">
+          <caret line="68" column="22" selection-start-line="68" selection-start-column="22" selection-end-line="68" selection-end-column="22" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/user/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/BusSearchController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="507" column="61" selection-start-line="507" selection-start-column="61" selection-end-line="507" selection-end-column="61" />
+        <state relative-caret-position="124">
+          <caret line="485" column="5" selection-start-line="485" selection-start-column="5" selection-end-line="485" selection-end-column="5" />
           <folding>
             <element signature="e#40#56#0#PHP" expanded="true" />
             <element signature="e#473#574#0#PHP" />
@@ -1194,80 +1107,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/user/createAccount.blade.php">
+    <entry file="file://$PROJECT_DIR$/laravel/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/MyController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2">
-          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-          <folding>
-            <element signature="e#40#54#0#PHP" expanded="true" />
-            <element signature="e#482#630#0#PHP" />
-            <element signature="e#635#1081#0#PHP" />
-            <element signature="e#1086#2145#0#PHP" />
-            <element signature="e#2150#2259#0#PHP" />
-            <element signature="e#2264#3501#0#PHP" />
-            <element signature="e#3506#3711#0#PHP" />
-            <element signature="e#3716#4263#0#PHP" />
-            <element signature="e#4269#4429#0#PHP" />
-            <element signature="e#4434#5735#0#PHP" />
-            <element signature="e#5740#5963#0#PHP" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="156" column="126" selection-start-line="156" selection-start-column="126" selection-end-line="156" selection-end-column="126" />
-          <folding>
-            <element signature="e#400#541#0#PHP" />
-            <element signature="e#661#751#0#PHP" />
-            <element signature="e#921#2793#0#PHP" />
-            <element signature="e#3642#4155#0#PHP" />
-            <element signature="e#4282#4562#0#PHP" />
-          </folding>
+        <state relative-caret-position="311">
+          <caret line="103" column="25" lean-forward="true" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/laravel/resources/views/user/profile.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="441" column="117" selection-start-line="441" selection-start-column="117" selection-end-line="441" selection-end-column="117" />
+        <state relative-caret-position="257">
+          <caret line="428" column="77" selection-start-line="428" selection-start-column="77" selection-end-line="428" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/user/cancel-message.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-731" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/cancelTicket.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="101" column="57" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
           <folding>
-            <element signature="e#881#1372#0#HTML" />
-            <element signature="e#1544#3316#0#HTML" />
-            <element signature="e#3353#5125#0#HTML" />
-            <element signature="e#5165#6937#0#HTML" />
-            <element signature="e#6886#8683#0#HTML" />
-            <element signature="e#6835#6938#0#HTML" />
-            <element signature="e#3350#3455#0#HTML" />
-            <element signature="e#5306#5411#0#HTML" />
-            <element signature="e#7298#7322#0#HTML" />
-            <element signature="e#5299#5404#0#HTML" />
-            <element signature="e#5440#5545#0#HTML" />
-            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#ul#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#button#0;n#td#5;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#thead#0;n#table#0;n#div#2;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#3;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#table#0;n#div#3;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#thead#0;n#table#0;n#div#3;n#div#1;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#3;n#div#0;n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="e#0#22350#0#Blade" />
+            <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#p#0;n#form#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#1;n#form#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h2#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/TicketPrintController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="268" column="40" selection-start-line="268" selection-start-column="40" selection-end-line="268" selection-end-column="40" />
+          <folding>
+            <element signature="e#232#4032#0#PHP" />
+            <element signature="e#4038#7961#0#PHP" />
           </folding>
         </state>
       </provider>
