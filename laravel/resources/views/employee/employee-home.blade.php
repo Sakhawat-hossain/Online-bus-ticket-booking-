@@ -98,11 +98,11 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
 
-                    <li>
+                    <li style="background-color: forestgreen; margin-right: -10px;">
                         <a href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="employee-tickets/{{\Illuminate\Support\Facades\Session::get('employee-username')}}">
+                        <a href="employee-ticket-list">
                             <i class="fa fa-sitemap"></i>Tickets</a>
                     </li>
 
@@ -117,7 +117,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Welcome  <small> Employee</small>
+                            Welcome  <small> {{\Illuminate\Support\Facades\Session::get('employee-username')}}</small>
                         </h1>
                     </div>
                 </div>
@@ -188,7 +188,7 @@
 
     <div class="container" style="min-height: 500px;">
         <h2 style="text-align: center;margin-top: 100px;">
-            Thank you for registration. Please wait for confirmation.........</h2>
+            Please login first .........</h2>
     </div>
 
 @endif

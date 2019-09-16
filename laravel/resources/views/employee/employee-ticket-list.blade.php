@@ -11,9 +11,13 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header-design.css">
     <link rel="stylesheet" href="css/footer-design.css">
+    <!-- Custom Styles-->
+    <!-- FontAwesome Styles-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -117,10 +121,10 @@
                 }
             });
             var tr_val = document.getElementById("myTable").rows[idx].cells;
-            tr_val[5].innerHTML = 'cancelled';
-            tr_val[5].style.color = 'forestgreen';
+            tr_val[6].innerHTML = 'cancelled';
+            tr_val[6].style.color = 'forestgreen';
 
-            tr_val[7].innerHTML = '<button class="btn btn-primary" ' +
+            tr_val[8].innerHTML = '<button class="btn btn-primary" ' +
                 'onclick="cancel_confirm_cancel('+idx+','+id+','+empID+')">Cancel</button>';
         }
         function cancel_confirm_cancel(idx,id,empID) {
@@ -139,10 +143,10 @@
                 }
             });
             var tr_val = document.getElementById("myTable").rows[idx].cells;
-            tr_val[5].innerHTML = 'cancelling';
-            tr_val[5].style.color = 'brown';
+            tr_val[6].innerHTML = 'cancelling';
+            tr_val[6].style.color = 'brown';
 
-            tr_val[7].innerHTML = '<button class="btn btn-success" ' +
+            tr_val[8].innerHTML = '<button class="btn btn-success" ' +
                 'onclick="confirm_cancel('+idx+','+id+','+empID+')">Confirm</button>';
         }
     </script>
@@ -153,11 +157,11 @@
 <div class="section">
 
     <div id="header">
-        <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A; color: red;">
+        <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #120A2A;">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#" style="color: white;"><span>
-                        <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
+                    <a class="navbar-brand" href="employee-home" style="color: white;"><span>
+                            <i class="glyphicon glyphicon-home"></i></span>Online bus booking</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="employee-home">Home</a></li>
@@ -165,156 +169,219 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if(\Illuminate\Support\Facades\Session::has('employee-username'))
-                        @php $username=Session::get('employee-username');@endphp
-                        <li><a href="{{url('employee/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
-                                    {{\Illuminate\Support\Facades\Session::get('employee-username')}}</span></a> </li>
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#" style="color: white;">Employee</a>
+                        </div>
+                        <li><a href="employee-profile"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
+                                        {{\Illuminate\Support\Facades\Session::get('employee-username')}}</span></a> </li>
                         <li><a href="employee-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
-
                     @else
-                        <li><a href="employee-sign-in"><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
+                        <li><a href="employee-sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
                     @endif
                 </ul>
             </div>
         </nav>
     </div>
-<div id="t"></div>
+
     <div class="container" style="min-height: 500px;">
 
-    @if(\Illuminate\Support\Facades\Session::has('employee-username'))
-        <form method="post" action="employee-search-ticket-with-filter">
-            {{csrf_field()}}
-            <div id="search-option-container">
-                <div class="row">
-                    <!--div class="col-sm-2">
-                        <div class="form-group">
-                            <span class="form-label">From</span>
-                            <select class="form-control" name="from">
+        @if(\Illuminate\Support\Facades\Session::has('employee-username'))
+            <form method="post" action="employee-search-ticket-with-filter">
+                {{csrf_field()}}
+                <div id="search-option-container">
+                    <div class="row">
+                        <!--div class="col-sm-2">
+                            <div class="form-group">
+                                <span class="form-label">From</span>
+                                <select class="form-control" name="from">
 
-                            </select>
-                            <span class="select-arrow"></span>
+                                </select>
+                                <span class="select-arrow"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <span class="form-label">To</span>
-                            <select class="form-control" name="to">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <span class="form-label">To</span>
+                                <select class="form-control" name="to">
 
-                            </select>
-                            <span class="select-arrow"></span>
-                        </div>
-                    </div-->
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <span class="form-label">Transaction Id</span>
-                            <input id="trxID" class="form-control" name="trxID" onkeyup="filterByTrxID()">
-                            <span class="select-arrow"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <span class="form-label">Booking Date</span>
-                            <input id="booking_time" class="form-control" type="date" name="booking_time"
-                                   oninput="filterByBooking()">
-                        </div>
-                    </div>
-                    <div class="col-sm-2" hidden>
-                        <div class="form-group">
-                            <span class="form-label">Enterprise</span>
-                            <select class="form-control" name="bus_name">
-                                <option>All</option>
-                                @foreach($buses as $bus)
-                                    @foreach($bus as $b)
-
-                                    <option>{{$b}}</option>
-
-                                    @endforeach
-                                @endforeach
-                            </select>
-                            <span class="select-arrow"></span>
-                        </div>
-                    </div>
-
-                    @if($ticket_status == 'cancelling')
-                    <div class="form-btn" style="margin-top: 20px;float: right;margin-right:80px;">
-                        <button type="submit" class="btn btn-success" name="ticket_status" value="pending">Pending</button>
-                    </div>
-                    @else
-                    <div class="form-btn" style="margin-top: 20px;float: right;margin-right:80px;">
-                        <button type="submit" class="btn btn-success" name="ticket_status" value="cancelling">Cancelling</button>
-                    </div>
-                    @endif
-                </div>
-
-            </div>
-
-            <div id="sort-option-container">
-                <div class="row">
-                    <div class="col-sm-2"></div>
-
-                    <div class="col-sm-2" hidden><p id="filter">Filter  <span><i class="fas fa-sort-down"></i></span></p>
-                        <div id="filter-list">
-                            <ul>
-                                <li>Bus Type</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--div class="form-btn" style="margin-top: 10px;float: right;margin-right:80px;">
-                        <button type="submit" class="btn btn-default" name="sendval" value="next">Next Day</button>
-                    </div>
-                    <div class="form-btn" style="margin-top: 10px;float: right;margin-right:20px;">
-                        <button type="submit" class="btn btn-default" name="sendval" value="prev">Prev Day</button>
-                    </div-->
-
-                </div>
-            </div>
-        </form>
-
-        <table class="table table-hover table-dark" id="myTable">
-            <thead>
-            <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Mobile No</th>
-                <th scope="col">Boarding point</th>
-                <th scope="col">Booking Time</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Status</th>
-                <th scope="col">Trx ID</th>
-                <th scope="col">Action</th>
-
-            </tr>
-            </thead>
-
-            <tbody>
-
-            @php $idx = 1; $id=\Illuminate\Support\Facades\Session::get("employeeID");@endphp
-            @foreach ($tickets as $ticket)
-                @php $j=0; $status=''; @endphp
-                <tr id="{{$idx}}">
-                    @foreach($ticket as $t)
-                        @if($j==7)
-                            <td>
-                                @if($ticket_status == 'pending')
-                                <button class="btn btn-success" onclick="confirm_ticket({{$idx}},{{$t}},{{$id}})">Confirm</button>
+                                </select>
+                                <span class="select-arrow"></span>
+                            </div>
+                        </div-->
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <span class="form-label">Transaction Id</span>
+                                @if($ticket_status == 'cancelling')
+                                    <input id="trxID" class="form-control" name="trxID" onkeyup="filterByTrxIDCan()">
                                 @else
-                                    <button class="btn btn-success" onclick="confirm_cancel({{$idx}},{{$t}},{{$id}})">Confirm</button>
+                                    <input id="trxID" class="form-control" name="trxID" onkeyup="filterByTrxID()">
                                 @endif
-                            </td>
-                        @elseif($j==5)
-                        <td style="color: brown">{{$t}}</td>
-                        @else
-                            <td>{{$t}}</td>
-                        @endif
-                            @php $j= $j+1;@endphp
-                     @endforeach
-                </tr>
-                @php $idx = $idx+1; @endphp
-            @endforeach
+                                <span class="select-arrow"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <span class="form-label">Booking Date</span>
+                                <input id="booking_time" class="form-control" type="date" name="booking_time"
+                                       oninput="filterByBooking()">
+                            </div>
+                        </div>
+                        <div class="col-sm-2" hidden>
+                            <div class="form-group">
+                                <span class="form-label">Enterprise</span>
+                                <select class="form-control" name="bus_name">
+                                    <option>All</option>
+                                    @foreach($buses as $bus)
+                                        @foreach($bus as $b)
 
-            </tbody>
-        </table>
-    @endif
+                                            <option>{{$b}}</option>
+
+                                        @endforeach
+                                    @endforeach
+                                </select>
+                                <span class="select-arrow"></span>
+                            </div>
+                        </div>
+
+                        @if($ticket_status == 'cancelling')
+                            <div class="form-btn" style="margin-top: 20px;float: right;margin-right:80px;">
+                                <button type="submit" class="btn btn-success" name="ticket_status" value="pending">Pending</button>
+                            </div>
+                        @else
+                            <div class="form-btn" style="margin-top: 20px;float: right;margin-right:80px;">
+                                <button type="submit" class="btn btn-success" name="ticket_status" value="cancelling">Cancelling</button>
+                            </div>
+                        @endif
+                    </div>
+
+                </div>
+
+                <div id="sort-option-container">
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+
+                        <div class="col-sm-2" hidden><p id="filter">Filter  <span><i class="fas fa-sort-down"></i></span></p>
+                            <div id="filter-list">
+                                <ul>
+                                    <li>Bus Type</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--div class="form-btn" style="margin-top: 10px;float: right;margin-right:80px;">
+                            <button type="submit" class="btn btn-default" name="sendval" value="next">Next Day</button>
+                        </div>
+                        <div class="form-btn" style="margin-top: 10px;float: right;margin-right:20px;">
+                            <button type="submit" class="btn btn-default" name="sendval" value="prev">Prev Day</button>
+                        </div-->
+
+                    </div>
+                </div>
+            </form>
+
+            @if(isset($ticket_status))
+                @if($ticket_status == 'pending')
+                    <table class="table table-hover table-dark" id="myTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Mobile No</th>
+                            <th scope="col">Boarding point</th>
+                            <th scope="col">Booking Time</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Trx ID</th>
+                            <th scope="col">Action</th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        @php $idx = 1; $id=\Illuminate\Support\Facades\Session::get("employeeID");@endphp
+                        @foreach ($tickets as $ticket)
+                            @php $j=0; $status=''; @endphp
+                            <tr id="{{$idx}}">
+                                @foreach($ticket as $t)
+                                    @if($j==7)
+                                        <td>
+                                            @if($ticket_status == 'pending')
+                                                <button class="btn btn-success" onclick="confirm_ticket({{$idx}},{{$t}},{{$id}})">Confirm</button>
+                                            @else
+                                                <button class="btn btn-success" onclick="confirm_cancel({{$idx}},{{$t}},{{$id}})">Confirm</button>
+                                            @endif
+                                        </td>
+                                    @elseif($j==5)
+                                        <td style="color: brown">{{$t}}</td>
+                                    @else
+                                        <td>{{$t}}</td>
+                                    @endif
+                                    @php $j= $j+1;@endphp
+                                @endforeach
+                            </tr>
+                            @php $idx = $idx+1; @endphp
+                        @endforeach
+
+                        </tbody>
+                    </table>
+                @else
+                    <table class="table table-hover table-dark" id="myTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Mobile No</th>
+                            <th scope="col">Boarding point</th>
+                            <th scope="col">Booking Time</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Refund To</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Trx ID</th>
+                            <th scope="col">Action</th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        @php $idx = 1; $id=\Illuminate\Support\Facades\Session::get("employeeID");@endphp
+                        @foreach ($tickets as $ticket)
+                            @php $j=0; $status=''; @endphp
+                            <tr id="{{$idx}}">
+                                @foreach($ticket as $t)
+                                    @if($j==8)
+                                        <td>
+                                            @if($ticket_status == 'pending')
+                                                <button class="btn btn-success" onclick="confirm_ticket({{$idx}},{{$t}},{{$id}})">Confirm</button>
+                                            @else
+                                                <button class="btn btn-success" onclick="confirm_cancel({{$idx}},{{$t}},{{$id}})">Confirm</button>
+                                            @endif
+                                        </td>
+                                    @elseif($j==6)
+                                        <td style="color: brown">{{$t}}</td>
+                                    @else
+                                        <td>{{$t}}</td>
+                                    @endif
+                                    @php $j= $j+1;@endphp
+                                @endforeach
+                            </tr>
+                            @php $idx = $idx+1; @endphp
+                        @endforeach
+
+                        </tbody>
+                    </table>
+                @endif
+            @endif
+
+        @else
+
+            <div class="container" style="min-height: 500px;">
+                <h2 style="text-align: center;margin-top: 100px;">
+                    Please login first .........</h2>
+            </div>
+
+        @endif
 
     </div>
+
     <div id="footer">
         <div class="container">
             <div class="row-space">
@@ -339,8 +406,6 @@
             </div>
         </div>
     </div>
-
-
 
 </div>
 <script>
@@ -408,7 +473,28 @@
 
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[4];
+            td = tr[i].getElementsByTagName("td")[6];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.indexOf(filter) == 0) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function filterByTrxIDCan() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("trxID");
+        filter = input.value;//.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[7];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.indexOf(filter) == 0) {
