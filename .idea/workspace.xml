@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5dae38a0-9f06-43d2-b8cc-810c96e8ff20" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/representative/rept-place-details.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/representative/rept-place-details.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel/resources/views/representative/rept-places.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/representative/rept-places.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/app/Http/Controllers/RepActivityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/app/Http/Controllers/RepActivityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel/resources/views/representative/representative-home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/resources/views/representative/representative-home.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +23,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/laravel/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="146" lean-forward="true" selection-start-line="146" selection-end-line="146" />
+            <state relative-caret-position="192">
+              <caret line="139" column="12" lean-forward="true" selection-start-line="139" selection-start-column="12" selection-end-line="139" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -32,18 +32,62 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/RepActivityController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="407" column="42" selection-start-line="407" selection-start-column="42" selection-end-line="407" selection-end-column="42" />
+            <state relative-caret-position="444">
+              <caret line="791" column="12" lean-forward="true" selection-start-line="791" selection-start-column="12" selection-end-line="791" selection-end-column="12" />
               <folding>
                 <element signature="e#41#53#0#PHP" expanded="true" />
                 <element signature="e#333#1033#0#PHP" />
                 <element signature="e#1039#3266#0#PHP" />
                 <element signature="e#3272#3490#0#PHP" />
+                <element signature="e#3495#6016#0#PHP" />
                 <element signature="e#6022#6779#0#PHP" />
                 <element signature="e#6785#7619#0#PHP" />
                 <element signature="e#7625#8206#0#PHP" />
                 <element signature="e#8212#8753#0#PHP" />
                 <element signature="e#8759#11409#0#PHP" />
+                <element signature="e#11415#11512#0#PHP" />
+                <element signature="e#11517#12922#0#PHP" />
+                <element signature="e#12927#14813#0#PHP" />
+                <element signature="e#14819#17327#0#PHP" />
+                <element signature="e#17333#17498#0#PHP" />
+                <element signature="e#17503#17726#0#PHP" />
+                <element signature="e#17731#17969#0#PHP" />
+                <element signature="e#17975#18516#0#PHP" />
+                <element signature="e#18521#18612#0#PHP" />
+                <element signature="e#18617#19114#0#PHP" />
+                <element signature="e#19120#19267#0#PHP" />
+                <element signature="e#19273#19871#0#PHP" />
+                <element signature="e#19878#20498#0#PHP" />
+                <element signature="e#20504#20692#0#PHP" />
+                <element signature="e#20698#23445#0#PHP" />
+                <element signature="e#23451#26169#0#PHP" />
+                <element signature="e#26175#26273#0#PHP" />
+                <element signature="e#26278#27982#0#PHP" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-route-details.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="277">
+              <caret line="73" column="47" lean-forward="true" selection-start-line="73" selection-start-column="47" selection-end-line="73" selection-end-column="47" />
+              <folding>
+                <element signature="n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#style#0;n#li#4;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-add-route.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="135" column="32" lean-forward="true" selection-start-line="135" selection-start-column="32" selection-end-line="135" selection-end-column="32" />
+              <folding>
+                <element signature="n#style#0;n#li#4;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -91,36 +135,6 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-add-place.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="104" column="65" selection-start-line="104" selection-start-column="65" selection-end-line="104" selection-end-column="65" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-place-details.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="126" column="46" selection-start-line="126" selection-start-column="46" selection-end-line="126" selection-end-column="46" />
-              <folding>
-                <element signature="n#style#0;n#li#6;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-places.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="130" column="43" selection-start-line="130" selection-start-column="43" selection-end-line="130" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -146,10 +160,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/laravel/resources/views/ticket.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/app/SuperAdmin.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/homeController.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/EmployeeController.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/representative/representative-login.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/representative/representative-register.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/admin/super-admin-login.blade.php" />
@@ -165,17 +175,13 @@
         <option value="$PROJECT_DIR$/laravel/resources/views/home.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/ticket/seatList.blade.copy.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/representative/places" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/representative/rept-place-edit.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/representative/rept-add-place.blade.php" />
         <option value="$PROJECT_DIR$/laravel/public/assets/css/custom-styles.css" />
         <option value="$PROJECT_DIR$/laravel/resources/views/representative/representative-buses.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/representative/representative-trips.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/representative/representative-availability.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/resources/views/representative/representative-home.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/seatList.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/representative/representative-add-bus.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/representative/representative-seats.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/RepActivityController.php" />
         <option value="$PROJECT_DIR$/laravel/.env" />
         <option value="$PROJECT_DIR$/laravel/resources/views/agent/after-register.blade.php" />
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/AjaxlController.php" />
@@ -194,9 +200,17 @@
         <option value="$PROJECT_DIR$/laravel/resources/views/employee/employee-home.blade.php" />
         <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/EmployeeActivityController.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/employee/employee-ticket-list.blade.php" />
-        <option value="$PROJECT_DIR$/laravel/routes/web.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/representative/rept-place-details.blade.php" />
         <option value="$PROJECT_DIR$/laravel/resources/views/representative/rept-places.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/resources/views/representative/rept-place-edit.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/resources/views/representative/rept-add-place.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/app/Http/Controllers/RepActivityController.php" />
+        <option value="$PROJECT_DIR$/laravel/resources/views/representative/representative-home.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/routes/web.php" />
+        <option value="$PROJECT_DIR$/laravel/resources/views/representative/rept-route.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/resources/views/representative/rept-route-edit.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/resources/views/representative/rept-route-details.blade.php" />
+        <option value="$PROJECT_DIR$/laravel/resources/views/representative/rept-add-route.blade.php" />
       </list>
     </option>
   </component>
@@ -461,12 +475,12 @@
       <workItem from="1568480016013" duration="7330000" />
       <workItem from="1568558930072" duration="15410000" />
       <workItem from="1568620355073" duration="9094000" />
-      <workItem from="1568637962387" duration="1461000" />
+      <workItem from="1568637962387" duration="3320000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="794787000" />
+    <option name="totallyTimeSpent" value="796646000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -724,61 +738,10 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/home.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="88" column="64" selection-start-line="88" selection-start-column="64" selection-end-line="88" selection-end-column="64" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/public/js/jquery/home-query.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="103" column="29" selection-start-line="103" selection-start-column="29" selection-end-line="103" selection-end-column="29" />
-          <folding>
-            <element signature="e#298#2132#0" />
-            <element signature="e#2241#3192#0" />
-            <element signature="n#!!block;n#addActive#0;n#!!block;n#autocomplete#0" />
-            <element signature="n#!!block;n#removeActive#0;n#!!block;n#autocomplete#0" />
-            <element signature="n#!!block;n#closeAllLists#0;n#!!block;n#autocomplete#0" />
-            <element signature="e#4360#4400#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/ticket/seatList.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4488" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/ticket/seatList.blade.copy.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="79" column="6" selection-start-line="79" selection-start-column="6" selection-end-line="79" selection-end-column="6" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/places">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1615">
           <caret line="95" selection-start-line="18" selection-end-line="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-place-edit.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="146" selection-start-line="146" selection-end-line="146" />
-          <folding>
-            <element signature="n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1138,27 +1101,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/routes/web.php">
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-place-edit.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="146" lean-forward="true" selection-start-line="146" selection-end-line="146" />
+        <state relative-caret-position="-166">
+          <caret line="133" column="82" selection-start-line="133" selection-start-column="82" selection-end-line="133" selection-end-column="82" />
+          <folding>
+            <element signature="n#style#0;n#li#6;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/RepActivityController.php">
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-place-details.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="407" column="42" selection-start-line="407" selection-start-column="42" selection-end-line="407" selection-end-column="42" />
+        <state relative-caret-position="429">
+          <caret line="126" column="46" selection-start-line="126" selection-start-column="46" selection-end-line="126" selection-end-column="46" />
           <folding>
-            <element signature="e#41#53#0#PHP" expanded="true" />
-            <element signature="e#333#1033#0#PHP" />
-            <element signature="e#1039#3266#0#PHP" />
-            <element signature="e#3272#3490#0#PHP" />
-            <element signature="e#6022#6779#0#PHP" />
-            <element signature="e#6785#7619#0#PHP" />
-            <element signature="e#7625#8206#0#PHP" />
-            <element signature="e#8212#8753#0#PHP" />
-            <element signature="e#8759#11409#0#PHP" />
+            <element signature="n#style#0;n#li#6;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-add-place.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11">
+          <caret line="138" column="82" selection-start-line="138" selection-start-column="82" selection-end-line="138" selection-end-column="82" />
+          <folding>
+            <element signature="n#style#0;n#li#6;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1203,27 +1171,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/app/Http/Controllers/RepActivityController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="444">
+          <caret line="791" column="12" lean-forward="true" selection-start-line="791" selection-start-column="12" selection-end-line="791" selection-end-column="12" />
+          <folding>
+            <element signature="e#41#53#0#PHP" expanded="true" />
+            <element signature="e#333#1033#0#PHP" />
+            <element signature="e#1039#3266#0#PHP" />
+            <element signature="e#3272#3490#0#PHP" />
+            <element signature="e#3495#6016#0#PHP" />
+            <element signature="e#6022#6779#0#PHP" />
+            <element signature="e#6785#7619#0#PHP" />
+            <element signature="e#7625#8206#0#PHP" />
+            <element signature="e#8212#8753#0#PHP" />
+            <element signature="e#8759#11409#0#PHP" />
+            <element signature="e#11415#11512#0#PHP" />
+            <element signature="e#11517#12922#0#PHP" />
+            <element signature="e#12927#14813#0#PHP" />
+            <element signature="e#14819#17327#0#PHP" />
+            <element signature="e#17333#17498#0#PHP" />
+            <element signature="e#17503#17726#0#PHP" />
+            <element signature="e#17731#17969#0#PHP" />
+            <element signature="e#17975#18516#0#PHP" />
+            <element signature="e#18521#18612#0#PHP" />
+            <element signature="e#18617#19114#0#PHP" />
+            <element signature="e#19120#19267#0#PHP" />
+            <element signature="e#19273#19871#0#PHP" />
+            <element signature="e#19878#20498#0#PHP" />
+            <element signature="e#20504#20692#0#PHP" />
+            <element signature="e#20698#23445#0#PHP" />
+            <element signature="e#23451#26169#0#PHP" />
+            <element signature="e#26175#26273#0#PHP" />
+            <element signature="e#26278#27982#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/representative-home.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
-          <caret line="177" column="61" selection-start-line="177" selection-start-column="61" selection-end-line="177" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-add-place.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="104" column="65" selection-start-line="104" selection-start-column="65" selection-end-line="104" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-place-details.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="126" column="46" selection-start-line="126" selection-start-column="46" selection-end-line="126" selection-end-column="46" />
-          <folding>
-            <element signature="n#style#0;n#li#6;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <caret line="125" column="54" lean-forward="true" selection-start-line="125" selection-start-column="54" selection-end-line="125" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -1231,6 +1219,56 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="130" column="43" selection-start-line="130" selection-start-column="43" selection-end-line="130" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-route.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="140" lean-forward="true" selection-start-line="104" selection-start-column="12" selection-end-line="140" />
+          <folding>
+            <element signature="n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#li#4;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="139" column="12" lean-forward="true" selection-start-line="139" selection-start-column="12" selection-end-line="139" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-route-edit.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="144" selection-start-line="144" selection-end-line="144" />
+          <folding>
+            <element signature="n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#li#4;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-route-details.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="73" column="47" lean-forward="true" selection-start-line="73" selection-start-column="47" selection-end-line="73" selection-end-column="47" />
+          <folding>
+            <element signature="n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#li#4;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laravel/resources/views/representative/rept-add-route.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="135" column="32" lean-forward="true" selection-start-line="135" selection-start-column="32" selection-end-line="135" selection-end-column="32" />
+          <folding>
+            <element signature="n#style#0;n#li#4;n#ul#0;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

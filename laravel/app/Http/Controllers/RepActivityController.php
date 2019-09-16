@@ -541,4 +541,309 @@ class RepActivityController extends Controller
     }
 
 
+    public function reptRoute(){
+
+        $r  = DB::table('routes')->get();
+
+        return view('representative.rept-route')->with('routes',$r);
+    }
+    public function reptRouteDetails(Request $request ,$route_id){
+
+
+
+        $r =  DB::table('routes')
+            ->join('boardings','routes.id','=','boardings.routeID')
+            ->join('places','boardings.placeID','=','places.id')
+            ->where('routes.id',$route_id)
+            ->select('places.name')
+            ->get();
+
+        $route_data =  DB::table('routes')
+            ->where('id',$route_id)
+            ->select('from','to','starting_point')
+            ->get();
+
+
+
+        return view('representative.rept-route-details')->with('bp',$r)->with('route_data',$route_data);
+    }
+    public function reptRouteEdit(Request $request ,$route_id){
+
+
+
+        $r =  DB::table('routes')
+            ->join('boardings','routes.id','=','boardings.routeID')
+            ->join('places','boardings.placeID','=','places.id')
+            ->where('routes.id',$route_id)
+            ->select('places.name')
+            ->get();
+
+        $route_data =  DB::table('routes')
+            ->where('id',$route_id)
+            ->select('from','to','starting_point')
+            ->get();
+
+
+
+        return view('representative.rept-route-edit')->with('bp',$r)->with('route_data',$route_data)->with('route_id',$route_id);
+    }
+
+    public function reptAddRoute(){
+
+
+        $places=DB::table('routes')->distinct()->select('to')->get();
+        return view('representative.rept-add-route')->with('places',$places);
+
+    }
+    public function reptStoreRoute(Request $r){
+
+        $r->validate([
+            'from' => 'required|max:255',
+            'to' => 'required|max:255',
+            'bp1' => 'required|max:255'
+        ]);
+
+        $from = $r->get('from');    //from
+        $to = $r->get('to');        //to
+        $bp1 = $r->get('bp1');      // starting point or first boarding point
+        $n = $r->get('n');          //#of boarding points
+
+        //if from == to => redirect to the form
+        return redirect()->back()->with('error_msg', 'From and to should be different');
+
+
+        $pl_id_form =  DB::table('places')->where('name',$from)->value('id');
+        if(!$pl_id_form){
+            //source place name not in the places table
+            $pl = new Place;
+            $pl->name = $from;
+            $pl->save();
+
+        }
+        $pl_id_to =  DB::table('places')->where('name',$to)->value('id');
+        if(!$pl_id_to){
+            //Destination place  not in the places table
+            $pl = new Place;
+            $pl->name = $to;
+            $pl->save();
+
+        }
+
+        //find whether route exits or not
+        $r_id = DB::table('routes')->where('from',$from)->where('to',$to)->value('id');
+
+        if(!$r_id){
+            //route doesn't exist
+
+            $route = new Route;
+            $route->from = $from;
+            $route->to = $to;
+            $route->starting_point = $bp1;
+            $route->save();
+            $r_id = DB::table('routes')->where('from',$from)->where('to',$to)->value('id');
+
+        }
+
+
+
+
+
+        for($i = 1 ; $i <= $n ; $i++){                                          //iterate through the boarding points
+
+
+            if($r->has('bp'.$i) and $r->get('bp'.$i)!='' ){
+
+                $p_name = $r->get('bp'.$i);
+                $p_id = DB::table('places')->where('name',$p_name)->value('id');//check whether place exits or not
+
+                if(!$p_id){
+                    //place doesnot exits
+                    //add place
+                    $pl = new Place;
+                    $pl->name = $p_name;
+                    $pl->save();
+                    $p_id = DB::table('places')->where('name',$p_name)->value('id');
+
+                }
+
+                //check whether the boarding point already exit
+                $bp_id = DB::table('boardings')->where('routeID',$r_id)->where('placeID',$p_id)->value('id');
+                //add the place as a boarding point
+
+                if(!$bp_id){
+                    $bp = new Boarding;
+                    $bp->routeID = $r_id;
+                    $bp->placeID = $p_id;
+                    $bp->save();
+                }
+
+
+
+
+            }
+
+        }
+
+        return redirect()->back()->with('message', 'Route has been added successflly.');
+
+
+    }
+    public function reptUpdateRoute(Request $r,$route_id){
+
+        $i=1;
+        $num_boarding_point = $r->get('num_boarding_point');
+        $new_bp =$r->get('n');
+
+        //echo $new_bp;
+
+        $from = $r->get('from');
+        $to = $r->get('to');
+        $bp1 = $r->get('bp1');
+
+        //update route
+        $affected = DB::table('routes')
+            ->where('id',$route_id)
+            ->update(['from'=>$from,'to'=>$to,'starting_point'=>$bp1]);
+
+        //update boardings
+        for($i=1; $i<=$num_boarding_point;$i++){
+
+
+            $bp1 = $r->get('bp'.$i);
+
+            if($r->get('old_bp'.$i)== $bp1){
+
+
+            }else{
+                $old_pl_id = DB::table('places')->where('name',$r->get('old_bp'.$i))->value('id');
+
+                $boarding_id = DB::table('boardings')
+                    ->where('routeID',$route_id)
+                    ->where('placeID',$old_pl_id)->value('id');
+
+                $new_pl_id = DB::table('places')->where('name',$bp1)->value('id');
+
+                if($new_pl_id){
+
+                }else{
+
+                    $pl = new Place;
+                    $pl->name = $bp1;
+                    $pl->save();
+
+                    $new_pl_id = DB::table('places')->where('name',$bp1)->value('id');
+
+                }
+
+                DB::table('boardings')
+                    ->where('id',$boarding_id)
+                    ->update(['placeID'=>$new_pl_id]);
+
+
+            }
+
+        }
+
+
+        for($i = 1 ; $i <= $new_bp ; $i++){                                          //iterate through the boarding points
+
+
+            if($r->has('new_bp'.$i) and $r->get('new_bp'.$i)!='' ){
+                //echo $r->get('new_bp'.$i);
+
+                $p_name = $r->get('new_bp'.$i);
+                $p_id = DB::table('places')->where('name',$p_name)->value('id');//check whether place exits or not
+
+                if(!$p_id){
+                    //place doesnot exits
+                    //add place
+                    $pl = new Place;
+                    $pl->name = $p_name;
+                    $pl->save();
+                    $p_id = DB::table('places')->where('name',$p_name)->value('id');
+
+                }
+
+                //check whether the boarding point already exit
+                $bp_id = DB::table('boardings')->where('routeID',$route_id)->where('placeID',$p_id)->value('id');
+                //add the place as a boarding point
+
+                if(!$bp_id){
+                    $bp = new Boarding;
+                    $bp->routeID = $route_id;
+                    $bp->placeID = $p_id;
+                    $bp->save();
+                }
+
+
+
+
+            }
+
+        }
+
+        return redirect()->back()->with('message', 'Route has been updated successflly.');
+    }
+
+    public function reptSearchRoute(){
+
+        return view('representative.rept-search-route');
+    }
+    function reptLiveSearchRoute(Request $request)
+    {
+
+        if($request->ajax())
+        {
+            $output = '';
+
+            $from = $request->get('query');
+            $to = $request->get('query1');
+
+            if($from == '' and $to == '')
+            {
+                $data = DB::table('routes')
+                    ->get();
+
+            }else{
+                $data = DB::table('routes')
+                    ->Where('from', 'like', '%'.$from.'%')
+                    ->Where('to', 'like', '%'.$to.'%')
+                    ->get();
+            }
+
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr>
+                    <td>'.$row->id.'</td>
+                    <td>'.$row->from.'</td>
+                    <td>'.$row->to.'</td>
+                    <td>'.$row->starting_point.'</td>
+                    <td>'.' <a role="button" type="submit" class="btn btn-success" href="representative-route-details/'.($row->id).'">Details </a></td>
+                    <td>'.' <a role="button" type="submit" class="btn btn-success" href="representative-route-edit/'.($row->id).'">Edit </a></td>
+                    </tr>
+                    ';
+                }
+            }
+            else
+            {
+                $output = '
+                <tr>
+                <td align="center" colspan="5">No Data Found</td>
+                </tr>
+                ';
+            }
+
+            $data = array(
+                'table_data'  => $output,
+                'total_data'  => $total_row
+            );
+
+            echo json_encode($data);
+        }
+    }
+
 }

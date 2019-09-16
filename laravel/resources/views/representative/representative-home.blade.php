@@ -123,7 +123,7 @@
                             <i class="fa fa-check-circle"></i> Availability</a>
                     </li>
                     <li>
-                        <a href="representative-routes/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                        <a href="representative-routes">
                             <i class="fa fa-road"></i> Routes</a>
                     </li>
                     <li>
@@ -201,7 +201,7 @@
                                 <h3>2 </h3>
                             </div>
                             <div class="panel-footer back-footer-brown">
-                                <a href="routes_view.php" style="text-decoration: none;color: white"> <strong>Routes</strong></a>
+                                <a href="routes_view" style="text-decoration: none;color: white"> <strong>Routes</strong></a>
 
                             </div>
                         </div>

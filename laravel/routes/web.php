@@ -144,6 +144,16 @@ Route::post('representative-place-update/{p_id}','RepActivityController@reptUpda
 Route::get('representative-add-place','RepActivityController@reptAddPlace');
 Route::post('representative-add-place','RepActivityController@reptStorePlace');
 
+Route::get('routes_view', 'RepActivityController@reptRoute');
+Route::get('representative-routes', 'RepActivityController@reptRoute');
+Route::get('representative-route-details/{route_id}', 'RepActivityController@reptRouteDetails');
+Route::get('representative-route-edit/{route_id}', 'RepActivityController@reptRouteEdit');
+Route::post('representative-route-update/{route_id}','RepActivityController@reptUpdateRoute');
+Route::get('rept-search-route','RepActivityController@reptSearchRoute');
+Route::get('/live_search/routes', 'RepActivityController@reptLiveSearchRoute')->name('live_search.routes');
+Route::get('rept-add-route','RepActivityController@reptAddRoute');
+Route::post('rept-add-route','RepActivityController@reptStoreRoute');
+
 
 // employee activities employee-search-ticket-with-filter
 Route::get('/employee-ticket-list','EmployeeActivityController@getTicketList');// get tickets
