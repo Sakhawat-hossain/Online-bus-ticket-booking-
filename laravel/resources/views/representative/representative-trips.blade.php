@@ -146,6 +146,7 @@
                 var div = document.getElementById("edit-trip-"+id);
                 div.parentNode.removeChild(div);
             }
+
         </script>
         
     </head>
@@ -260,7 +261,9 @@
                             <div class="col-sm-3"><div class="row">
                                     <div class="col-sm-4" style="padding-top: 8px;">Filter By</div>
                                     <div class="col-sm-8" style="padding-top: 8px;margin-left: -20px;">
-                                        <input type="text" name="coach_no" class="form-control" placeholder="Coach No"></div>
+                                        <input type="text" name="coach_no" class="form-control" placeholder="Coach No"
+                                               id="coach_no" onkeyup="filterByCoach()">
+                                     </div>
                                 </div>
                             </div>
 
@@ -410,6 +413,28 @@
                         if (switchcount == 0 && dir == "asc") {
                             dir = "desc";
                             switching = true;
+                        }
+                    }
+                }
+            }
+            function filterByCoach() {
+                alert('hello');
+                // Declare variables
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("coach_no");
+                filter = input.value;//.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[3];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.indexOf(filter) == 0) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
                         }
                     }
                 }

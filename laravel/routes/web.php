@@ -18,6 +18,7 @@ Route::get('/admin','homeController@adminHomepage');
 
 Route::get('/', 'homeController@homepage');
 Route::get('/home', 'homeController@homepage');
+Route::get('/getDepartureTime/{date}', 'homeController@getDepartureTime');
 
 //customer login, logout
 Route::get('logout', 'MyController@logout'); // logout

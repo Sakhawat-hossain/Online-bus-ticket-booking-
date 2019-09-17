@@ -111,7 +111,7 @@
                 <span>Mobile No : </span><input name="phone_no" type="text" style="margin-left: 50px;" required>
                 <span class="text-muted"> (Used to register)</span><br>
                 <span>Mobile No : </span><input name="mobileNo" type="text" style="margin-left: 50px;" required>
-                <span class="text-muted"> (where should be refund)</span>
+                <span class="text-muted"> (bKash no where should be refund)</span>
                 <p style="padding-left: 140px;margin-top: 10px;margin-bottom: 10px;color: brown;">
                     @if(isset($cancelError)) {{$cancelError}}@endif</p>
                 <br><button class="btn btn-warning">Submit</button>

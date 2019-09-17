@@ -400,19 +400,19 @@
                 innerhtml = innerhtml +    "</select>" +
                     "</div>" +
                     "</div>" +
-                    "<div class='col-sm-2'>" +
+                    "<div class='col-sm-3'>" +
                     "<div class='form-group'>" +
                     "<button class='form-control input-3 btn-success' type='button' onclick='add_seat(" + i + "," + j + ")'>" +
                     "Add </button>" +
                     "</div>" +
                     "</div>" +
-                    "<div class='col-sm-2'>" +
+                    "<div class='col-sm-3'>" +
                     "<div class='form-group'>" +
                     "<button class='form-control input-3 btn-success' type='button' onclick='remove_seat(" + i + "," + j + ")'>" +
                     "Remove </button>" +
                     "</div>" +
                     "</div>" +
-                    "<div class='col-sm-2'>" +
+                    "<div class='col-sm-3'>" +
                     "<div class='form-group'>" +
                     "<button class='form-control input-3 btn-warning' type='button' style='margin-left: -10px;' onclick='cancel_seat()'>" +
                     "Cancel </button>" +
@@ -642,32 +642,32 @@
                             <i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="representative-buses/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                        <a href="../representative-buses/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                             <i class="fa fa-truck"></i>Buses</a>
                     </li>
 
                     <li style="background-color: forestgreen;margin-right: -10px;">
-                        <a href="representative-seats/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                        <a href="../representative-seats/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                             <i class="fa fa-sitemap"></i>Seats</a>
                     </li>
                     <li>
-                        <a href="representative-availability/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                        <a href="../representative-availability/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                             <i class="fa fa-check-circle"></i> Availability</a>
                     </li>
                     <li>
-                        <a href="representative-routes/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                        <a href="../representative-routes">
                             <i class="fa fa-road"></i> Routes</a>
                     </li>
                     <li>
-                        <a href="representative-trips/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                        <a href="../representative-trips/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                             <i class="fa fa-road"></i> Trips</a>
                     </li>
                     <li>
-                        <a href="representative-places">
+                        <a href="../representative-places">
                             <i class="fa fa-map-marker"></i>Places</a>
                     </li>
                     <li>
-                        <a href="representative-reports/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                        <a href="../representative-reports/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
                             <i class="fa fa-list"></i> Reports</a>
                     </li>
                 </ul>

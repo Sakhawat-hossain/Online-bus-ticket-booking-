@@ -143,7 +143,7 @@
                             <i class="fa fa-check-circle"></i> Availability</a>
                     </li>
                     <li>
-                        <a href="../representative-routes/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                        <a href="../representative-routes">
                             <i class="fa fa-road"></i> Routes</a>
                     </li>
                     <li>

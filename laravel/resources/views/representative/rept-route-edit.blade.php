@@ -163,7 +163,7 @@
                     </div>
 
                     <form action="../representative-route-update/{{$route_id}}" method="post">
-                        @csrf         
+                        {{csrf_field()}}
                             <div class="row">
                                     
                                         

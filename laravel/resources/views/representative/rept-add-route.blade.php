@@ -156,7 +156,7 @@
                                     <div class="container-fluid">
                                       
                                         <ul class="nav navbar-nav">
-                                            <li ><a href="representative-route">All Routes</a></li>
+                                            <li ><a href="representative-routes">All Routes</a></li>
                                             <li class="active" style="background:white;"><a href="#" style="color:black;">Add Route</a></li>
                                             <li><a href="rept-search-route">Search Route</a></li>
                                            

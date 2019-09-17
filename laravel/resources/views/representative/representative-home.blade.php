@@ -254,7 +254,7 @@
                                 <i class="fa fa-list fa-5x"></i>
                                 <h3>report</h3>
                             </div>
-                            <div class="panel-footer back-footer-green">
+                            <div class="panel-footer back-footer-red">
                                 <a href="membership_profile.php" style="text-decoration:none;color: white"><strong>Report</strong></a>
 
                             </div>

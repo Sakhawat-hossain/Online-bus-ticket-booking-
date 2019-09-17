@@ -33,7 +33,23 @@
 	<script src="js/jquery/home-query.js"></script>
 
 	<script>
-
+        function getDepartureTime() {
+            var date=document.getElementById("DepartureDate").value;
+            jQuery.ajax({
+                type:'GET',
+                url:'getDepartureTime/'+date,
+                data:'',
+                success:function (data) {
+                    var div=document.getElementById("DepartureTime");
+                    var temp = "<option>All</option>";
+                    var i;
+                    for(i=0; i<data.length;i++){
+                        temp += "<option>"+data[i].departure_time+"</option>";
+                    }
+                    div.innerHTML = temp;
+                }
+            });
+        }
 	</script>
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -107,7 +123,7 @@
 				            <div class="col-sm-6">
 								<div class="form-group">
 									<span class="form-label">Deperture Date</span>
-									<input class="form-control" type="date" name="departuredate" required>
+									<input id="DepartureDate" class="form-control" type="date" name="departuredate" required oninput="getDepartureTime()">
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -122,7 +138,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <span class="form-label"><i class="fas fa-star" style="color: brown;"></i>Deperture Time</span>
-                                    <select class="form-control" name="departuretime">
+                                    <select id="DepartureTime" class="form-control" name="departuretime">
                                         <option>All</option>
                                         @if(isset($times))
                                             @foreach($times as $tt)
