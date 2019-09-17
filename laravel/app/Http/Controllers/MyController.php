@@ -224,7 +224,7 @@ class MyController extends Controller
                     'payments.trxID','payments.amount','tickets.status','tickets.id')->get();
             return view('admin.ticket-list')->with('buses',$places)->with('tickets',$tickets);//redirect()->route('sign-in');
 */
-            return view('admin.admin-home');
+            return redirect('admin-home');
         }
 
         //}

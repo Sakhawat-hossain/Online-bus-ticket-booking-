@@ -87,7 +87,7 @@
                     <div class="panel-heading">Login as Admin</div>
 
                     <div class="panel-body">
-                        <form class="form-horizontal" method="POST" action="super-admin-sign-in">
+                        <form class="form-horizontal" method="POST" action="admin-sign-in">
                             {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">

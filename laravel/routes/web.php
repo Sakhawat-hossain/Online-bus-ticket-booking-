@@ -50,6 +50,11 @@ Route::get('admin-home', 'MyController@adminHome'); // admin-home
 Route::get('admin/admin-create', 'MyController@adminCreate'); // admin-create / register
 Route::post('admin/admin-store', 'MyController@adminStore'); // admin store
 
+Route::get('admin-representative-list','AdminActivityController@adminGetReptList');
+Route::get('admin-agent-list','AdminActivityController@adminGetAgentList');
+Route::get('admin-profile/{id}','AdminActivityController@adminProfile');
+
+
 //super admins login, logout
 Route::get('super-admin-logout', 'MyController@superAdminLogout'); // logout
 Route::get('super-admin-sign-in', 'MyController@superAdminShowLogin'); // login
@@ -153,6 +158,13 @@ Route::get('rept-search-route','RepActivityController@reptSearchRoute');
 Route::get('/live_search/routes', 'RepActivityController@reptLiveSearchRoute')->name('live_search.routes');
 Route::get('rept-add-route','RepActivityController@reptAddRoute');
 Route::post('rept-add-route','RepActivityController@reptStoreRoute');
+
+
+//ajax for admin
+Route::get('admin-confirm-Rept/{id}','AdminActivityController@adminReptConfirm');
+Route::get('admin-cancel-Rept/{id}','AdminActivityController@adminReptCancel');
+Route::get('admin-confirm-Agent/{id}','AdminActivityController@adminAgentConfirm');
+Route::get('admin-cancel-Agent/{id}','AdminActivityController@adminAgentCancel');
 
 
 // employee activities employee-search-ticket-with-filter
