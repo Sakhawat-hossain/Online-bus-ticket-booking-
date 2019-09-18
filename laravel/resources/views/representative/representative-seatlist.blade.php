@@ -287,7 +287,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if(\Illuminate\Support\Facades\Session::has('agent-username'))
                         @php $username=Session::get('agent-username');@endphp
-                        <li><a href="{{url('user/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
+                        <li><a href="../representative/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
                                     {{\Illuminate\Support\Facades\Session::get('agent-username')}}</span></a> </li>
                         <li><a href="../agent-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
                     @else

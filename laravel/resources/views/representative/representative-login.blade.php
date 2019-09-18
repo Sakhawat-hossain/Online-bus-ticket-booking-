@@ -65,7 +65,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if(\Illuminate\Support\Facades\Session::has('rep-username'))
                         @php $username=Session::get('rep-username');@endphp
-                        <li><a href="{{url('representative/'.$username)}}"><span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
+                        <li><a href="representative/{{\Illuminate\Support\Facades\Session::get('rep-username')}}">
+                            <span style="margin-right: 8px;"><i class="fas fa-user-tie"></i>
                                     {{\Illuminate\Support\Facades\Session::get('rep-username')}}</span></a> </li>
                         <li><a href="representative-logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
 

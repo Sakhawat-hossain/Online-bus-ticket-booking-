@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Representative extends Model
 {
-    protected $fillable = ['username', 'password', 'adminID', 'enterprise'];
+    protected $fillable = ['username', 'password', 'adminID', 'enterprise','admin_infoID','addressID'];
 }
